@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["es2021", "dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "paths": {
+      "@usedapp/core": ["packages/core/src"],
+      "@usedapp/core/*": ["packages/core/src/*"],
+      "usedapp": ["packages/react/src"],
+      "usedapp/*": ["packages/react/src/*"],
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es2021",
+  },
+  "exclude": ["**/node_modules/**", "**/dist/**"],
+  "include": [
+    "packages/**/*",
+    "vitest.config.ts"
+  ]
+}

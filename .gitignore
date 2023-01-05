@@ -1,0 +1,21 @@
+.idea/
+.next/
+.store/
+.turbo/
+data/
+dist/
+node_modules/
+target/
+tests_output/
+vendor/
+/out/
+coverage/
+
+*.tsbuildinfo
+.eslintcache
+*.node
+graph*.html
+
+# not pnpm
+.pnp.*
+.yarn/*

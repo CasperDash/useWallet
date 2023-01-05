@@ -1,0 +1,48 @@
+{
+  "name": "usedapp",
+  "version": "1.0.0",
+  "repository": "git@github.com:CasperDash/usedapp.git",
+  "author": "dev@casperdash.io",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint . --ext js,jsx,ts,tsx",
+    "build": "pnpm -r --filter './packages/**' build",
+    "dev": "pnpm -r --filter './packages/**' dev",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:run": "vitest run",
+    "test:typecheck": "vitest typecheck",
+    "test:ui": "vitest --ui",
+    "test:update": "vitest --update",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.31.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-sonar": "^0.9.2",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
+    "semver": "^7.3.8",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4",
+    "vitest": "^0.26.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --ext js,jsx,ts,tsx --quiet --fix --",
+      "prettier --write"
+    ],
+    "*.{md,mdx,mjs,yml,yaml,css}": [
+      "prettier --write"
+    ]
+  },
+  "packageManager": "pnpm@7.18.2"
+}
