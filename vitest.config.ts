@@ -7,10 +7,6 @@ export default defineConfig({
     },
     environment: 'jsdom',
     include: ['packages/**/*.test.ts'],
-    setupFiles: [
-      './packages/core/test/setup.ts',
-      './packages/react/test/setup.ts',
-    ],
   },
 });
 
