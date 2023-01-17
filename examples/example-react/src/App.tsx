@@ -1,34 +1,57 @@
 import { useEffect, useState } from 'react';
-import { CapserDashConnector, CasperSignerConnector, connect, createClient, disconnect, isConnected,
-  getActivePublicKey } from '@usedapp/core';
+import {
+  CapserDashConnector,
+  CasperSignerConnector,
+  connect,
+  createClient,
+  disconnect,
+  isConnected,
+  watchAccount,
+  Account,
+} from '@usedapp/core';
+import { useAccount } from '@usedapp/react';
 
 import './App.css';
 
 function App() {
   const [activeKey, setActiveKey] = useState<string | false>(false);
+  const a = useAccount();
+
+  console.log('test: ', a);
+  // console.log('status: ', status);
+  // console.log('publicKey: ', publicKey);
 
   useEffect(() => {
     createClient({
       connectors: [new CasperSignerConnector({}), new CapserDashConnector({})],
     });
 
-    window?.addEventListener('casper:change',
-      (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => {
-        setActiveKey(event.detail ? event.detail.activeKey : false);
+    watchAccount((account: Account | null) => {
+      console.log(account);
+      if (!account) {
+        return;
+      }
 
-        return true;
-      });
-    window?.addEventListener('casper:disconnect', () => {
-      setActiveKey(false);
+      setActiveKey(account.publicKey ? account.publicKey : false);
     });
-    window?.addEventListener('casper:connect',
-      (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => {
-        setActiveKey(event.detail ? event.detail.activeKey : false);
 
-        return true;
-      });
+    // window?.addEventListener('casper:change',
+    //   (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => {
+    //     setActiveKey(event.detail ? event.detail.activeKey : false);
 
-    void getActivePublicKey().then((activeKey: string) => setActiveKey(activeKey));
+    //     return true;
+    //   });
+    // window?.addEventListener('casper:disconnect', () => {
+    //   setActiveKey(false);
+    // });
+    // window?.addEventListener('casper:connect',
+    //   (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => {
+    //     setActiveKey(event.detail ? event.detail.activeKey : false);
+
+    //     return true;
+    //   });
+
+    // void getActivePublicKey().then((activeKey: string) => setActiveKey(activeKey));
 
   }, []);
 

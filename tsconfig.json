@@ -17,6 +17,8 @@
     "paths": {
       "@usedapp/core": ["packages/core/src"],
       "@usedapp/core/*": ["packages/core/src/*"],
+      "@usedapp/react": ["packages/react/src"],
+      "@usedapp/react/*": ["packages/react/src/*"],
       "usedapp": ["packages/react/src"],
       "usedapp/*": ["packages/react/src/*"],
     },
