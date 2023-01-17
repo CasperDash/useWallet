@@ -90,7 +90,7 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
     // eslint-disable-next-line @typescript-eslint/unbound-method, @typescript-eslint/no-unsafe-call
     eventProvider?.removeEventListener('casperdash:activeKeyChanged', this.onActiveKeyChanged);
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    eventProvider?.removeEventListener('casperdash:disconnected', this.onDisconnected);
+    eventProvider?.removeEventListener('casperdash:disconnected', () => this.onDisconnected());
     // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.removeEventListener('casperdash:connected', this.onConnected);
 

@@ -1,10 +1,12 @@
 import { getClient } from '@usedapp/core/utils/client';
 
-export const getActivePublicKey = async (): Promise<void> => {
+export const getActivePublicKey = async (): Promise<string | undefined> => {
   const connector = getClient()?.connector;
 
   try {
-    await connector?.getActivePublicKey();
+    const activeKey = await connector?.getActivePublicKey();
+
+    return activeKey;
   } catch (error) {
     console.log(error);
   }
