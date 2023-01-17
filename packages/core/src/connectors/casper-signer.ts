@@ -105,7 +105,7 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('signer:activeKeyChanged', this.onActiveKeyChanged);
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    eventProvider?.addEventListener('signer:disconnected', this.onDisconnected);
+    eventProvider?.addEventListener('signer:disconnected', () => this.onDisconnected());
     // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('signer:connected', this.onConnected);
 
