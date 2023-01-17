@@ -25,10 +25,14 @@
     "strict": true,
     "strictNullChecks": true,
     "target": "es2021",
+    "typeRoots": [
+      "packages/core/src/types/*.d.ts"
+    ]
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
   "include": [
     "packages/**/*",
+    "packages/**/*.ts",
     "vitest.config.ts"
   ]
 }
