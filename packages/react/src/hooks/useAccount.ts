@@ -1,4 +1,8 @@
-import { Account, watchAccount, StatusEnum, createClient, CasperSignerConnector, CapserDashConnector } from '@usedapp/core';
+import { Account,
+  watchAccount, StatusEnum, createClient, CasperSignerConnector,
+  CapserDashConnector,
+  disconnect as disconnectDapp,
+} from '@usedapp/core';
 import { useEffect, useState } from 'react';
 
 export const useAccount = () => {
@@ -22,8 +26,13 @@ export const useAccount = () => {
     });
   }, []);
 
+  const disconnect = async () => {
+    await disconnectDapp();
+  };
+
   return {
     status,
     publicKey,
+    disconnect,
   };
 };
