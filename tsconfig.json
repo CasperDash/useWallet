@@ -31,6 +31,7 @@
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
   "include": [
+    "examples/**/*",
     "packages/**/*",
     "packages/**/*.ts",
     "vitest.config.ts"
