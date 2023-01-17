@@ -1,41 +1,11 @@
-import { useEffect, useState } from 'react';
-import { CapserDashConnector, CasperSignerConnector, connect, createClient, disconnect, isConnected,
-  getActivePublicKey } from '@usedapp/core';
+import { useAccount } from '@usedapp/react';
 
 import './App.css';
+import CasperDashButton from './component/CasperDashButton';
+import CasperSignerButton from './component/CasperSignerButton';
 
 function App() {
-  const [activeKey, setActiveKey] = useState<string | false>(false);
-
-  useEffect(() => {
-    createClient({
-      connectors: [new CasperSignerConnector({}), new CapserDashConnector({})],
-    });
-
-    window?.addEventListener('casper:change',
-      (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => {
-        setActiveKey(event.detail ? event.detail.activeKey : false);
-
-        return true;
-      });
-    window?.addEventListener('casper:disconnect', () => {
-      setActiveKey(false);
-    });
-    window?.addEventListener('casper:connect',
-      (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => {
-        setActiveKey(event.detail ? event.detail.activeKey : false);
-
-        return true;
-      });
-
-    void getActivePublicKey().then((activeKey: string) => setActiveKey(activeKey));
-
-  }, []);
-
-  const loadConnected = () => {
-    void isConnected();
-  };
-
+  const { publicKey, disconnect } = useAccount();
 
   return (
     <div className="App">
@@ -44,21 +14,18 @@ function App() {
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>UseDApp Connector</h1>
       <div className="card">
         {
-          activeKey ? (
-            <button onClick={async () => disconnect().finally(() => loadConnected())}>
-              Disconnect {activeKey}
+          publicKey ? (
+            <button onClick={async () => disconnect()}>
+              Disconnect {publicKey}
             </button>
           ) : (
             <>
-              <button onClick={async () => connect({ connector: new CapserDashConnector({}) })}>
-                Connect with CasperDash
-              </button>
-              <button onClick={async () => connect({ connector: new CasperSignerConnector({}) })}>
-                Connect with CasperSigner
-              </button>
+              <CasperSignerButton/>
+              <br/>
+              <CasperDashButton/>
             </>
           )
         }

@@ -115,7 +115,7 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
   public async getActivePublicKey(): Promise<any> {
     const provider = await this.getProvider();
 
-    await provider!.getActivePublicKey();
+    return provider!.getActivePublicKey();
   }
 
   public async signMessage(message: string, signingPublicKey: string): Promise<string> {
