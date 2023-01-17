@@ -96,7 +96,7 @@ export class Client {
 
         window?.addEventListener('casper:change',
           (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onChange(event.detail!));
-        window?.addEventListener('casper:disconnect', () => onDisconnect);
+        window?.addEventListener('casper:disconnect', () => onDisconnect());
         window?.addEventListener('casper:connect',
           (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onConnect(event.detail!));
       },

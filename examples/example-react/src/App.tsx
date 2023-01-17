@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { CapserDashConnector, CasperSignerConnector, connect, createClient, disconnect, isConnected } from '@usedapp/core';
+import { CapserDashConnector, CasperSignerConnector, connect, createClient, disconnect, isConnected,
+  getActivePublicKey } from '@usedapp/core';
 
 import './App.css';
 
@@ -26,15 +27,15 @@ function App() {
 
         return true;
       });
+
+    void getActivePublicKey().then((activeKey: string) => setActiveKey(activeKey));
+
   }, []);
 
   const loadConnected = () => {
     void isConnected();
   };
 
-  useEffect(() => {
-    loadConnected();
-  }, [isConnected]);
 
   return (
     <div className="App">
