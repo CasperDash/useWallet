@@ -40,11 +40,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pnpm lint-staged"
+      "pre-commit": "pnpm lint"
     }
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
+    "pre-commit": "pnpm lint"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [

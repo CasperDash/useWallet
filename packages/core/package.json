@@ -14,9 +14,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "eventemitter3": "^5.0.0",
     "typescript": "^4.9.4"
   },
   "devDependencies": {
+    "casper-js-sdk": "^2.10.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "tsup": "^6.5.0"
   }
 }
