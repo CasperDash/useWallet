@@ -2,11 +2,14 @@ import { createStore, Mutate, StoreApi } from 'zustand/vanilla';
 import { subscribeWithSelector } from 'zustand/middleware';
 
 import { Connector, ConnectorData } from '../connectors/base';
+import { ClientNotFoundError } from '../errors';
+import { StatusEnum } from '../enums';
 
 export type StateParams = {
   connectors: Connector[];
   connector?: Connector;
   data?: ConnectorData;
+  status?: StatusEnum;
 };
 
 
@@ -25,6 +28,7 @@ export class Client {
   }: ClientConfig) {
     this.store = createStore(subscribeWithSelector(() => ({
       connectors: connectors,
+      status: StatusEnum.DISCONNECTED,
     })));
 
     this.triggerEvent();
@@ -36,6 +40,14 @@ export class Client {
 
   public get subscribe() {
     return this.store.subscribe;
+  }
+
+  public get data() {
+    return this.store.getState().data;
+  }
+
+  public get status() {
+    return this.store.getState().status;
   }
 
   public clearState() {
@@ -77,6 +89,7 @@ export class Client {
       this.setState((x: StateParams) => ({
         ...x,
         data: { ...x.data, ...data },
+        status: StatusEnum.CONNECTED,
       }));
     };
 
@@ -112,9 +125,9 @@ export const createClient = (clientConfig: ClientConfig): Client => {
   return client;
 };
 
-export const getClient = (): null | Client => {
+export const getClient = (): Client => {
   if (!client) {
-    return null;
+    throw new ClientNotFoundError();
   }
 
   return client;
