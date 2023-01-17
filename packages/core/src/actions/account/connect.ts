@@ -15,17 +15,34 @@ export const connect = async ({ connector }: ConnectParams): Promise<void> => {
     throw new ConnectorAlreadyConnectedError();
   }
 
-  console.log('connector: ', connector);
-
   try {
+    client.setState((x: StateParams) => ({ ...x, status: StatusEnum.CONNETING }));
     await connector.connect();
+    let customData = {};
+    let isConnected = false;
 
-    client?.setState((oldState: StateParams) => ({
+    try {
+      const activeKey = await connector.getActivePublicKey();
+      customData = {
+        activeKey: activeKey,
+      };
+      isConnected = !!activeKey;
+    } catch (err) {
+      console.log(err);
+    }
+
+    client.setState((oldState: StateParams) => ({
       ...oldState,
       connector,
-      status: StatusEnum.CONNECTED,
+      status: isConnected ? StatusEnum.CONNECTED : StatusEnum.CONNETING,
+      data: {
+        ...oldState.data,
+        ...customData,
+      },
     }));
   } catch (error) {
     console.log(error);
+
+    throw error;
   }
 };
