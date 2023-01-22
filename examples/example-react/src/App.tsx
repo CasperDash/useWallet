@@ -10,8 +10,8 @@ function App() {
   return (
     <div className="App">
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
+        <a href="https://casperdash.io" target="_blank">
+          <img src="/casperdash.png" className="logo" alt="CasperDash logo" />
         </a>
       </div>
       <h1>UseDApp Connector</h1>
