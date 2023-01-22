@@ -1,3 +1,4 @@
 export * from './hooks';
 
-export { CasperDappProvider } from './provider';
+export { CasperProvider } from './provider';
+export * from './client';

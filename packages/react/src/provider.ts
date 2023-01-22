@@ -1,14 +1,19 @@
 import * as React from 'react';
-import { CapserDashConnector, CasperSignerConnector, createClient } from '@usedapp/core';
+import { QueryClientProvider } from '@tanstack/react-query';
+
+import type { Client } from './client';
 
 type Props = {
   children: React.ReactElement;
+  client: Client;
 };
 
-export const CasperDappProvider = ({ children }: Props): JSX.Element => {
-  createClient({
-    connectors: [new CasperSignerConnector({}), new CapserDashConnector({})],
-  });
-
-  return children;
+export const CasperProvider = ({ children, client }: Props): JSX.Element => {
+  return React.createElement(
+    QueryClientProvider,
+    {
+      children,
+      client: client.queryClient,
+    },
+  );
 };
