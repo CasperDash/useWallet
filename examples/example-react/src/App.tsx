@@ -1,11 +1,12 @@
-import { useAccount } from '@usedapp/react';
+import { useAccount, useDisconnect } from '@usedapp/react';
 
 import './App.css';
 import CasperDashButton from './component/CasperDashButton';
 import CasperSignerButton from './component/CasperSignerButton';
 
 function App() {
-  const { publicKey, disconnect } = useAccount();
+  const { publicKey } = useAccount();
+  const { disconnect } = useDisconnect();
 
   return (
     <div className="App">
@@ -18,7 +19,7 @@ function App() {
       <div className="card">
         {
           publicKey ? (
-            <button onClick={async () => disconnect()}>
+            <button onClick={() => disconnect()}>
               Disconnect {publicKey}
             </button>
           ) : (
