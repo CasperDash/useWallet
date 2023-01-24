@@ -7,7 +7,11 @@ export type ConnectParams = {
   connector: Connector;
 };
 
-export const connect = async ({ connector }: ConnectParams): Promise<void> => {
+export type ConnectResult = {
+  connector: Connector;
+};
+
+export const connect = async ({ connector }: ConnectParams): Promise<ConnectResult> => {
   const client = getClient();
   const activeConnector = client?.connector;
 
@@ -40,6 +44,10 @@ export const connect = async ({ connector }: ConnectParams): Promise<void> => {
         ...customData,
       },
     }));
+
+    return {
+      connector,
+    };
   } catch (error) {
     console.log(error);
 

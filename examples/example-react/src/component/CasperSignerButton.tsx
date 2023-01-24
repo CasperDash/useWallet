@@ -11,7 +11,7 @@ export const CasperSignerButton = () => {
 
   return (
     <div>
-        <button onClick={async () => connect()}>
+        <button onClick={() => connect()}>
           Connect with CasperSigner
         </button>
     </div>

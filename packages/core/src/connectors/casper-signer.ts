@@ -7,7 +7,7 @@ declare global {
     casperlabsHelper?: {
       isConnected: () => Promise<boolean>;
       signMessage: (message: string, signingPublicKey: string) => Promise<string>;
-      sign: (deploy: any, signingPublicKey: string, targetPublicKey: string) => Promise<string>;
+      sign: (deploy: unknown, signingPublicKey: string, targetPublicKey: string) => Promise<string>;
       disconnectFromSite: () => Promise<void>;
       requestConnection: () => Promise<void>;
       getActivePublicKey: () => Promise<string>;
@@ -34,7 +34,7 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
 
   constructor({
     options: defaultOptions,
-  }: { options?: CapseSignerConnectorOptions }) {
+  }: { options?: CapseSignerConnectorOptions } = {}) {
     const options = {
       name: 'CasperSigner',
       getProvider: (): Provider | undefined => {

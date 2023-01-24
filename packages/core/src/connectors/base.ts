@@ -1,6 +1,6 @@
 import { default as EventEmitter } from 'eventemitter3';
 
-export type ConnectorData<Provider = any> = {
+export type ConnectorData<Provider = unknown> = {
   activeKey?: string;
   isConnected?: boolean;
   provider?: Provider;
