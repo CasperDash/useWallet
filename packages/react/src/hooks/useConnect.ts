@@ -1,20 +1,72 @@
-import { Connector, connect as connectDapp, disconnect as disconnectDapp } from '@usedapp/core';
+import { useCallback } from 'react';
+import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { connect as connectDapp, ConnectParams, ConnectResult } from '@usedapp/core';
+import { MutationKeysEnum } from '@usedapp/react';
 
-export type UserConnectProps = {
-  connector: Connector;
+export type UseConnectParams = Partial<ConnectParams>;
+
+export type UseConnectConfig = Partial<UseMutationOptions<ConnectResult, unknown, UseConnectParams>>;
+
+export type UseConnectProps = UseConnectParams & UseConnectConfig;
+
+const mutationFn = async (args: UseConnectParams) => {
+  const { connector } = args;
+  if (!connector) {
+    throw new Error('connector is required');
+  }
+
+  return connectDapp({ connector });
 };
 
-export const useConnect = ({ connector }: UserConnectProps) => {
-  const connect = async () => {
-    await connectDapp({ connector });
-  };
+export const useConnect = ({
+  connector,
+  onError,
+  onMutate,
+  onSettled,
+  onSuccess,
+}: UseConnectProps) => {
+  const {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
+    status,
+    variables,
+    mutate,
+    mutateAsync,
+  } = useMutation([MutationKeysEnum.CONNECT], mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  });
 
-  const disconnect = async () => {
-    await disconnectDapp();
-  };
+  const connect = useCallback(() => {
+    return mutate({
+      connector,
+    });
+  }, [connector]);
+
+  const connectAsync = useCallback(async () => {
+    return mutateAsync({
+      connector,
+    });
+  }, [connector]);
 
   return {
     connect,
-    disconnect,
+    connectAsync,
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
+    status,
+    variables,
   };
 };

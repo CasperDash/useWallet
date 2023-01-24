@@ -33,7 +33,7 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
 
   constructor({
     options: defaultOptions,
-  }: { options?: CasperDashConnectorOptions }) {
+  }: { options?: CasperDashConnectorOptions } = {}) {
     const options: CasperDashConnectorOptions = {
       name: 'CasperDash',
       getProvider: (): Provider | undefined => {
