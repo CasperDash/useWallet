@@ -11,7 +11,7 @@ export const CasperDashButton = () => {
 
   return (
     <div>
-        <button onClick={async () => connect()}>
+        <button onClick={() => connect()}>
           Connect with CasperDash
         </button>
     </div>

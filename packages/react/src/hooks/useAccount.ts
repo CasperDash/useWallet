@@ -1,7 +1,6 @@
 import { Account,
   watchAccount, StatusEnum, createClient, CasperSignerConnector,
   CapserDashConnector,
-  disconnect as disconnectDapp,
 } from '@usedapp/core';
 import { useEffect, useState } from 'react';
 
@@ -14,9 +13,7 @@ export const useAccount = () => {
       connectors: [new CasperSignerConnector({}), new CapserDashConnector({})],
     });
 
-
     watchAccount((account: Account | null) => {
-      console.log(account);
       if (!account) {
         return;
       }
@@ -26,13 +23,8 @@ export const useAccount = () => {
     });
   }, []);
 
-  const disconnect = async () => {
-    await disconnectDapp();
-  };
-
   return {
     status,
     publicKey,
-    disconnect,
   };
 };
