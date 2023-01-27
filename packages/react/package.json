@@ -13,7 +13,6 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "@tanstack/query-core": ">=4.22.0",
     "react": ">=17.0.0"
   },
   "dependencies": {

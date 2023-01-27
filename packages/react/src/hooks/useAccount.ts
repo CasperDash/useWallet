@@ -1,6 +1,7 @@
-import { Account,
-  watchAccount, StatusEnum, createClient, CasperSignerConnector,
-  CapserDashConnector,
+import {
+  Account,
+  watchAccount,
+  StatusEnum,
 } from '@usedapp/core';
 import { useEffect, useState } from 'react';
 
@@ -9,10 +10,6 @@ export const useAccount = () => {
   const [status, setStatus] = useState<StatusEnum>(StatusEnum.DISCONNECTED);
 
   useEffect(() => {
-    createClient({
-      connectors: [new CasperSignerConnector({}), new CapserDashConnector({})],
-    });
-
     watchAccount((account: Account | null) => {
       if (!account) {
         return;
