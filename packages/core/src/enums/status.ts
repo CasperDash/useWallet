@@ -1,6 +1,6 @@
 export enum StatusEnum {
   CONNECTED = 'connected',
-  CONNETING = 'connecting',
+  CONNECTING = 'connecting',
   RECONNECTING = 'reconnecting',
   DISCONNECTED = 'disconnected',
 }

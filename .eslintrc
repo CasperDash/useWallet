@@ -22,13 +22,6 @@
     "class-methods-use-this": "off",
     "consistent-return": "off",
     "func-names": "off",
-    // "import/no-cycle": [
-    //   "error",
-    //   {
-    //     "maxDepth": 2,
-    //     "ignoreExternal": true
-    //   }
-    // ],
     "max-len": [
       "error",
       {
@@ -93,6 +86,7 @@
     "no-return-await": "off",
     "no-unused-expressions": "off",
     "object-curly-spacing": "off",
+    "import/no-extraneous-dependencies": "off",
     "import/named": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/consistent-indexed-object-style": "error",
