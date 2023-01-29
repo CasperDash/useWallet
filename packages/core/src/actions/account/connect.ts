@@ -20,7 +20,7 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
   }
 
   try {
-    client.setState((x: StateParams) => ({ ...x, status: StatusEnum.CONNETING }));
+    client.setState((x: StateParams) => ({ ...x, status: StatusEnum.CONNECTING }));
     await connector.connect();
     let customData = {};
     let isConnected = false;
@@ -38,7 +38,7 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
     client.setState((oldState: StateParams) => ({
       ...oldState,
       connector,
-      status: isConnected ? StatusEnum.CONNECTED : StatusEnum.CONNETING,
+      status: isConnected ? StatusEnum.CONNECTED : StatusEnum.CONNECTING,
       data: {
         ...oldState.data,
         ...customData,

@@ -6,6 +6,6 @@ export const disconnect = async (): Promise<void> => {
   try {
     await connector?.disconnect();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

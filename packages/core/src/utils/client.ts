@@ -60,7 +60,7 @@ export class Client {
 
   public setState(
     updater:
-    | StateParams
+    | Partial<StateParams>
     | ((
       state: StateParams,
     ) => StateParams),

@@ -1,6 +1,6 @@
 import { Connector } from '@usedapp/core/connectors';
 import { StatusEnum } from '@usedapp/core/enums';
-import { getClient } from '@usedapp/core/utils/client';
+import { getClient } from '@usedapp/core/utils';
 
 export type Account = {
   publicKey?: string;
@@ -9,13 +9,8 @@ export type Account = {
 };
 
 export const getAccount = (): Account | null => {
-
   try {
     const client = getClient();
-    if (!client) {
-      return null;
-    }
-
     const { data, status, connector } = client;
 
     return {
@@ -24,7 +19,7 @@ export const getAccount = (): Account | null => {
       connector,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     return null;
   }
