@@ -32,7 +32,7 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
       };
       isConnected = !!activeKey;
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
 
     client.setState((oldState: StateParams) => ({
@@ -49,7 +49,7 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
       connector,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     throw error;
   }
