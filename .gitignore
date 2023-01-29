@@ -19,3 +19,5 @@ graph*.html
 # not pnpm
 .pnp.*
 .yarn/*
+
+.DS_Store
