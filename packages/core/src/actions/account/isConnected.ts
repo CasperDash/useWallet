@@ -8,7 +8,7 @@ export const isConnected = async (): Promise<boolean> => {
 
     return !!hasConnected;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };
