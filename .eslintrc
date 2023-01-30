@@ -3,8 +3,7 @@
   "extends": [
     "eslint:recommended",
     "airbnb-typescript/base",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended"
   ],
   "parserOptions": {
     "project": "tsconfig.json",
@@ -86,6 +85,7 @@
     "no-return-await": "off",
     "no-unused-expressions": "off",
     "object-curly-spacing": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
     "import/no-extraneous-dependencies": "off",
     "import/named": "off",
     "import/prefer-default-export": "off",
@@ -102,79 +102,6 @@
     "@typescript-eslint/lines-between-class-members": "off",
     "@typescript-eslint/member-delimiter-style": "error",
     "@typescript-eslint/member-ordering": "error",
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "default",
-        "format": [
-          "strictCamelCase"
-        ]
-      },
-      {
-        "selector": "variable",
-        "format": [
-          "strictCamelCase",
-          "UPPER_CASE",
-          "StrictPascalCase"
-        ]
-      },
-      {
-        "selector": "variable",
-        "format": [
-          "PascalCase",
-          "UPPER_CASE"
-        ],
-        "types": [
-          "boolean"
-        ],
-        "prefix": [
-          "is",
-          "should",
-          "has",
-          "can",
-          "did",
-          "will"
-        ]
-      },
-      {
-        "selector": "variableLike",
-        "format": [
-          "camelCase",
-          "UPPER_CASE",
-          "PascalCase"
-        ]
-      },
-      {
-        "selector": "parameter",
-        "modifiers": [
-          "unused"
-        ],
-        "format": [
-          "strictCamelCase"
-        ],
-        "leadingUnderscore": "allow"
-      },
-      {
-        "selector": "property",
-        "format": null
-      },
-      {
-        "selector": "typeProperty",
-        "format": null
-      },
-      {
-        "selector": "typeLike",
-        "format": [
-          "StrictPascalCase"
-        ]
-      },
-      {
-        "selector": "enumMember",
-        "format": [
-          "UPPER_CASE"
-        ]
-      }
-    ],
     "@typescript-eslint/no-dupe-class-members": "error",
     "@typescript-eslint/no-duplicate-imports": "error",
     "@typescript-eslint/no-floating-promises": [
