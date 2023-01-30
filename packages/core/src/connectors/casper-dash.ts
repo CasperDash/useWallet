@@ -1,3 +1,5 @@
+import { JsonTypes } from 'typedjson';
+
 import { ConnectorNotFoundError } from '../errors';
 
 import { Connector } from './base';
@@ -7,7 +9,7 @@ declare global {
     casperDashPluginHelpers?: {
       isConnected: () => Promise<boolean>;
       signMessage: (message: string, signingPublicKey: string) => Promise<string>;
-      sign: (deploy: unknown, signingPublicKey: string, targetPublicKey: string) => Promise<string>;
+      sign: (deploy: unknown, signingPublicKey: string, targetPublicKey: string) => Promise<{ deploy: JsonTypes }>;
       disconnectFromSite: () => Promise<void>;
       requestConnection: () => Promise<void>;
       getActivePublicKey: () => Promise<string>;
@@ -124,7 +126,7 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
     return provider!.signMessage(message, signingPublicKey);
   }
 
-  public async sign(deploy: any, signingPublicKey: string, targetPublicKey: string): Promise<string> {
+  public async sign(deploy: any, signingPublicKey: string, targetPublicKey: string): Promise<{ deploy: JsonTypes }> {
     const provider = await this.getProvider();
 
     return provider!.sign(deploy, signingPublicKey, targetPublicKey);

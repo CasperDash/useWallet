@@ -1,4 +1,5 @@
 import { getClient } from '@usedapp/core/utils/client';
+import { JsonTypes } from 'typedjson';
 
 export type SignParams = {
   deploy: unknown;
@@ -6,7 +7,7 @@ export type SignParams = {
   targetPublicKeyHex: string;
 };
 
-export type SignResult = string | undefined;
+export type SignResult = { deploy: JsonTypes } | undefined;
 
 export const sign = async ({ deploy, signingPublicKey, targetPublicKeyHex }: SignParams): Promise<SignResult> => {
   const connector = getClient()?.connector;

@@ -1,4 +1,5 @@
 import { default as EventEmitter } from 'eventemitter3';
+import { JsonTypes } from 'typedjson';
 
 export type ConnectorData<Provider = unknown> = {
   activeKey?: string;
@@ -35,7 +36,7 @@ export abstract class Connector<Provider = unknown, EventProvider = unknown, Opt
   public abstract connect(): Promise<void>;
   public abstract getActivePublicKey(): Promise<string>;
   public abstract signMessage(message:string, signingPublicKey: string): Promise<string>;
-  public abstract sign(deploy: unknown, signingPublicKeyHex: string, targetPublicKeyHex: string): Promise<string>;
+  public abstract sign(deploy: unknown, signingPublicKeyHex: string, targetPublicKeyHex: string): Promise<{ deploy: JsonTypes }>;
 
   public abstract onConnected(event: CustomEventInit): void;
   public abstract onDisconnected(): void;
