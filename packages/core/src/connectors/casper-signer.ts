@@ -1,35 +1,31 @@
+import { JsonTypes } from 'typedjson';
+
 import { ConnectorNotFoundError } from '../errors';
+import { CasperLabsHelper } from '../types/casperLabsHelper';
 
 import { Connector } from './base';
 
 declare global {
   interface Window {
-    casperlabsHelper?: {
-      isConnected: () => Promise<boolean>;
-      signMessage: (message: string, signingPublicKey: string) => Promise<string>;
-      sign: (deploy: unknown, signingPublicKey: string, targetPublicKey: string) => Promise<string>;
-      disconnectFromSite: () => Promise<void>;
-      requestConnection: () => Promise<void>;
-      getActivePublicKey: () => Promise<string>;
-    };
+    casperlabsHelper: CasperLabsHelper;
   }
 }
 
 
-type CasperLabWindowGlobal = Window['casperlabsHelper'];
-type Provider = CasperLabWindowGlobal;
+type CasperLabWindowGlobal = CasperLabsHelper;
+type Provider = CasperLabsHelper;
 type EventProvider = Window;
 
 export type CapseSignerConnectorOptions = {
   name?: string;
-  getProvider?: () => Provider;
+  getProvider?: () => Provider | undefined;
   getEventProvider?: () => EventProvider;
 };
 
 export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Window, CapseSignerConnectorOptions> {
   public readonly id: string = 'casperSigner';
 
-  private provider: Provider;
+  private provider: Provider | undefined;
   private eventProvider: Window | undefined;
 
   constructor({
@@ -76,7 +72,7 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     try {
       const provider = await this.getProvider();
 
-      return await provider!.isConnected();
+      return await provider.isConnected();
     } catch (err) {
       return false;
     }
@@ -94,7 +90,7 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.removeEventListener('signer:connected', this.onConnected);
 
-    await provider!.disconnectFromSite();
+    provider.disconnectFromSite();
   }
 
   public async connect(): Promise<void> {
@@ -109,25 +105,25 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('signer:connected', this.onConnected);
 
-    await provider!.requestConnection();
+    provider.requestConnection();
   }
 
   public async getActivePublicKey(): Promise<string> {
     const provider = await this.getProvider();
 
-    return provider!.getActivePublicKey();
+    return provider.getActivePublicKey();
   }
 
   public async signMessage(message: string, signingPublicKey: string): Promise<string> {
     const provider = await this.getProvider();
 
-    return provider!.signMessage(message, signingPublicKey);
+    return provider.signMessage(message, signingPublicKey);
   }
 
-  public async sign(deploy: any, signingPublicKeyHex: string, targetPublicKeyHex: string): Promise<string> {
+  public async sign(deploy: any, signingPublicKeyHex: string, targetPublicKeyHex: string): Promise<{ deploy: JsonTypes }> {
     const provider = await this.getProvider();
 
-    return provider!.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
+    return provider.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
   }
 
   public onDisconnected(): void {
