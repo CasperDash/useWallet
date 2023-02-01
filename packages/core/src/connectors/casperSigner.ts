@@ -16,13 +16,13 @@ type CasperLabWindowGlobal = CasperLabsHelper;
 type Provider = CasperLabsHelper;
 type EventProvider = Window;
 
-export type CapseSignerConnectorOptions = {
+export type CasperSignerConnectorOptions = {
   name?: string;
   getProvider?: () => Provider | undefined;
   getEventProvider?: () => EventProvider;
 };
 
-export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Window, CapseSignerConnectorOptions> {
+export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Window, CasperSignerConnectorOptions> {
   public readonly id: string = 'casperSigner';
 
   private provider: Provider | undefined;
@@ -30,7 +30,7 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
 
   constructor({
     options: defaultOptions,
-  }: { options?: CapseSignerConnectorOptions } = {}) {
+  }: { options?: CasperSignerConnectorOptions } = {}) {
     const options = {
       name: 'CasperSigner',
       getProvider: (): Provider | undefined => {
@@ -83,11 +83,8 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
 
     const eventProvider = await this.getEventProvider();
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.removeEventListener('signer:activeKeyChanged', this.onActiveKeyChanged);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.removeEventListener('signer:disconnected', this.onDisconnected);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.removeEventListener('signer:connected', this.onConnected);
 
     provider.disconnectFromSite();
@@ -98,11 +95,8 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
 
     const eventProvider = await this.getEventProvider();
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('signer:activeKeyChanged', this.onActiveKeyChanged);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('signer:disconnected', () => this.onDisconnected());
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('signer:connected', this.onConnected);
 
     provider.requestConnection();
