@@ -1,3 +1,3 @@
-export * from './casper-dash';
-export * from './casper-signer';
+export * from './casperDash';
+export * from './casperSigner';
 export * from './base';
