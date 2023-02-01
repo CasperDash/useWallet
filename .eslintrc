@@ -151,12 +151,7 @@
         "propertyDeclaration": true
       }
     ],
-    "@typescript-eslint/unbound-method": [
-      "error",
-      {
-        "ignoreStatic": true
-      }
-    ],
+    "@typescript-eslint/unbound-method": "off",
     "import/order": [
       2,
       {

@@ -1,6 +1,6 @@
 import { createClient, getClient } from '@usedapp/core/utils';
 import { describe, expect, it, vi } from 'vitest';
-import { CapserDashConnector } from '@usedapp/core/connectors';
+import { CasperDashConnector } from '@usedapp/core/connectors';
 import { StatusEnum } from '@usedapp/core/enums';
 
 import { getAccount } from './getAccount';
@@ -14,12 +14,12 @@ describe('getAccount', () => {
   });
 
   it('should return the account details if the client is set', () => {
-    const connector = new CapserDashConnector();
+    const connector = new CasperDashConnector();
     const publicKey = 'abc123';
     const status = StatusEnum.CONNECTED;
 
     createClient({
-      connectors: [new CapserDashConnector()],
+      connectors: [new CasperDashConnector()],
     });
     getClient().setState({
       connector,
@@ -39,11 +39,11 @@ describe('getAccount', () => {
   });
 
   it('should return the account details with undefined publicKey if data is not set', () => {
-    const connector = new CapserDashConnector();
+    const connector = new CasperDashConnector();
     const status = StatusEnum.DISCONNECTED;
 
     createClient({
-      connectors: [new CapserDashConnector()],
+      connectors: [new CasperDashConnector()],
     });
     getClient().setState({
       connector,

@@ -27,7 +27,7 @@ export type CasperDashConnectorOptions = {
   getEventProvider?: () => EventProvider;
 };
 
-export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Window, CasperDashConnectorOptions> {
+export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Window, CasperDashConnectorOptions> {
   public readonly id: string = 'casperDash';
 
   private provider: Provider;
@@ -50,7 +50,6 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
     super({ options });
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   public async getProvider(): Promise<CasperDashWindowGlobal> {
     const provider = this.options.getProvider?.();
     if (!provider) {
@@ -61,7 +60,6 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
     return this.provider;
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   public async getEventProvider(): Promise<EventProvider> {
     const eventProvider = this.options.getEventProvider?.();
     if (!eventProvider) {
@@ -77,7 +75,6 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
     try {
       const provider = await this.getProvider();
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return await provider!.isConnected();
     } catch (err) {
       return false;
@@ -89,11 +86,8 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
 
     const eventProvider = await this.getEventProvider();
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method, @typescript-eslint/no-unsafe-call
     eventProvider?.removeEventListener('casperdash:activeKeyChanged', this.onActiveKeyChanged);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.removeEventListener('casperdash:disconnected', () => this.onDisconnected());
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.removeEventListener('casperdash:connected', this.onConnected);
 
     await provider!.disconnectFromSite();
@@ -104,11 +98,8 @@ export class CapserDashConnector extends Connector<CasperDashWindowGlobal, Windo
 
     const eventProvider = await this.getEventProvider();
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('casperdash:activeKeyChanged', this.onActiveKeyChanged);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('casperdash:disconnected', this.onDisconnected);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     eventProvider?.addEventListener('casperdash:connected', this.onConnected);
 
     await provider!.requestConnection();

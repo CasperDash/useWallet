@@ -28,6 +28,10 @@ export abstract class Connector<Provider = unknown, EventProvider = unknown, Opt
     this.options = options;
   }
 
+  public getOptions() {
+    return this.options;
+  }
+
   public abstract getProvider(): Promise<Provider>;
   public abstract getEventProvider(): Promise<EventProvider>;
 

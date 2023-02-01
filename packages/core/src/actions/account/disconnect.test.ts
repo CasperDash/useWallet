@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createClient, getClient } from '@usedapp/core/utils/client';
-import { CapserDashConnector, Connector } from '@usedapp/core/connectors';
+import { CasperDashConnector, Connector } from '@usedapp/core/connectors';
 
 import { disconnect } from './disconnect';
 
 describe('disconnect', () => {
   beforeEach(() => {
     createClient({
-      connectors: [new CapserDashConnector()],
+      connectors: [new CasperDashConnector()],
     });
   });
 
