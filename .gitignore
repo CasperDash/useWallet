@@ -3,7 +3,6 @@
 .store/
 .turbo/
 data/
-dist/
 node_modules/
 target/
 tests_output/
