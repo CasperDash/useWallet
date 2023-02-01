@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { CapserDashConnector, CasperSignerConnector, Connector } from '@usedapp/core/connectors';
+import { CasperDashConnector, CasperSignerConnector, Connector } from '@usedapp/core/connectors';
 import { createClient, getClient } from '@usedapp/core/utils';
 import { StatusEnum } from '@usedapp/core/enums';
 import { ConnectorNotFoundError } from '@usedapp/core/errors';
@@ -10,7 +10,7 @@ describe('isConnected', () => {
   beforeEach(() => {
     // reset the client state
     createClient({
-      connectors: [new CapserDashConnector(), new CasperSignerConnector()],
+      connectors: [new CasperDashConnector(), new CasperSignerConnector()],
     });
   });
 

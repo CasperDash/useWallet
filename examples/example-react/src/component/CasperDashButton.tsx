@@ -1,12 +1,12 @@
 import {
-  CapserDashConnector,
+  CasperDashConnector,
 } from '@usedapp/core';
 import { useConnect } from '@usedapp/react';
 
 
 export const CasperDashButton = () => {
   const { connect } = useConnect({
-    connector: new CapserDashConnector({}),
+    connector: new CasperDashConnector({}),
   });
 
   return (

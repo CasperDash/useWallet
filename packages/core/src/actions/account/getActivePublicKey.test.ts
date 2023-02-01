@@ -1,4 +1,4 @@
-import { CapserDashConnector, Connector } from '@usedapp/core/connectors';
+import { CasperDashConnector, Connector } from '@usedapp/core/connectors';
 import { ConnectorNotFoundError } from '@usedapp/core/errors';
 import { getClient } from '@usedapp/core/utils/client';
 import { createClient } from '@usedapp/core/utils';
@@ -10,7 +10,7 @@ describe('getActivePublicKey', () => {
   beforeEach(() => {
     // Reset the client state before each test
     createClient({
-      connectors: [new CapserDashConnector()],
+      connectors: [new CasperDashConnector()],
     });
   });
 
