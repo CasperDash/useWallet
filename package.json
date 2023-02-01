@@ -20,7 +20,7 @@
     "@tanstack/query-sync-storage-persister": "^4.22.0",
     "@tanstack/react-query": "^4.22.3",
     "@tanstack/react-query-persist-client": "^4.22.3",
-    "@usedapp/core": "workspace:*",
+    "@usedapp/core": "https://github.com/CasperDash/useDApp#build-core",
     "react": "^18.2.0"
   },
   "devDependencies": {
