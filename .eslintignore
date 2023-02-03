@@ -9,3 +9,4 @@ node_modules
 **/*.config.mjs
 vitest.config.ts
 dist/*
+coverage
