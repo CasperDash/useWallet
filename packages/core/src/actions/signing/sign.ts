@@ -15,6 +15,6 @@ export const sign = async ({ deploy, signingPublicKey, targetPublicKeyHex }: Sig
   try {
     return await connector?.sign(deploy, signingPublicKey, targetPublicKeyHex);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
