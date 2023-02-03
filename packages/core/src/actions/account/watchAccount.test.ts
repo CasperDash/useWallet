@@ -1,6 +1,7 @@
 import { CasperDashConnector } from '@usedapp/core/connectors';
 import { createClient } from '@usedapp/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
+
 import { watchAccount } from './watchAccount';
 
 vi.mock('./getAccount', () => ({
