@@ -96,7 +96,7 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     const eventProvider = await this.getEventProvider();
 
     eventProvider?.addEventListener('signer:activeKeyChanged', this.onActiveKeyChanged);
-    eventProvider?.addEventListener('signer:disconnected', () => this.onDisconnected());
+    eventProvider?.addEventListener('signer:disconnected',  this.onDisconnected);
     eventProvider?.addEventListener('signer:connected', this.onConnected);
 
     provider.requestConnection();
