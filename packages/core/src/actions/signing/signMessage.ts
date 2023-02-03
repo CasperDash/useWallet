@@ -13,6 +13,6 @@ export const signMessage = async ({ message, signingPublicKey }: SignMessagePara
   try {
     return await connector?.signMessage(message, signingPublicKey);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
