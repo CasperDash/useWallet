@@ -5,7 +5,6 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import type { Client } from './client';
 
 type Props = {
-  children: React.ReactElement;
   client: Client;
 };
 
@@ -15,7 +14,7 @@ export const queryClientContext = React.createContext<QueryClient | undefined>(
   undefined,
 );
 
-export const CasperProvider = ({ children, client }: Props): JSX.Element => {
+export const CasperProvider = ({ children, client }: React.PropsWithChildren<Props>): JSX.Element => {
   return React.createElement(
     Context.Provider,
     {
