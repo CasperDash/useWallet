@@ -33,3 +33,4 @@ export const createClient = ({
 };
 
 export type Client = CasperClient & { queryClient: QueryClient };
+export { CasperDashConnector, CasperSignerConnector } from '@usedapp/core';

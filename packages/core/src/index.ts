@@ -6,3 +6,5 @@ export * from './connectors';
 export * from './utils';
 
 export * from './enums';
+
+export * from './errors';
