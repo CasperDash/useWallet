@@ -34,6 +34,10 @@ export class Client {
     this.triggerEvent();
   }
 
+  public get state() {
+    return this.store.getState();
+  }
+
   public get connector(): Connector | undefined {
     return this.store.getState().connector;
   }
@@ -72,7 +76,6 @@ export class Client {
 
   private triggerEvent(): void {
     const onChange = (data: ConnectorData) => {
-      console.log('onChange', data);
       this.setState((x: StateParams) => ({
         ...x,
         data: { ...x.data, ...data },
@@ -80,12 +83,10 @@ export class Client {
     };
 
     const onDisconnect = () => {
-      console.log('onDisconnect');
       this.clearState();
     };
 
     const onConnect = (data: ConnectorData) => {
-      console.log('onConnect', data);
       this.setState((x: StateParams) => ({
         ...x,
         data: { ...x.data, ...data },
@@ -96,17 +97,7 @@ export class Client {
     this.store.subscribe(
       ({ connector }: StateParams) => connector!,
       (connector: Connector) => {
-        // prevConnector?.off?.('change', onChange);
-        // prevConnector?.off?.('disconnect', onDisconnect);
-        // prevConnector?.off?.('connect', onConnect);
-
         if (!connector) return;
-        // console.log('connector');
-
-        // connector.on?.('change', onChange);
-        // connector.on?.('disconnect', onDisconnect);
-        // connector.on?.('connect', onDisconnect);
-
         window?.addEventListener('casper:change',
           (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onChange(event.detail!));
         window?.addEventListener('casper:disconnect', () => onDisconnect());
