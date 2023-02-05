@@ -1,6 +1,4 @@
-import { Connector } from '@usedapp/core/connectors/base';
-import { StatusEnum } from '@usedapp/core/enums';
-import { ConnectorAlreadyConnectedError } from '@usedapp/core/errors';
+import { Connector, StatusEnum, ConnectorAlreadyConnectedError } from '@usedapp/core';
 import { getClient, StateParams } from '@usedapp/core/utils/client';
 
 export type ConnectParams = {
