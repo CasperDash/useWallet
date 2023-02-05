@@ -53,14 +53,14 @@ export const useSignMessage = ({
     onSuccess,
   });
 
-  const signMessage = useCallback((params: UseSignMessageParams) => {
+  const signMessage = useCallback((params?: UseSignMessageParams) => {
     return mutate(params || {
       message,
       signingPublicKey,
     });
   }, [message, signingPublicKey, mutate]);
 
-  const signMessageAsync = useCallback(async (params: UseSignMessageParams) => {
+  const signMessageAsync = useCallback(async (params?: UseSignMessageParams) => {
     return mutateAsync(params || {
       message,
       signingPublicKey,
