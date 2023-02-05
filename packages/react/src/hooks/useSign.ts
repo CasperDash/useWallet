@@ -53,7 +53,7 @@ export const useSign = ({
     onSuccess,
   });
 
-  const sign = useCallback((params: UseSignParams) => {
+  const sign = useCallback((params?: UseSignParams) => {
     return mutate(params || {
       deploy,
       signingPublicKey,
@@ -61,7 +61,7 @@ export const useSign = ({
     });
   }, [deploy, signingPublicKey, targetPublicKeyHex, mutate]);
 
-  const signAsync = useCallback(async (params: UseSignParams) => {
+  const signAsync = useCallback(async (params?: UseSignParams) => {
     return mutateAsync(params || {
       deploy,
       signingPublicKey,
