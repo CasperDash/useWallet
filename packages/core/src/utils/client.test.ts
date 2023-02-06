@@ -1,9 +1,31 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest';
 
-import { CasperDashConnector, CasperSignerConnector } from '../connectors';
+import { CasperDashConnector, CasperSignerConnector, Connector } from '../connectors';
 import { StatusEnum } from '../enums';
+import { ClientNotFoundError } from '../errors';
 
-import { Client, ClientConfig, StateParams } from './client';
+import { Client, ClientConfig, createClient, getClient, StateParams } from './client';
+
+
+describe('getClient', () => {
+  it('throws an error if client is not created', () => {
+    expect(() => getClient()).toThrowError(ClientNotFoundError);
+  });
+
+  it('returns the created client instance', () => {
+    const client = createClient({ connectors: [] });
+
+    expect(getClient()).toEqual(client);
+  });
+});
+
+describe('createClient', () => {
+  it('creates a new Client instance', () => {
+    const client = createClient({ connectors: [] });
+
+    expect(client).toBeInstanceOf(Client);
+  });
+});
 
 describe('Client', () => {
   let client: Client;
@@ -17,16 +39,70 @@ describe('Client', () => {
   });
 
   describe('constructor', () => {
+    it('creates a store with connector, status and autoConnect values', () => {
+      expect(client.state).toEqual({ autoConnect: false, connectors: mockConnectors, status: StatusEnum.DISCONNECTED });
+    });
+
     it('should initialize the store with the given config', () => {
       expect(client.state.connectors).toEqual(mockConnectors);
       expect(client.state.status).toEqual(StatusEnum.DISCONNECTED);
     });
 
-    // it('should call triggerEvent', () => {
-    //   vi.spyOn(client, 'triggerEvent');
-    //   client = new Client({ connectors: mockConnectors });
-    //   expect(client.triggerEvent).toHaveBeenCalled();
-    // });
+    it('should not run if already autoConnecting is true', async () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      client.isAutoConnecting = true;
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const result = await client.autoConnect();
+
+      expect(result).toBeUndefined();
+    });
+
+    it('should not run if already connected', async () => {
+      client.setState((x: StateParams) => ({ ...x, status: StatusEnum.CONNECTED }));
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const result = await client.autoConnect();
+
+      expect(result).toBeUndefined();
+    });
+
+    it('should set status to CONNECTING', async () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      void client.autoConnect();
+
+      expect(client.status).toEqual(StatusEnum.CONNECTING);
+    });
+
+    it('should set status to DISCONNECTED when no connector is connected', async () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      await client.autoConnect();
+
+      expect(client.status).toEqual(StatusEnum.DISCONNECTED);
+    });
+
+    it('should set status to CONNECTED and set connector/data after successful connection', async () => {
+      const dummyConnector = {
+        isConnected: vi.fn().mockResolvedValue(true),
+        connect: vi.fn().mockResolvedValue(null),
+        getActivePublicKey: vi.fn().mockResolvedValue('publicKey'),
+      } as unknown as Connector;
+
+      client.setState({ connectors: [dummyConnector] });
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      await client.autoConnect();
+
+      expect(client.status).toEqual(StatusEnum.CONNECTED);
+      expect(client.connector).toEqual(dummyConnector);
+      expect(client.data).toEqual({ activeKey: 'publicKey' });
+    });
   });
 
   describe('get connector', () => {
