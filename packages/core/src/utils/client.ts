@@ -10,6 +10,7 @@ export type StateParams = {
   connector?: Connector;
   data?: ConnectorData;
   status?: StatusEnum;
+  autoConnect?: boolean;
 };
 
 
@@ -23,15 +24,23 @@ export class Client {
   ]
   >;
 
+  private isAutoConnecting: boolean | undefined;
+
   constructor({
+    autoConnect = false,
     connectors,
   }: ClientConfig) {
     this.store = createStore(subscribeWithSelector(() => ({
       connectors: connectors,
       status: StatusEnum.DISCONNECTED,
+      autoConnect,
     })));
 
     this.triggerEvent();
+
+    if (autoConnect) {
+      setTimeout(async () => this.autoConnect(), 0);
+    }
   }
 
   public get state() {
@@ -40,6 +49,10 @@ export class Client {
 
   public get connector(): Connector | undefined {
     return this.store.getState().connector;
+  }
+
+  public get connectors(): Connector[] | undefined {
+    return this.store.getState().connectors;
   }
 
   public get subscribe() {
@@ -74,6 +87,55 @@ export class Client {
     this.store.setState(newState, true);
   }
 
+  protected async autoConnect() {
+    if (this.isAutoConnecting) {
+      return;
+    }
+    if (this.status === StatusEnum.CONNECTED) {
+      return;
+    }
+    this.isAutoConnecting = true;
+
+    this.setState((x: StateParams) => ({
+      ...x,
+      status: x.data?.activeKey ? StatusEnum.RECONNECTING : StatusEnum.CONNECTING,
+    }));
+
+
+    let isConnected = false;
+    for (const connector of this.connectors || []) {
+      const isConnectedWithConnector = await connector?.isConnected();
+
+      if (isConnectedWithConnector) {
+        await this.connector?.connect();
+        const publicKey = await connector?.getActivePublicKey();
+        this.setState((x: StateParams) => ({
+          ...x,
+          status: StatusEnum.CONNECTED,
+          connector,
+          data: {
+            ...x.data,
+            activeKey: publicKey,
+          },
+        }));
+        isConnected = true;
+
+        break;
+      }
+    }
+
+    if (!isConnected) {
+      this.setState((x: StateParams) => ({
+        ...x,
+        status: StatusEnum.DISCONNECTED,
+      }));
+    }
+
+    this.isAutoConnecting = false;
+
+    return this.data;
+  }
+
   private triggerEvent(): void {
     const onChange = (data: ConnectorData) => {
       this.setState((x: StateParams) => ({
@@ -106,6 +168,8 @@ export class Client {
       },
     );
   }
+
+
 }
 
 export let client: Client;

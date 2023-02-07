@@ -2,7 +2,7 @@ import {
   Account,
   watchAccount,
   StatusEnum,
-  getActivePublicKey,
+  getAccount,
 } from '@usedapp/core';
 import { useEffect, useState } from 'react';
 
@@ -12,10 +12,11 @@ export const useAccount = () => {
 
   useEffect(() => {
     const initAccount = async (): Promise<void> => {
-      const fetchedPublicKey = await getActivePublicKey();
+      const account = getAccount();
 
-      if (fetchedPublicKey) {
-        setPublicKey(fetchedPublicKey);
+      if (account && account.status === StatusEnum.CONNECTED) {
+        setPublicKey(account.publicKey!);
+        setStatus(account.status);
       }
     };
 
