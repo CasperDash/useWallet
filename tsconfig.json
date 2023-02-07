@@ -33,6 +33,7 @@
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
   "include": [
+    "docs/**/*",
     "examples/**/*",
     "packages/**/*",
     "packages/**/*.ts",
