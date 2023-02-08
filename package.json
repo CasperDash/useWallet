@@ -11,6 +11,8 @@
     "lint:format": "prettier --write",
     "build": "pnpm -r --filter './packages/**' build",
     "dev": "pnpm -r --filter './packages/**' dev",
+    "docs:build": "pnpm -r --filter './docs' build",
+    "docs:dev": "pnpm -r --filter './docs' dev",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:run": "vitest run",
