@@ -1,7 +1,10 @@
 {
   "name": "usedapp",
-  "version": "1.0.0",
-  "repository": "git@github.com:CasperDash/usedapp.git",
+  "version": "0.0.1-beta.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CasperDash/useDApp.git"
+  },
   "author": "dev@casperdash.io",
   "license": "MIT",
   "scripts": {
@@ -11,6 +14,8 @@
     "lint:format": "prettier --write",
     "build": "pnpm -r --filter './packages/**' build",
     "dev": "pnpm -r --filter './packages/**' dev",
+    "changeset:release": "pnpm build && changeset publish",
+    "changeset:version": "changeset version && pnpm install --lockfile-only",
     "docs:build": "pnpm -r --filter './docs' build",
     "docs:dev": "pnpm -r --filter './docs' dev",
     "test": "vitest",
@@ -23,6 +28,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.0",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@vitest/coverage-c8": "^0.28.3",

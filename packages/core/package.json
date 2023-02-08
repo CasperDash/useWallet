@@ -1,7 +1,16 @@
 {
   "name": "@usedapp/core",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1-beta.1",
+  "description": "Vanilla JS library for Casper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CasperDash/useDApp.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://casperdash.io",
+  "contributors": [
+    "dev <dev@casperdash.io>"
+  ],
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +21,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "eventemitter3": "^4.0.7",
     "typedjson": "^1.8.0",
