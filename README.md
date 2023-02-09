@@ -1,3 +1,5 @@
+# useDApp
+
 ## Features
 
 - 💼 Built-in wallet connectors for CasperDash, Casper Signer and more
