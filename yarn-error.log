@@ -1,0 +1,85 @@
+Arguments: 
+  /Users/gaupoit/.nvm/versions/node/v16.13.1/bin/node /Users/gaupoit/.nvm/versions/node/v16.13.1/bin/yarn
+
+PATH: 
+  /opt/homebrew/opt/jpeg/bin:/Users/gaupoit/.pyenv/shims:/Users/gaupoit/.pyenv/bin:/Users/gaupoit/.serverless/bin:/Users/gaupoit/.pyenv/bin:/Applications/MAMP/bin/php//bin:/Users/gaupoit/.nvm/versions/node/v16.13.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/opt/homebrew/opt/jpeg/bin:/Users/gaupoit/.pyenv/bin:/Users/gaupoit/.serverless/bin:/Applications/MAMP/bin/php//bin:/Users/gaupoit/.nvm/versions/node/v16.13.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Users/gaupoit/.cargo/bin:/Users/gaupoit/Work/vidmagz/mobile/flutter/bin:~/Library/Python/3.6/bin/:/Applications/CMake.app/Contents/bin:/Applications/MAMP/Library/bin:/Users/gaupoit/Library/Android/sdk/emulator:/Users/gaupoit/Library/Android/sdk/tools:/Users/gaupoit/Library/Android/sdk/tools/bin:/Users/gaupoit/Library/Android/sdk/platform-tools:/Users/gaupoit/Work/vidmagz/mobile/flutter/bin:~/Library/Python/3.6/bin/:/Applications/CMake.app/Contents/bin:/Applications/MAMP/Library/bin:/Users/gaupoit/Library/Android/sdk/emulator:/Users/gaupoit/Library/Android/sdk/tools:/Users/gaupoit/Library/Android/sdk/tools/bin:/Users/gaupoit/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.22.17
+
+Node version: 
+  16.13.1
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile '/Users/gaupoit/~/tmp/Caches/Yarn/v6/v6/npm-ms-2.1.3-574c8138ce1d2b5861f0b44579dbadd60c6615b2-integrity/node_modules/ms/license.md' -> '/Users/gaupoit/Work/casperdash/useDApp/node_modules/eslint-import-resolver-node/node_modules/ms/license.md'
+
+npm manifest: 
+  {
+    "name": "usedapp",
+    "version": "1.0.0",
+    "repository": "git@github.com:CasperDash/usedapp.git",
+    "author": "dev@casperdash.io",
+    "license": "MIT",
+    "scripts": {
+      "prepare": "husky install",
+      "lint": "eslint . --cache",
+      "lint:fix": "pnpm lint --fix",
+      "lint:format": "prettier --write",
+      "build": "pnpm -r --filter './packages/**' build",
+      "dev": "pnpm -r --filter './packages/**' dev",
+      "test": "vitest",
+      "test:coverage": "vitest run --coverage",
+      "test:run": "vitest run",
+      "test:typecheck": "vitest typecheck",
+      "test:ui": "vitest --ui",
+      "test:update": "vitest --update",
+      "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.20.12",
+      "@typescript-eslint/eslint-plugin": "^5.13.0",
+      "@typescript-eslint/parser": "^5.0.0",
+      "@vitest/coverage-c8": "^0.28.3",
+      "eslint": "^8.31.0",
+      "eslint-config-airbnb-typescript": "^17.0.0",
+      "eslint-config-prettier": "^8.5.0",
+      "eslint-plugin-import": "^2.26.0",
+      "eslint-plugin-prettier": "^4.2.1",
+      "eslint-plugin-sonar": "^0.9.2",
+      "husky": "^8.0.0",
+      "jsdom": "^20.0.3",
+      "lint-staged": "^13.1.0",
+      "prettier": "^2.8.1",
+      "semver": "^7.3.8",
+      "tsup": "^6.5.0",
+      "typescript": "^4.9.4",
+      "vite-tsconfig-paths": "^4.0.5",
+      "vitest": "^0.26.3"
+    },
+    "husky": {
+      "hooks": {
+        "pre-commit": "pnpm lint"
+      }
+    },
+    "simple-git-hooks": {
+      "pre-commit": "pnpm lint"
+    },
+    "lint-staged": {
+      "*.{js,ts,tsx}": [
+        "pnpm lint:fix"
+      ],
+      "*.{json,md,mdx,yml}": [
+        "pnpm lint:format"
+      ]
+    },
+    "packageManager": "pnpm@7.18.2"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
