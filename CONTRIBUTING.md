@@ -1,117 +1,209 @@
-# Contributing to useDApp
+# Contributing
 
-First off, thanks for taking the time to contribute! ❤️
+Thanks for your interest in contributing to useDApp! Please take a moment to review this document **before submitting a pull request.**
 
-All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
+If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/CasperDash/useDApp/discussions).
 
-> And if you like the project, but just don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
+> **Note**
 >
-> -   Star the project
-> -   Tweet about it
-> -   Refer this project in your project's readme
-> -   Mention the project at local meetups and tell your friends/colleagues
-
-<!-- omit in toc -->
-
-## Table of Contents
-
--   [Code of Conduct](#code-of-conduct)
--   [I Have a Question](#i-have-a-question)
--   [I Want To Contribute](#i-want-to-contribute)
-    -   [Reporting Bugs](#reporting-bugs)
-    -   [Suggesting Enhancements](#suggesting-enhancements)
-
-## Code of Conduct
-
-This project and everyone participating in it is governed by the
-[CasperDash Code of Conduct](https://github.com/CasperDash/useDApp/blob/main/CODE_OF_CONDUCT.md).
-By participating, you are expected to uphold this code. Please report unacceptable behavior
-to <hello@casperdash.io>.
-
-## I Have a Question
-
-
-Before you ask a question, it is best to search for existing [Issues](https://github.com/CasperDash/useDApp/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
-
-If you then still feel the need to ask a question and need clarification, we recommend the following:
-
--   Open an [Issue](https://github.com/CasperDash/useDApp/issues/new).
--   Provide as much context as you can about what you're running into.
--   Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.
-
-We will then take care of the issue as soon as possible.
-
-## I Want To Contribute
-
-> ### Legal Notice <!-- omit in toc -->
+> **Please ask first before starting work on any significant new features. This includes things like adding new connectors, hooks, chains, API providers, etc.**
 >
-> When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project license.
-1. Fork the repository
-2. Create a branch for your feature: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -am 'Add my feature'`
-4. Push to the branch: `git push origin feature/my-feature`
-5. Create a pull request
+> It's never a fun experience to have your pull request declined after investing time and effort into a new feature. To avoid this from happening, we request that contributors create a [feature request](https://github.com/CasperDash/useDApp/discussions/categories/ideas) to first discuss any API changes or significant new ideas.
 
-### Reporting Bugs
+<br>
 
-<!-- omit in toc -->
+## Basic guide
 
-#### Before Submitting a Bug Report
+This guide is intended to help you get started with contributing. By following these steps, you will understand the development process and workflow.
 
-A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.
+1. [Cloning the repository](#cloning-the-repository)
+2. [Installing Node.js and pnpm](#installing-nodejs-and-pnpm)
+3. [Installing dependencies](#installing-dependencies)
+4. [Starting the development playground](#starting-the-development-playground)
+5. [Running the test suite](#running-the-test-suite)
+6. [Writing documentation](#writing-documentation)
+7. [Submitting a pull request](#submitting-a-pull-request)
 
--   Make sure that you are using the latest version.
--   Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the [documentation](https://docs.casperdash.io). If you are looking for support, you might want to check [this section](#i-have-a-question)).
--   To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/CasperDash/casperdash-client/issues?q=label%3Abug).
--   Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
--   Collect information about the bug:
-    -   Stack trace (Traceback)
-    -   OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
-    -   Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
-    -   Possibly your input and the output
-    -   Can you reliably reproduce the issue? And can you also reproduce it with older versions?
+## Advanced guide
 
-<!-- omit in toc -->
+This guide covers more advanced topics. Pick the topics based on your needs.
 
-#### How Do I Submit a Good Bug Report?
+8. [Versioning](#versioning)
+9. [Testing against React 17](#testing-against-react-17)
 
-> You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <hello@casperdash.io>.
+<br>
 
-<!-- You may add a PGP key to allow the messages to be sent encrypted as well. -->
+---
 
-We use GitHub issues to track bugs and errors. If you run into an issue with the project:
+<br>
 
--   Open an [Issue](https://github.com/CasperDash/useDApp/issues/new). (Since we can't be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)
--   Explain the behavior you would expect and the actual behavior.
--   Please provide as much context as possible and describe the _reproduction steps_ that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports you should isolate the problem and create a reduced test case.
--   Provide the information you collected in the previous section.
+## Cloning the repository
 
-Once it's filed:
+To start contributing to the project, clone it to your local machine using git:
 
--   The project team will label the issue accordingly.
--   A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and mark the issue as `needs-repro`. Bugs with the `needs-repro` tag will not be addressed until they are reproduced.
--   If the team is able to reproduce the issue, it will be marked `needs-fix`, as well as possibly other tags (such as `critical`), and the issue will be left to be [implemented by someone](#your-first-code-contribution).
+```bash
+git clone https://github.com/CasperDash/useDApp --recurse-submodules
+```
 
-<!-- You might want to create an issue template for bugs and errors that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
+Or the [GitHub CLI](https://cli.github.com):
 
-### Suggesting Enhancements
+```bash
+gh repo clone CasperDash/useDApp -- --recurse-submodules
+```
 
-This section guides you through submitting an enhancement suggestion for CasperDash, **including completely new features and minor improvements to existing functionality**. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.
+<div align="right">
+  <a href="#basic-guide">&uarr; back to top</a></b>
+</div>
 
+## Installing Node.js and pnpm
 
-#### Before Submitting an Enhancement
+useDApp uses [pnpm workspaces](https://pnpm.io/workspaces) to manage multiple projects. You need to install **Node.js v16 or higher** and **pnpm v7 or higher**.
 
--   Make sure that you are using the latest version.
--   Perform a [search](https://github.com/CasperDash/useDApp/issues) to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.
--   Find out whether your idea fits with the scope and aims of the project. It's up to you to make a strong case to convince the project's developers of the merits of this feature. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset. If you're just targeting a minority of users, consider writing an add-on/plugin library.
+You can run the following commands in your terminal to check your local Node.js and npm versions:
 
+```bash
+node -v
+pnpm -v
+```
 
-#### How Do I Submit a Good Enhancement Suggestion?
+If the versions are not correct or you don't have Node.js or pnpm installed, download and follow their setup instructions:
 
-Enhancement suggestions are tracked as [GitHub issues](https://github.com/CasperDash/useDApp/issues).
+- Install Node.js using [fnm](https://github.com/Schniz/fnm) or from the [official website](https://nodejs.org)
+- Install [pnpm](https://pnpm.io/installation)
 
--   Use a **clear and descriptive title** for the issue to identify the suggestion.
--   Provide a **step-by-step description of the suggested enhancement** in as many details as possible.
--   **Describe the current behavior** and **explain which behavior you expected to see instead** and why. At this point you can also tell which alternatives do not work for you.
--   You may want to **include screenshots and animated GIFs** which help you demonstrate the steps or point out the part which the suggestion is related to. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux. <!-- this should only be included if the project has a GUI -->
--   **Explain why this enhancement would be useful** to most CasperDash users. You may also want to point out the other projects that solved it better and which could serve as inspiration.
+<div align="right">
+  <a href="#basic-guide">&uarr; back to top</a></b>
+</div>
+
+## Installing dependencies
+
+Once in the project's root directory, run the following command to install the project's dependencies:
+
+```bash
+pnpm install
+```
+
+After the install completes, pnpm links packages across the project for development and [git hooks](https://github.com/toplenboren/simple-git-hooks) are set up.
+
+<div align="right">
+  <a href="#basic-guide">&uarr; back to top</a></b>
+</div>
+
+## Starting the development playground
+
+To start the local development playground, run the following. This will run a [Next.js](https://nextjs.org) app (located at [`examples/_dev`](../examples/_dev)) that is set up for playing around with code while making changes.
+
+```bash
+pnpm play
+```
+
+Once the Next.js dev server is running, you can make changes to any of the package source files (e.g. `packages/react`) and it will automatically update the playground. (If the playground isn't automatically updating, try running `pnpm dev` to relink packages in development mode.)
+
+<div align="right">
+  <a href="#basic-guide">&uarr; back to top</a></b>
+</div>
+
+## Running the test suite
+
+useDApp uses [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) to execute tests against a local Ethereum node. First, install Anvil via [Foundry](https://book.getfoundry.sh/getting-started/installation). Next, add the following to your environment (recommended to use [`direnv`](https://github.com/direnv/direnv)):
+
+```bash
+ANVIL_FORK_URL=https://eth-mainnet.alchemyapi.io/v2/<apiKey>
+```
+
+`ANVIL_FORK_URL` can be for any RPC service provider (e.g. Alchemy or Infura). Now you are ready to run the tests! In one terminal session, spin up Anvil using `pnpm anvil`. Next, in a different terminal session, you have the following options for running tests:
+
+- `pnpm test` — runs tests in watch mode
+- `pnpm test:run` — performs single run without watch mode
+
+When adding new features or fixing bugs, it's important to add test cases to cover the new/updated behavior. If snapshot tests fail, you can run the `test:update` command to update the snapshots.
+
+<div align="right">
+  <a href="#basic-guide">&uarr; back to top</a></b>
+</div>
+
+## Writing documentation
+
+Documentation is crucial to helping developers of all experience levels use useDApp. useDApp uses [Nextra](https://github.com/shuding/nextra) and [MDX](https://mdxjs.com) for the documentation site (located at [`docs`](../docs)). To start the site in dev mode, run:
+
+```bash
+pnpm docs:dev
+```
+
+Try to keep documentation brief and use plain language so folks of all experience levels can understand. If you think something is unclear or could be explained better, you are welcome to open a pull request.
+
+<div align="right">
+  <a href="#basic-guide">&uarr; back to top</a></b>
+</div>
+
+## Submitting a pull request
+
+When you're ready to submit a pull request, you can follow these naming conventions:
+
+- Pull request titles use the [Imperative Mood](https://en.wikipedia.org/wiki/Imperative_mood) (e.g., `Add something`, `Fix something`).
+- [Changesets](#versioning) use past tense verbs (e.g., `Added something`, `Fixed something`).
+
+When you submit a pull request, GitHub will automatically lint, build, and test your changes. If you see an ❌, it's most likely a bug in your code. Please, inspect the logs through the GitHub UI to find the cause.
+
+<div align="right">
+  <a href="#basic-guide">&uarr; back to top</a></b>
+</div>
+
+<br>
+
+---
+
+<div align="center">
+  ✅ Now you're ready to contribute to useDApp! Follow the next steps if you need more advanced instructions.
+</div>
+
+---
+
+<br>
+
+## Versioning
+
+When adding new features or fixing bugs, we'll need to bump the package versions. We use [Changesets](https://github.com/changesets/changesets) to do this.
+
+> **Note**
+>
+> Only changes to the codebase that affect the public API or existing behavior (e.g. bugs) need changesets.
+
+Each changeset defines which package(s) should be published and whether the change should be a major/minor/patch release, as well as providing release notes that will be added to the changelog upon release.
+
+To create a new changeset, run `pnpm changeset`. This will run the Changesets CLI, prompting you for details about the change. You’ll be able to edit the file after it’s created — don’t worry about getting everything perfect up front.
+
+Since we’re currently in beta, all changes should be marked as a minor/patch release to keep us within the `v0.x` range.
+
+Even though you can technically use any markdown formatting you like, headings should be avoided since each changeset will ultimately be nested within a bullet list. Instead, bold text should be used as section headings.
+
+If your PR is making changes to an area that already has a changeset (e.g. there’s an existing changeset covering theme API changes but you’re making further changes to the same API), you should update the existing changeset in your PR rather than creating a new one.
+
+### Releasing
+
+The first time a PR with a changeset is merged after a release, a new PR will automatically be created called `chore: version packages`. Any subsequent PRs with changesets will automatically update this existing version packages PR. Merging this PR triggers the release process by publishing to npm and cleaning up the changeset files.
+
+### Creating a snapshot release
+
+If a PR has changesets, you can create a [snapshot release](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md) by [manually dispatching](https://github.com/wagmi-dev/wagmi/actions/workflows/snapshot.yml) the Snapshot workflow. This publishes a tagged version to npm with the PR branch name and timestamp.
+
+<div align="right">
+  <a href="#advanced-guide">&uarr; back to top</a></b>
+</div>
+
+## Testing against React 17
+
+useDApp supports both React 17 and React 18. If you want to run tests against React 17, you can run the following commands.
+
+```bash
+cd packages/react
+pnpm add -D react@17.0.2 react-dom@17.0.2
+cd ../..
+pnpm test:run react
+```
+
+Unfortunately `pnpm` [doesn't support](https://github.com/pnpm/pnpm/issues/2020) a `--no-save` flag so you will need to restore the package.json and lockfile before committing your changes.
+
+<div align="right">
+  <a href="#advanced-guide">&uarr; back to top</a></b>
+</div>

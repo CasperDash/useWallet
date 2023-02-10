@@ -48,12 +48,17 @@ function App() {
 
 ## Built With
 
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
+- [React](https://reactjs.org) A JavaScript library for building user interfaces
+
+- [TypeScript](https://www.typescriptlang.org/) is JavaScript with syntax for types
 
 ## Contributing
 
-If you're interested in contributing, please read the [CONTRIBUTING](CONTRIBUTING) contributing docs before submitting a pull request.
+We welcome contributions to useDApp! If you're interested in helping out, take a look at our [contributing guidelines](https://github.com/CasperDash/useDApp/blob/master/CONTRIBUTING.md) for more information.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+useDApp is licensed under the [MIT License](https://github.com/CasperDash/useDApp/blob/master/LICENSE).
+
+
+
