@@ -40,11 +40,53 @@ const client = createClient({
 function App() {
   return (
     <CasperProvider client={client}>
-      <Profile />
+      <WalletProfile />
     </CasperProvider>
   )
 }
 ```
+
+```tsx
+import {
+  CasperSignerConnector,
+  CasperDashConnector
+} from '@usedapp/core';
+import { useAccount, useDisconnect, useConnect } from '@usedapp/react';
+
+function WalletProfile() {
+  const { publicKey } = useAccount();
+  const { disconnect } = useDisconnect();
+
+  const { connect: connectWithCasperSigner } = useConnect({
+    connector: new CasperSignerConnector({}),
+  });
+
+  const { connect: connectWithCasperDash } = useConnect({
+    connector: new CasperDashConnector({}),
+  });
+
+  if (publicKey)
+    return (
+      <div>
+        Connected to {publicKey}
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    )
+
+  return (
+    <div>
+      <button onClick={() => connectWithCasperSigner()}>Connect with Casper Signer</button>
+      </br>
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button> 
+    </div>
+    
+  )
+}
+```
+
+In the above snippet, we create a useDApp ```client``` and pass it to the CasperProvider React Context. The client is set up to use the Casper Wallet Default Provider and automatically connect to previously connected wallets.
+
+Next, we use the useConnect hook to connect injected supporting wallets (Casper Signer and CasperDash) to the app. Finally, we show the connected account's public key with useAccount and allow them to disconnect with useDisconnect.
 
 ## Built With
 
