@@ -24,13 +24,6 @@ This guide is intended to help you get started with contributing. By following t
 6. [Writing documentation](#writing-documentation)
 7. [Submitting a pull request](#submitting-a-pull-request)
 
-## Advanced guide
-
-This guide covers more advanced topics. Pick the topics based on your needs.
-
-8. [Versioning](#versioning)
-9. [Testing against React 17](#testing-against-react-17)
-
 <br>
 
 ---
@@ -91,7 +84,7 @@ After the install completes, pnpm links packages across the project for developm
 
 ## Starting the development playground
 
-To start the local development playground, run the following. This will run a [Next.js](https://nextjs.org) app (located at [`examples/_dev`](../examples/_dev)) that is set up for playing around with code while making changes.
+To start the local development playground, run the following. This will run a [Next.js](https://nextjs.org) app (located at [`examples/example-react`](../examples/example-react)) that is set up for playing around with code while making changes.
 
 ```bash
 pnpm play
@@ -105,18 +98,12 @@ Once the Next.js dev server is running, you can make changes to any of the packa
 
 ## Running the test suite
 
-useDApp uses [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) to execute tests against a local Ethereum node. First, install Anvil via [Foundry](https://book.getfoundry.sh/getting-started/installation). Next, add the following to your environment (recommended to use [`direnv`](https://github.com/direnv/direnv)):
-
-```bash
-ANVIL_FORK_URL=https://eth-mainnet.alchemyapi.io/v2/<apiKey>
-```
-
-`ANVIL_FORK_URL` can be for any RPC service provider (e.g. Alchemy or Infura). Now you are ready to run the tests! In one terminal session, spin up Anvil using `pnpm anvil`. Next, in a different terminal session, you have the following options for running tests:
+Next, in a different terminal session, you have the following options for running tests:
 
 - `pnpm test` — runs tests in watch mode
 - `pnpm test:run` — performs single run without watch mode
 
-When adding new features or fixing bugs, it's important to add test cases to cover the new/updated behavior. If snapshot tests fail, you can run the `test:update` command to update the snapshots.
+When adding new features or fixing bugs, it's important to add test cases to cover the new/updated behavior.
 
 <div align="right">
   <a href="#basic-guide">&uarr; back to top</a></b>
@@ -158,52 +145,3 @@ When you submit a pull request, GitHub will automatically lint, build, and test 
 </div>
 
 ---
-
-<br>
-
-## Versioning
-
-When adding new features or fixing bugs, we'll need to bump the package versions. We use [Changesets](https://github.com/changesets/changesets) to do this.
-
-> **Note**
->
-> Only changes to the codebase that affect the public API or existing behavior (e.g. bugs) need changesets.
-
-Each changeset defines which package(s) should be published and whether the change should be a major/minor/patch release, as well as providing release notes that will be added to the changelog upon release.
-
-To create a new changeset, run `pnpm changeset`. This will run the Changesets CLI, prompting you for details about the change. You’ll be able to edit the file after it’s created — don’t worry about getting everything perfect up front.
-
-Since we’re currently in beta, all changes should be marked as a minor/patch release to keep us within the `v0.x` range.
-
-Even though you can technically use any markdown formatting you like, headings should be avoided since each changeset will ultimately be nested within a bullet list. Instead, bold text should be used as section headings.
-
-If your PR is making changes to an area that already has a changeset (e.g. there’s an existing changeset covering theme API changes but you’re making further changes to the same API), you should update the existing changeset in your PR rather than creating a new one.
-
-### Releasing
-
-The first time a PR with a changeset is merged after a release, a new PR will automatically be created called `chore: version packages`. Any subsequent PRs with changesets will automatically update this existing version packages PR. Merging this PR triggers the release process by publishing to npm and cleaning up the changeset files.
-
-### Creating a snapshot release
-
-If a PR has changesets, you can create a [snapshot release](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md) by [manually dispatching](https://github.com/wagmi-dev/wagmi/actions/workflows/snapshot.yml) the Snapshot workflow. This publishes a tagged version to npm with the PR branch name and timestamp.
-
-<div align="right">
-  <a href="#advanced-guide">&uarr; back to top</a></b>
-</div>
-
-## Testing against React 17
-
-useDApp supports both React 17 and React 18. If you want to run tests against React 17, you can run the following commands.
-
-```bash
-cd packages/react
-pnpm add -D react@17.0.2 react-dom@17.0.2
-cd ../..
-pnpm test:run react
-```
-
-Unfortunately `pnpm` [doesn't support](https://github.com/pnpm/pnpm/issues/2020) a `--no-save` flag so you will need to restore the package.json and lockfile before committing your changes.
-
-<div align="right">
-  <a href="#advanced-guide">&uarr; back to top</a></b>
-</div>
