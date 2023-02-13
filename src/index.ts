@@ -1,5 +1,10 @@
-export * from './hooks';
+export * from './actions/account';
+export * from './actions/signing';
 
-export { CasperProvider } from './provider';
-export * from './client';
+export * from './connectors';
+
+export * from './utils';
+
 export * from './enums';
+
+export * from './errors';

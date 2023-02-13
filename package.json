@@ -1,11 +1,11 @@
 {
-  "name": "@usedapp/react",
+  "name": "@usedapp/core",
   "version": "0.0.1-beta.1",
-  "description": "React Hooks for Casper",
+  "description": "Vanilla JS library for Casper",
   "repository": {
     "type": "git",
     "url": "https://github.com/CasperDash/useDApp.git",
-    "directory": "packages/react"
+    "directory": "packages/core"
   },
   "homepage": "https://casperdash.io",
   "contributors": [
@@ -15,27 +15,21 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pnpm build -- --watch"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "peerDependencies": {
-    "react": ">=17.0.0"
-  },
   "dependencies": {
-    "@tanstack/query-core": "^4.22.0",
-    "@tanstack/query-sync-storage-persister": "^4.22.0",
-    "@tanstack/react-query": "^4.22.3",
-    "@tanstack/react-query-persist-client": "^4.22.3",
-    "@usedapp/core": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "eventemitter3": "^4.0.7",
+    "typedjson": "^1.8.0",
+    "zustand": "^4.3.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^13.4.0",
-    "@types/react": "^18.0.26",
-    "typescript": "^4.9.4"
+    "casper-js-sdk": "^2.10.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "tsup": "^6.5.0"
   }
 }

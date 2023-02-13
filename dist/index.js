@@ -1,361 +1,536 @@
-// src/hooks/useAccount.ts
-import {
-  watchAccount,
-  StatusEnum,
-  getAccount
-} from "@usedapp/core";
-import { useEffect, useState } from "react";
-var useAccount = () => {
-  const [publicKey, setPublicKey] = useState(null);
-  const [status, setStatus] = useState(StatusEnum.DISCONNECTED);
-  useEffect(() => {
-    const initAccount = async () => {
-      const account = getAccount();
-      if (account && account.status === StatusEnum.CONNECTED) {
-        setPublicKey(account.publicKey);
-        setStatus(account.status);
+// src/utils/client.ts
+import { createStore } from "zustand/vanilla";
+import { subscribeWithSelector } from "zustand/middleware";
+
+// src/errors/ConnectorNotFoundError.ts
+var ConnectorNotFoundError = class extends Error {
+  constructor() {
+    super(...arguments);
+    this.name = "ConnectorNotFoundError";
+    this.message = "Connector not found";
+  }
+};
+
+// src/errors/ConnectorAlreadyConnectedError.ts
+var ConnectorAlreadyConnectedError = class extends Error {
+  constructor() {
+    super(...arguments);
+    this.name = "ConnectorAlreadyConnectedError";
+    this.message = "Connector already connected";
+  }
+};
+
+// src/errors/ClientNotFoundError.ts
+var ClientNotFoundError = class extends Error {
+  constructor() {
+    super(...arguments);
+    this.name = "ClientNotFoundError";
+    this.message = "Client not found";
+  }
+};
+
+// src/enums/status.ts
+var StatusEnum = /* @__PURE__ */ ((StatusEnum2) => {
+  StatusEnum2["CONNECTED"] = "connected";
+  StatusEnum2["CONNECTING"] = "connecting";
+  StatusEnum2["RECONNECTING"] = "reconnecting";
+  StatusEnum2["DISCONNECTED"] = "disconnected";
+  return StatusEnum2;
+})(StatusEnum || {});
+
+// src/utils/client.ts
+var Client = class {
+  constructor({
+    autoConnect = false,
+    connectors
+  }) {
+    this.store = createStore(subscribeWithSelector(() => ({
+      connectors,
+      status: "disconnected" /* DISCONNECTED */,
+      autoConnect
+    })));
+    this.triggerEvent();
+    if (autoConnect) {
+      setTimeout(async () => this.autoConnect(), 0);
+    }
+  }
+  get state() {
+    return this.store.getState();
+  }
+  get connector() {
+    return this.store.getState().connector;
+  }
+  get connectors() {
+    return this.store.getState().connectors;
+  }
+  get subscribe() {
+    return this.store.subscribe;
+  }
+  get data() {
+    return this.store.getState().data;
+  }
+  get status() {
+    return this.store.getState().status;
+  }
+  clearState() {
+    this.setState((x) => ({
+      ...x,
+      connector: void 0,
+      data: void 0
+    }));
+  }
+  setState(updater) {
+    const newState = typeof updater === "function" ? updater(this.store.getState()) : updater;
+    this.store.setState(newState, true);
+  }
+  async autoConnect() {
+    if (this.isAutoConnecting) {
+      return;
+    }
+    if (this.status === "connected" /* CONNECTED */) {
+      return;
+    }
+    this.isAutoConnecting = true;
+    this.setState((x) => ({
+      ...x,
+      status: x.data?.activeKey ? "reconnecting" /* RECONNECTING */ : "connecting" /* CONNECTING */
+    }));
+    let isConnected2 = false;
+    for (const connector of this.connectors || []) {
+      const isConnectedWithConnector = await connector?.isConnected();
+      if (isConnectedWithConnector) {
+        await this.connector?.connect();
+        const publicKey = await connector?.getActivePublicKey();
+        this.setState((x) => ({
+          ...x,
+          status: "connected" /* CONNECTED */,
+          connector,
+          data: {
+            ...x.data,
+            activeKey: publicKey
+          }
+        }));
+        isConnected2 = true;
+        break;
       }
+    }
+    if (!isConnected2) {
+      this.setState((x) => ({
+        ...x,
+        status: "disconnected" /* DISCONNECTED */
+      }));
+    }
+    this.isAutoConnecting = false;
+    return this.data;
+  }
+  triggerEvent() {
+    const onChange = (data) => {
+      this.setState((x) => ({
+        ...x,
+        data: { ...x.data, ...data }
+      }));
     };
-    void initAccount();
-    watchAccount((account) => {
-      if (!account) {
-        return;
+    const onDisconnect = () => {
+      this.clearState();
+    };
+    const onConnect = (data) => {
+      this.setState((x) => ({
+        ...x,
+        data: { ...x.data, ...data },
+        status: "connected" /* CONNECTED */
+      }));
+    };
+    this.store.subscribe(
+      ({ connector }) => connector,
+      (connector) => {
+        if (!connector)
+          return;
+        window?.addEventListener(
+          "casper:change",
+          (event) => onChange(event.detail)
+        );
+        window?.addEventListener("casper:disconnect", () => onDisconnect());
+        window?.addEventListener(
+          "casper:connect",
+          (event) => onConnect(event.detail)
+        );
       }
-      setPublicKey(account.publicKey ? account.publicKey : null);
-      setStatus(account.status ? account.status : StatusEnum.DISCONNECTED);
-    });
-  }, []);
-  return {
-    status,
-    publicKey
-  };
+    );
+  }
+};
+var client;
+var createClient = (clientConfig) => {
+  client = new Client(clientConfig);
+  return client;
+};
+var getClient = () => {
+  if (!client) {
+    throw new ClientNotFoundError();
+  }
+  return client;
 };
 
-// src/hooks/useConnect.ts
-import { useCallback } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { connect as connectDapp } from "@usedapp/core";
-var mutationFn = async (args) => {
-  const { connector } = args;
-  if (!connector) {
-    throw new Error("connector is required");
+// src/actions/account/connect.ts
+var connect = async ({ connector }) => {
+  const client2 = getClient();
+  const activeConnector = client2?.connector;
+  if (activeConnector && activeConnector.id !== connector.id) {
+    throw new ConnectorAlreadyConnectedError();
   }
-  return connectDapp({ connector });
-};
-var useConnect = ({
-  connector,
-  onError,
-  onMutate,
-  onSettled,
-  onSuccess
-}) => {
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    reset,
-    status,
-    variables,
-    mutate,
-    mutateAsync
-  } = useMutation(["connect" /* CONNECT */], mutationFn, {
-    onError,
-    onMutate,
-    onSettled,
-    onSuccess
-  });
-  const connect = useCallback(() => {
-    return mutate({
+  try {
+    client2.setState((x) => ({ ...x, status: "connecting" /* CONNECTING */ }));
+    await connector.connect();
+    let customData = {};
+    let isConnected2 = false;
+    try {
+      const activeKey = await connector.getActivePublicKey();
+      customData = {
+        activeKey
+      };
+      isConnected2 = !!activeKey;
+    } catch (err) {
+      console.error(err);
+    }
+    client2.setState((oldState) => ({
+      ...oldState,
+      connector,
+      status: isConnected2 ? "connected" /* CONNECTED */ : "connecting" /* CONNECTING */,
+      data: {
+        ...oldState.data,
+        ...customData
+      }
+    }));
+    return {
       connector
-    });
-  }, [connector]);
-  const connectAsync = useCallback(async () => {
-    return mutateAsync({
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// src/actions/account/disconnect.ts
+var disconnect = async () => {
+  const client2 = getClient();
+  try {
+    await client2.connector?.disconnect();
+    client2.setState((oldState) => ({
+      ...oldState,
+      status: "disconnected" /* DISCONNECTED */,
+      data: {
+        ...oldState.data,
+        activeKey: void 0
+      }
+    }));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// src/actions/account/isConnected.ts
+var isConnected = async () => {
+  const connector = getClient()?.connector;
+  try {
+    const hasConnected = await connector?.isConnected();
+    return !!hasConnected;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+// src/actions/account/getActivePublicKey.ts
+var getActivePublicKey = async () => {
+  const connector = getClient()?.connector;
+  try {
+    const activeKey = await connector?.getActivePublicKey();
+    return activeKey;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// src/actions/account/watchAccount.ts
+import { shallow } from "zustand/shallow";
+
+// src/utils/deepEqual.ts
+var deepEqual = (a, b) => {
+  if (a === null && b === null)
+    return true;
+  if (a === void 0 && b === void 0)
+    return true;
+  if (typeof a !== typeof b)
+    return false;
+  if (typeof a !== "object")
+    return a === b;
+  if (Object.keys(a).length !== Object.keys(b).length)
+    return false;
+  for (const key in a) {
+    if (!Object.prototype.hasOwnProperty.call(b, key))
+      return false;
+    if (!deepEqual(a[key], b[key]))
+      return false;
+  }
+  return true;
+};
+
+// src/actions/account/getAccount.ts
+var getAccount = () => {
+  try {
+    const client2 = getClient();
+    const { data, status, connector } = client2;
+    return {
+      publicKey: data?.activeKey,
+      status,
       connector
-    });
-  }, [connector]);
-  return {
-    connect,
-    connectAsync,
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    reset,
-    status,
-    variables
-  };
+    };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
-// src/hooks/useDisconnect.ts
-import { useCallback as useCallback2 } from "react";
-import { useMutation as useMutation2 } from "@tanstack/react-query";
-import { disconnect as disconnectDapp } from "@usedapp/core";
-var mutationFn2 = async () => {
-  return disconnectDapp();
-};
-var useDisconnect = ({
-  onError,
-  onMutate,
-  onSettled,
-  onSuccess
-} = {}) => {
-  const {
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    status,
-    reset,
-    mutate,
-    mutateAsync
-  } = useMutation2(["disconnect" /* DISCONNECT */], mutationFn2, {
-    onError,
-    onMutate,
-    onSettled,
-    onSuccess
-  });
-  const disconnect = useCallback2(() => {
-    return mutate();
-  }, []);
-  const disconnectAsync = useCallback2(async () => {
-    return mutateAsync();
-  }, []);
-  return {
-    disconnect,
-    disconnectAsync,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    status,
-    reset
-  };
-};
-
-// src/hooks/useSign.ts
-import { useCallback as useCallback3 } from "react";
-import { useMutation as useMutation3 } from "@tanstack/react-query";
-import { sign as signDapp } from "@usedapp/core";
-var mutationFn3 = async ({ deploy, signingPublicKey, targetPublicKeyHex }) => {
-  if (!deploy) {
-    throw new Error("Deploy must be a non-empty");
-  }
-  if (!signingPublicKey) {
-    throw new Error("signingPublicKey must be a non-empty string");
-  }
-  if (!targetPublicKeyHex) {
-    throw new Error("targetPublicKeyHex must be a non-empty string");
-  }
-  return signDapp({ deploy, signingPublicKey, targetPublicKeyHex });
-};
-var useSign = ({
-  deploy,
-  signingPublicKey,
-  targetPublicKeyHex,
-  onError,
-  onMutate,
-  onSettled,
-  onSuccess
-} = {}) => {
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    reset,
-    status,
-    variables,
-    mutate,
-    mutateAsync
-  } = useMutation3(["sign" /* SIGN */], mutationFn3, {
-    onError,
-    onMutate,
-    onSettled,
-    onSuccess
-  });
-  const sign = useCallback3((params) => {
-    return mutate(params || {
-      deploy,
-      signingPublicKey,
-      targetPublicKeyHex
-    });
-  }, [deploy, signingPublicKey, targetPublicKeyHex, mutate]);
-  const signAsync = useCallback3(async (params) => {
-    return mutateAsync(params || {
-      deploy,
-      signingPublicKey,
-      targetPublicKeyHex
-    });
-  }, [deploy, signingPublicKey, targetPublicKeyHex, mutateAsync]);
-  return {
-    sign,
-    signAsync,
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    reset,
-    status,
-    variables
-  };
-};
-
-// src/hooks/useSignMessage.ts
-import { useCallback as useCallback4 } from "react";
-import { useMutation as useMutation4 } from "@tanstack/react-query";
-import {
-  signMessage as signMessageDapp
-} from "@usedapp/core";
-var mutationFn4 = async ({ message, signingPublicKey }) => {
-  if (!message) {
-    throw new Error("Message must be a non-empty string");
-  }
-  if (!signingPublicKey) {
-    throw new Error("signingPublicKey must be a non-empty string");
-  }
-  return signMessageDapp({ message, signingPublicKey });
-};
-var useSignMessage = ({
-  message,
-  signingPublicKey,
-  onError,
-  onMutate,
-  onSettled,
-  onSuccess
-} = {}) => {
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    reset,
-    status,
-    variables,
-    mutate,
-    mutateAsync
-  } = useMutation4(["sign_message" /* SIGN_MESSAGE */, signingPublicKey, message], mutationFn4, {
-    onError,
-    onMutate,
-    onSettled,
-    onSuccess
-  });
-  const signMessage = useCallback4((params) => {
-    return mutate(params || {
-      message,
-      signingPublicKey
-    });
-  }, [message, signingPublicKey, mutate]);
-  const signMessageAsync = useCallback4(async (params) => {
-    return mutateAsync(params || {
-      message,
-      signingPublicKey
-    });
-  }, [message, signingPublicKey, mutateAsync]);
-  return {
-    signMessage,
-    signMessageAsync,
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    reset,
-    status,
-    variables
-  };
-};
-
-// src/provider.ts
-import * as React from "react";
-import { QueryClientProvider } from "@tanstack/react-query";
-var Context = React.createContext(void 0);
-var queryClientContext = React.createContext(
-  void 0
-);
-var CasperProvider = ({ children, client }) => {
-  return React.createElement(
-    Context.Provider,
+// src/actions/account/watchAccount.ts
+var watchAccount = (callback, { selector = (params) => params } = {}) => {
+  const client2 = getClient();
+  const handleOnChange = () => callback(getAccount());
+  const unsubscribe = client2.subscribe(
+    ({ data, connector, status }) => {
+      return selector?.({
+        publicKey: data?.activeKey,
+        status,
+        connector
+      });
+    },
+    handleOnChange,
     {
-      children: React.createElement(
-        QueryClientProvider,
-        {
-          children,
-          client: client.queryClient
-        }
-      ),
-      value: client
+      equalityFn: shallow
     }
   );
+  return unsubscribe;
 };
 
-// src/client.ts
-import { QueryClient } from "@tanstack/react-query";
-import {
-  createClient as createCasperClient
-} from "@usedapp/core";
-import { CasperDashConnector, CasperSignerConnector } from "@usedapp/core";
-var createClient = ({
-  queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        cacheTime: 1e3 * 60 * 60 * 24,
-        networkMode: "offlineFirst",
-        refetchOnWindowFocus: false,
-        retry: 0
+// src/actions/signing/sign.ts
+var sign = async ({ deploy, signingPublicKey, targetPublicKeyHex }) => {
+  const connector = getClient()?.connector;
+  try {
+    return await connector?.sign(deploy, signingPublicKey, targetPublicKeyHex);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// src/actions/signing/signMessage.ts
+var signMessage = async ({ message, signingPublicKey }) => {
+  const connector = getClient()?.connector;
+  try {
+    return await connector?.signMessage(message, signingPublicKey);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// src/connectors/base.ts
+import { default as EventEmitter } from "eventemitter3";
+var Connector2 = class extends EventEmitter {
+  constructor({
+    options
+  }) {
+    super();
+    this.options = options;
+  }
+  getOptions() {
+    return this.options;
+  }
+};
+
+// src/connectors/casperDash.ts
+var CasperDashConnector = class extends Connector2 {
+  constructor({
+    options: defaultOptions
+  } = {}) {
+    const options = {
+      name: "CasperDash",
+      getProvider: () => {
+        return typeof window !== "undefined" ? window.casperDashPluginHelpers : void 0;
       },
-      mutations: {
-        networkMode: "offlineFirst"
-      }
+      getEventProvider: () => {
+        return window;
+      },
+      ...defaultOptions
+    };
+    super({ options });
+    this.id = "casperDash";
+  }
+  async getProvider() {
+    const provider = this.options.getProvider?.();
+    if (!provider) {
+      throw new ConnectorNotFoundError();
     }
-  }),
-  ...config
-}) => {
-  const casperClient = createCasperClient(config);
-  return Object.assign(casperClient, {
-    queryClient
-  });
+    this.provider = provider;
+    return this.provider;
+  }
+  async getEventProvider() {
+    const eventProvider = this.options.getEventProvider?.();
+    if (!eventProvider) {
+      throw new ConnectorNotFoundError();
+    }
+    this.eventProvider = eventProvider;
+    return this.eventProvider;
+  }
+  async isConnected() {
+    try {
+      const provider = await this.getProvider();
+      return await provider.isConnected();
+    } catch (err) {
+      return false;
+    }
+  }
+  async disconnect() {
+    const provider = await this.getProvider();
+    const eventProvider = await this.getEventProvider();
+    eventProvider?.removeEventListener("casperdash:activeKeyChanged", this.onActiveKeyChanged);
+    eventProvider?.removeEventListener("casperdash:disconnected", () => this.onDisconnected());
+    eventProvider?.removeEventListener("casperdash:connected", this.onConnected);
+    await provider.disconnectFromSite();
+  }
+  async connect() {
+    const provider = await this.getProvider();
+    const eventProvider = await this.getEventProvider();
+    eventProvider?.addEventListener("casperdash:activeKeyChanged", this.onActiveKeyChanged);
+    eventProvider?.addEventListener("casperdash:disconnected", this.onDisconnected);
+    eventProvider?.addEventListener("casperdash:connected", this.onConnected);
+    await provider.requestConnection();
+  }
+  async getActivePublicKey() {
+    const provider = await this.getProvider();
+    return provider.getActivePublicKey();
+  }
+  async signMessage(message, signingPublicKey) {
+    const provider = await this.getProvider();
+    return provider.signMessage(message, signingPublicKey);
+  }
+  async sign(deploy, signingPublicKey, targetPublicKey) {
+    const provider = await this.getProvider();
+    return provider.sign(deploy, signingPublicKey, targetPublicKey);
+  }
+  onDisconnected() {
+    const customEvent = new CustomEvent("casper:disconnect");
+    window.dispatchEvent(customEvent);
+  }
+  onActiveKeyChanged(event) {
+    const customEvent = new CustomEvent("casper:change", event);
+    window.dispatchEvent(customEvent);
+  }
+  onConnected(event) {
+    const customEvent = new CustomEvent("casper:connect", event);
+    window.dispatchEvent(customEvent);
+  }
 };
 
-// src/enums/queryKeys.ts
-var QueryKeysEnum = /* @__PURE__ */ ((QueryKeysEnum2) => {
-  QueryKeysEnum2["CONNECT"] = "connect";
-  return QueryKeysEnum2;
-})(QueryKeysEnum || {});
-
-// src/enums/mutationKeys.ts
-var MutationKeysEnum = /* @__PURE__ */ ((MutationKeysEnum2) => {
-  MutationKeysEnum2["CONNECT"] = "connect";
-  MutationKeysEnum2["DISCONNECT"] = "disconnect";
-  MutationKeysEnum2["SIGN"] = "sign";
-  MutationKeysEnum2["SIGN_MESSAGE"] = "sign_message";
-  return MutationKeysEnum2;
-})(MutationKeysEnum || {});
+// src/connectors/casperSigner.ts
+var CasperSignerConnector = class extends Connector2 {
+  constructor({
+    options: defaultOptions
+  } = {}) {
+    const options = {
+      name: "CasperSigner",
+      getProvider: () => {
+        return typeof window !== "undefined" ? window.casperlabsHelper : void 0;
+      },
+      getEventProvider: () => {
+        return window;
+      },
+      ...defaultOptions
+    };
+    super({ options });
+    this.id = "casperSigner";
+  }
+  async getProvider() {
+    const provider = this.options.getProvider?.();
+    if (!provider) {
+      throw new ConnectorNotFoundError();
+    }
+    this.provider = provider;
+    return this.provider;
+  }
+  async getEventProvider() {
+    const eventProvider = this.options.getEventProvider?.();
+    if (!eventProvider) {
+      throw new ConnectorNotFoundError();
+    }
+    this.eventProvider = eventProvider;
+    return this.eventProvider;
+  }
+  async isConnected() {
+    try {
+      const provider = await this.getProvider();
+      return await provider.isConnected();
+    } catch (err) {
+      return false;
+    }
+  }
+  async disconnect() {
+    const provider = await this.getProvider();
+    const eventProvider = await this.getEventProvider();
+    eventProvider?.removeEventListener("signer:activeKeyChanged", this.onActiveKeyChanged);
+    eventProvider?.removeEventListener("signer:disconnected", this.onDisconnected);
+    eventProvider?.removeEventListener("signer:connected", this.onConnected);
+    provider.disconnectFromSite();
+  }
+  async connect() {
+    const provider = await this.getProvider();
+    const eventProvider = await this.getEventProvider();
+    eventProvider?.addEventListener("signer:activeKeyChanged", this.onActiveKeyChanged);
+    eventProvider?.addEventListener("signer:disconnected", this.onDisconnected);
+    eventProvider?.addEventListener("signer:connected", this.onConnected);
+    provider.requestConnection();
+  }
+  async getActivePublicKey() {
+    const provider = await this.getProvider();
+    return provider.getActivePublicKey();
+  }
+  async signMessage(message, signingPublicKey) {
+    const provider = await this.getProvider();
+    return provider.signMessage(message, signingPublicKey);
+  }
+  async sign(deploy, signingPublicKeyHex, targetPublicKeyHex) {
+    const provider = await this.getProvider();
+    return provider.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
+  }
+  onDisconnected() {
+    const customEvent = new CustomEvent("casper:disconnect");
+    window.dispatchEvent(customEvent);
+  }
+  onActiveKeyChanged(event) {
+    const customEvent = new CustomEvent("casper:change", event);
+    window.dispatchEvent(customEvent);
+  }
+  onConnected(event) {
+    const customEvent = new CustomEvent("casper:connect", event);
+    window.dispatchEvent(customEvent);
+  }
+};
 export {
   CasperDashConnector,
-  CasperProvider,
   CasperSignerConnector,
-  MutationKeysEnum,
-  QueryKeysEnum,
+  Client,
+  ClientNotFoundError,
+  Connector2 as Connector,
+  ConnectorAlreadyConnectedError,
+  ConnectorNotFoundError,
+  StatusEnum,
+  client,
+  connect,
   createClient,
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useSign,
-  useSignMessage
+  deepEqual,
+  disconnect,
+  getAccount,
+  getActivePublicKey,
+  getClient,
+  isConnected,
+  sign,
+  signMessage,
+  watchAccount
 };
 //# sourceMappingURL=index.js.map
