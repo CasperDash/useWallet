@@ -7,7 +7,7 @@ import { CasperDashConnector, CasperDashConnectorOptions } from './casperDash';
 
 declare global {
   interface Window {
-    casperDashPluginHelpers?: {
+    casperDashHelper?: {
       isConnected: () => Promise<boolean>;
       signMessage: (
         message: string,
@@ -27,7 +27,7 @@ declare global {
 
 describe('CasperDashConnector', () => {
   let connector: CasperDashConnector;
-  let providerMock: Window['casperDashPluginHelpers'];
+  let providerMock: Window['casperDashHelper'];
   let eventProviderMock: any;
   let options: CasperDashConnectorOptions;
 
@@ -54,10 +54,10 @@ describe('CasperDashConnector', () => {
 
   describe('constructor', () => {
     afterEach(() => {
-      window.casperDashPluginHelpers = undefined;
+      window.casperDashHelper = undefined;
     });
-    it('should get provider with casperDashPluginHelpers does exist', async () => {
-      window.casperDashPluginHelpers = {
+    it('should get provider with casperDashHelper does exist', async () => {
+      window.casperDashHelper = {
         isConnected: vi.fn().mockResolvedValue(true),
         signMessage: vi.fn(async () => Promise.resolve('signed message')),
         sign: vi.fn(async () => Promise.resolve({ deploy: {} })),
@@ -67,10 +67,10 @@ describe('CasperDashConnector', () => {
       };
       const casperConnector = new CasperDashConnector({});
 
-      expect(await casperConnector.getProvider()).equal(window.casperDashPluginHelpers);
+      expect(await casperConnector.getProvider()).equal(window.casperDashHelper);
     });
 
-    it('should get provider with casperDashPluginHelpers does not exist', async () => {
+    it('should get provider with casperDashHelper does not exist', async () => {
       const casperConnector = new CasperDashConnector({});
 
       try {

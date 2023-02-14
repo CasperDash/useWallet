@@ -6,7 +6,7 @@ import { Connector } from './base';
 
 declare global {
   interface Window {
-    casperDashPluginHelpers?: {
+    casperDashHelper?: {
       isConnected: () => Promise<boolean>;
       signMessage: (message: string, signingPublicKey: string) => Promise<string>;
       sign: (deploy: unknown, signingPublicKey: string, targetPublicKey: string) => Promise<{ deploy: JsonTypes }>;
@@ -17,7 +17,7 @@ declare global {
   }
 }
 
-type CasperDashWindowGlobal = Window['casperDashPluginHelpers'];
+type CasperDashWindowGlobal = Window['casperDashHelper'];
 type Provider = CasperDashWindowGlobal;
 type EventProvider = Window;
 
@@ -39,7 +39,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     const options: CasperDashConnectorOptions = {
       name: 'CasperDash',
       getProvider: (): Provider | undefined => {
-        return typeof window !== 'undefined' ? window.casperDashPluginHelpers : undefined;
+        return typeof window !== 'undefined' ? window.casperDashHelper : undefined;
       },
       getEventProvider: (): EventProvider => {
         return window;
