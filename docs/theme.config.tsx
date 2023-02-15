@@ -1,7 +1,7 @@
 import { DocsThemeConfig } from 'nextra-theme-docs';
 
 const config: DocsThemeConfig = {
-  logo: <span>UseDApp - Casper</span>,
+  logo: <span>useWallet</span>,
   project: {
     link: 'https://casperdash.io/',
   },
@@ -10,7 +10,7 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: 'https://github.com/CasperDash/useDApp',
   footer: {
-    text: 'useDApp Casper Docs',
+    text: 'Built by CasperDash team',
   },
 };
 
