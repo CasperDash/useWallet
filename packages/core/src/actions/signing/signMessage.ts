@@ -2,16 +2,16 @@ import { getClient } from '@usedapp/core/utils/client';
 
 export type SignMessageParams = {
   message: string;
-  signingPublicKey: string;
+  signingPublicKeyHex: string;
 };
 
 export type SignMessageResult = string | undefined;
 
-export const signMessage = async ({ message, signingPublicKey }: SignMessageParams): Promise<SignMessageResult> => {
+export const signMessage = async ({ message, signingPublicKeyHex }: SignMessageParams): Promise<SignMessageResult> => {
   const connector = getClient()?.connector;
 
   try {
-    return await connector?.signMessage(message, signingPublicKey);
+    return await connector?.signMessage(message, signingPublicKeyHex);
   } catch (error) {
     console.error(error);
   }

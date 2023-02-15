@@ -15,20 +15,20 @@ UseMutationOptions<SignMessageResult, unknown, UseSignMessageParams>
 
 export type UseSignMessageProps = Partial<UseSignMessageParams & UseSignMessageConfig>;
 
-const mutationFn = async ({ message, signingPublicKey }: UseSignMessageParams) => {
+const mutationFn = async ({ message, signingPublicKeyHex }: UseSignMessageParams) => {
   if (!message) {
     throw new Error('Message must be a non-empty string');
   }
-  if (!signingPublicKey) {
-    throw new Error('signingPublicKey must be a non-empty string');
+  if (!signingPublicKeyHex) {
+    throw new Error('signingPublicKeyHex must be a non-empty string');
   }
 
-  return signMessageDapp({ message, signingPublicKey });
+  return signMessageDapp({ message, signingPublicKeyHex });
 };
 
 export const useSignMessage = ({
   message,
-  signingPublicKey,
+  signingPublicKeyHex,
   onError,
   onMutate,
   onSettled,
@@ -46,7 +46,7 @@ export const useSignMessage = ({
     variables,
     mutate,
     mutateAsync,
-  } = useMutation([MutationKeysEnum.SIGN_MESSAGE, signingPublicKey, message], mutationFn, {
+  } = useMutation([MutationKeysEnum.SIGN_MESSAGE, signingPublicKeyHex, message], mutationFn, {
     onError,
     onMutate,
     onSettled,
@@ -56,16 +56,16 @@ export const useSignMessage = ({
   const signMessage = useCallback((params?: UseSignMessageParams) => {
     return mutate(params || {
       message,
-      signingPublicKey,
+      signingPublicKeyHex,
     });
-  }, [message, signingPublicKey, mutate]);
+  }, [message, signingPublicKeyHex, mutate]);
 
   const signMessageAsync = useCallback(async (params?: UseSignMessageParams) => {
     return mutateAsync(params || {
       message,
-      signingPublicKey,
+      signingPublicKeyHex,
     });
-  }, [message, signingPublicKey, mutateAsync]);
+  }, [message, signingPublicKeyHex, mutateAsync]);
 
   return {
     signMessage,

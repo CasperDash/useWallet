@@ -1,0 +1,101 @@
+---
+title: 'useSign'
+description: 'Hook for signing transcation.'
+---
+
+# useSign
+
+Hook for signing transaction prior to submitting to the Casper network.
+
+```ts
+import { useSign } from '@useWallet/react';
+```
+
+## Usage
+
+```tsx
+import { useSign } from '@casperdash/useWallet/react';
+
+function WalletProfile() {
+  const { sign, data } = useSign({
+    deploy: {},
+    signingPublicKeyHex: 'abc',
+    targetPublicKeyHex: 'abcde',
+  });
+
+  return (
+    <div>
+      <button onClick={() => sign()}>Sign with CasperDash</<button>
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```ts
+{
+  sign: function,
+  status: string,
+  isSuccess: boolean
+}
+```
+
+## Configuration
+
+### onMutate (optional)
+
+Function is called before any attempt to sign, receiving all relevant data, allowing for manipulation of this data before the operation itself is committed. Return value of this function will be passed to both onError and onSettled in event of a failure.
+
+```ts
+import { useConnect } from '@casperdash/useWallet/react';
+
+function App() {
+  const { sign, data } = useSign({
+    deploy: {},
+    signingPublicKeyHex: 'abc',
+    targetPublicKeyHex: 'abcde,
+    onMutate() {
+      console.log('Sign');
+    },
+  });
+}
+```
+
+### onSuccess (optional)
+
+Function that is invoked when the sign successful.
+
+```ts
+import { useSign } from '@casperdash/useWallet/react';
+
+function App() {
+  const { sign, data } = useSign({
+    deploy: {},
+    signingPublicKeyHex: 'abc',
+    targetPublicKeyHex: 'abcde,
+    onSuccess() {
+      console.log('Sign sucessfully');
+    },
+  });
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when sign has completed, providing information about success or failure of the connection.
+
+```ts
+import { useConnect } from '@casperdash/useWallet/react';
+
+function App() {
+  const { sign, data } = useSign({
+    deploy: {},
+    signingPublicKeyHex: 'abc',
+    targetPublicKeyHex: 'abcde,
+    onSettled(data, error) {
+      console.log('Settled', { data, error });
+    },
+  });
+}
+```

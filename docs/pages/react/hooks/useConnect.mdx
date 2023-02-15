@@ -1,9 +1,9 @@
 ---
-title: 'useAccount'
-description: 'Hook for checking the connection status and access account data.'
+title: 'useConnect'
+description: 'Hook for connecting to account with connectors.'
 ---
 
-# useAccount
+# useConnect
 
 Easy-to-use hook for quickly connecting to an account with compatible connectors. It provides a convenient way to quickly and securely sync accounts with a variety of services and applications.
 
@@ -64,7 +64,7 @@ function App() {
     onMutate(connector) {
       console.log('Connect');
     },
-  })
+  });
 }
 ```
 
@@ -80,7 +80,7 @@ function App() {
     onSuccess() {
       console.log('Connect');
     },
-  })
+  });
 }
 ```
 
@@ -96,6 +96,6 @@ function App() {
     onSettled(data, error) {
       console.log('Settled', { data, error });
     },
-  })
+  });
 }
 ```

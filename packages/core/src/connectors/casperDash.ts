@@ -8,8 +8,8 @@ declare global {
   interface Window {
     casperDashHelper?: {
       isConnected: () => Promise<boolean>;
-      signMessage: (message: string, signingPublicKey: string) => Promise<string>;
-      sign: (deploy: unknown, signingPublicKey: string, targetPublicKey: string) => Promise<{ deploy: JsonTypes }>;
+      signMessage: (message: string, signingPublicKeyHex: string) => Promise<string>;
+      sign: (deploy: unknown, signingPublicKeyHex: string, targetPublicKey: string) => Promise<{ deploy: JsonTypes }>;
       disconnectFromSite: () => Promise<void>;
       requestConnection: () => Promise<void>;
       getActivePublicKey: () => Promise<string>;
@@ -111,16 +111,16 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     return provider!.getActivePublicKey();
   }
 
-  public async signMessage(message: string, signingPublicKey: string): Promise<string> {
+  public async signMessage(message: string, signingPublicKeyHex: string): Promise<string> {
     const provider = await this.getProvider();
 
-    return provider!.signMessage(message, signingPublicKey);
+    return provider!.signMessage(message, signingPublicKeyHex);
   }
 
-  public async sign(deploy: any, signingPublicKey: string, targetPublicKey: string): Promise<{ deploy: JsonTypes }> {
+  public async sign(deploy: any, signingPublicKeyHex: string, targetPublicKey: string): Promise<{ deploy: JsonTypes }> {
     const provider = await this.getProvider();
 
-    return provider!.sign(deploy, signingPublicKey, targetPublicKey);
+    return provider!.sign(deploy, signingPublicKeyHex, targetPublicKey);
   }
 
   public onDisconnected(): void {

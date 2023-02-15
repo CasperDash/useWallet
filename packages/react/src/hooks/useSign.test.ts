@@ -27,7 +27,7 @@ describe('useSign', () => {
     const onSuccess = vi.fn();
     const { result } = renderHook(() => useSign({
       deploy: { id: '123' },
-      signingPublicKey: '123',
+      signingPublicKeyHex: '123',
       targetPublicKeyHex: '456',
       onSuccess,
     }), {
@@ -45,7 +45,7 @@ describe('useSign', () => {
       undefined,
       {
         deploy: { id: '123' },
-        signingPublicKey: '123',
+        signingPublicKeyHex: '123',
         targetPublicKeyHex: '456',
       },
       undefined,
@@ -57,7 +57,7 @@ describe('useSign', () => {
     const onSuccess = vi.fn();
     const { result } = renderHook(() => useSign({
       deploy: { id: '123' },
-      signingPublicKey: '123',
+      signingPublicKeyHex: '123',
       targetPublicKeyHex: '456',
       onSuccess,
     }), {
@@ -75,7 +75,7 @@ describe('useSign', () => {
       undefined,
       {
         deploy: { id: '123' },
-        signingPublicKey: '123',
+        signingPublicKeyHex: '123',
         targetPublicKeyHex: '456',
       },
       undefined,
@@ -91,7 +91,7 @@ describe('useSign', () => {
     await act(async () => {
       try {
         await result.current.signAsync({
-          signingPublicKey: '',
+          signingPublicKeyHex: '',
           targetPublicKeyHex: '',
         });
       } catch (error) {
@@ -102,7 +102,7 @@ describe('useSign', () => {
     expect(console.error).toHaveBeenCalledOnce();
   });
 
-  it('should throw an error if signingPublicKey is not provided', async () => {
+  it('should throw an error if signingPublicKeyHex is not provided', async () => {
     console.error = vi.fn();
     const { result } = renderHook(() => useSign({ deploy: 'test' }), {
       wrapper,
@@ -116,7 +116,7 @@ describe('useSign', () => {
         });
       } catch (error) {
         expect(error).toEqual(
-          new Error('signingPublicKey must be a non-empty string'),
+          new Error('signingPublicKeyHex must be a non-empty string'),
         );
       }
     });
@@ -127,7 +127,7 @@ describe('useSign', () => {
   it('should throw an error if targetPublicKeyHex is not provided', async () => {
     console.error = vi.fn();
     const { result } = renderHook(
-      () => useSign({ deploy: 'test', signingPublicKey: 'test' }),
+      () => useSign({ deploy: 'test', signingPublicKeyHex: 'test' }),
       {
         wrapper,
       },
@@ -137,7 +137,7 @@ describe('useSign', () => {
       try {
         await result.current.signAsync({
           deploy: {},
-          signingPublicKey: 'abc',
+          signingPublicKeyHex: 'abc',
         });
       } catch (error) {
         expect(error).toEqual(
@@ -152,7 +152,7 @@ describe('useSign', () => {
   it('should throw an error if targetPublicKeyHex is not provided', async () => {
     console.error = vi.fn();
     const { result } = renderHook(
-      () => useSign({ deploy: 'test', signingPublicKey: 'test' }),
+      () => useSign({ deploy: 'test', signingPublicKeyHex: 'test' }),
       {
         wrapper,
       },
@@ -162,7 +162,7 @@ describe('useSign', () => {
       try {
         await result.current.signAsync({
           deploy: {},
-          signingPublicKey: 'abc',
+          signingPublicKeyHex: 'abc',
         });
       } catch (error) {
         expect(error).toEqual(

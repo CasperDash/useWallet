@@ -11,11 +11,11 @@ declare global {
       isConnected: () => Promise<boolean>;
       signMessage: (
         message: string,
-        signingPublicKey: string,
+        signingPublicKeyHex: string,
       ) => Promise<string>;
       sign: (
         deploy: unknown,
-        signingPublicKey: string,
+        signingPublicKeyHex: string,
         targetPublicKey: string,
       ) => Promise<{ deploy: JsonTypes }>;
       disconnectFromSite: () => Promise<void>;

@@ -28,7 +28,7 @@ const FormSigner = () => {
 
     sign({
       deploy: transferDeploy,
-      signingPublicKey: publicKey!,
+      signingPublicKeyHex: publicKey!,
       targetPublicKeyHex: formValues.walletAddress,
     });
   };

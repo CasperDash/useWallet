@@ -14,8 +14,8 @@ export const useAccount = () => {
     const initAccount = async (): Promise<void> => {
       const account = getAccount();
 
-      if (account && account.status === StatusEnum.CONNECTED) {
-        setPublicKey(account.publicKey!);
+      if (account?.publicKey && account.status === StatusEnum.CONNECTED) {
+        setPublicKey(account.publicKey);
         setStatus(account.status);
       }
     };

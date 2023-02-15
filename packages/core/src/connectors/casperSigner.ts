@@ -108,10 +108,10 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     return provider.getActivePublicKey();
   }
 
-  public async signMessage(message: string, signingPublicKey: string): Promise<string> {
+  public async signMessage(message: string, signingPublicKeyHex: string): Promise<string> {
     const provider = await this.getProvider();
 
-    return provider.signMessage(message, signingPublicKey);
+    return provider.signMessage(message, signingPublicKeyHex);
   }
 
   public async sign(deploy: any, signingPublicKeyHex: string, targetPublicKeyHex: string): Promise<{ deploy: JsonTypes }> {

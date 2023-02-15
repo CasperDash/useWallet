@@ -23,24 +23,24 @@ describe('signMessage', () => {
 
   it('should return the signed message', async () => {
     const message = 'message';
-    const signingPublicKey = 'signingPublicKey';
+    const signingPublicKeyHex = 'signingPublicKeyHex';
 
-    const result = await signMessage({ message, signingPublicKey });
+    const result = await signMessage({ message, signingPublicKeyHex });
     expect(result).toBe('signedMessage');
-    expect(connector.signMessage).toHaveBeenCalledWith(message, signingPublicKey);
+    expect(connector.signMessage).toHaveBeenCalledWith(message, signingPublicKeyHex);
   });
 
   it('should return undefined when an error occurs', async () => {
     const message = 'message';
-    const signingPublicKey = 'signingPublicKey';
+    const signingPublicKeyHex = 'signingPublicKeyHex';
     connector.signMessage.mockImplementation(() => {
       throw new ConnectorNotFoundError();
     });
 
     console.error = vi.fn();
-    const result = await signMessage({ message, signingPublicKey });
+    const result = await signMessage({ message, signingPublicKeyHex });
     expect(result).toBeUndefined();
-    expect(connector.signMessage).toHaveBeenCalledWith(message, signingPublicKey);
+    expect(connector.signMessage).toHaveBeenCalledWith(message, signingPublicKeyHex);
     expect(console.error).toHaveBeenCalledWith(new ConnectorNotFoundError());
   });
 
@@ -48,7 +48,7 @@ describe('signMessage', () => {
     vi.spyOn(getClient(), 'connector', 'get').mockReturnValue(undefined);
 
 
-    const result = await signMessage({ message: '', signingPublicKey: '' });
+    const result = await signMessage({ message: '', signingPublicKeyHex: '' });
     expect(result).toBeUndefined();
   });
 });

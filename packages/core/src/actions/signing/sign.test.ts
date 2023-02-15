@@ -21,7 +21,7 @@ describe('sign', () => {
 
     const signParams: SignParams = {
       deploy: {},
-      signingPublicKey: 'signingPublicKey',
+      signingPublicKeyHex: 'signingPublicKeyHex',
       targetPublicKeyHex: 'targetPublicKeyHex',
     };
 
@@ -30,7 +30,7 @@ describe('sign', () => {
     const result = await sign(signParams);
 
     expect(result).toEqual(expectedResult);
-    expect(connector.sign).toHaveBeenCalledWith(signParams.deploy, signParams.signingPublicKey, signParams.targetPublicKeyHex);
+    expect(connector.sign).toHaveBeenCalledWith(signParams.deploy, signParams.signingPublicKeyHex, signParams.targetPublicKeyHex);
     expect(getClient).toHaveBeenCalled();
   });
 
@@ -39,7 +39,7 @@ describe('sign', () => {
 
     const signParams: SignParams = {
       deploy: {},
-      signingPublicKey: 'signingPublicKey',
+      signingPublicKeyHex: 'signingPublicKeyHex',
       targetPublicKeyHex: 'targetPublicKeyHex',
     };
 
@@ -57,7 +57,7 @@ describe('sign', () => {
 
     const signParams: SignParams = {
       deploy: {},
-      signingPublicKey: 'signingPublicKey',
+      signingPublicKeyHex: 'signingPublicKeyHex',
       targetPublicKeyHex: 'targetPublicKeyHex',
     };
 
@@ -65,7 +65,7 @@ describe('sign', () => {
 
     await sign(signParams);
 
-    expect(connector.sign).toHaveBeenCalledWith(signParams.deploy, signParams.signingPublicKey, signParams.targetPublicKeyHex);
+    expect(connector.sign).toHaveBeenCalledWith(signParams.deploy, signParams.signingPublicKeyHex, signParams.targetPublicKeyHex);
     expect(getClient).toHaveBeenCalled();
     expect(console.error).toHaveBeenCalledWith(new ConnectorNotFoundError());
   });
