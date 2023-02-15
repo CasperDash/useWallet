@@ -1,11 +1,108 @@
-# Introduction
- 
-Welcome to Nextra! This is a basic docs template. You can use it as a starting point for your own project :)
+import { Tabs, Tab } from 'nextra-theme-docs'
 
-## What is Nextra?
+useWallet is a collection of React Hooks containing everything you need to start working with Casper Network. useWallet makes it easy to "Connect Casper Wallet," sign messages, interact with contracts, and much more.
 
-A **simple**, **powerful** and **flexible** site generation framework with everything you love from Next.js.
+{/* prettier-ignore-start */}
+<div className="max-w-xs mx-auto mt-5 mb-8 text-center install">
+  <Tabs items={['npm', 'pnpm', 'yarn']}>
+    <Tab>
+```bash
+npm i @casperdash/useWallet
+```
+    </Tab>
+    <Tab>
+```bash
+pnpm i @casperdash/useWallet
+```
+    </Tab>
+    <Tab>
+```bash
+yarn add @casperdash/useWallet
+```
+    </Tab>
+  </Tabs>
+</div>
+{/* prettier-ignore-end */}
 
-## Documentation
+[Get Started](/core/getting-started) · [Examples](/examples/connect-wallet) · [GitHub Repository](https://github.com/CasperDash/useDApp)
 
-The documentation is available at [https://nextra.site](https://nextra.site).
+# Overview
+
+Connect a Casper Wallet likes 👻 speed.
+
+```tsx
+import { 
+	CasperProvider, 
+	createClient, 
+	CasperDashConnector, 
+	CasperSignerConnector 
+} from '@usedapp/react';
+
+const client = createClient({
+  connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],
+  autoConnect: true,
+});
+
+function App() {
+  return (
+    <CasperProvider client={client}>
+      <WalletProfile />
+    </CasperProvider>
+  )
+}
+```
+
+```tsx
+import { 
+	useAccount, 
+	useDisconnect, 
+	useConnect, 
+	CasperSignerConnector, 
+	CasperDashConnector 
+} from '@usedapp/react';
+
+function WalletProfile() {
+  const { publicKey } = useAccount();
+  const { disconnect } = useDisconnect();
+
+  const { connect: connectWithCasperSigner } = useConnect({
+    connector: new CasperSignerConnector({}),
+  });
+
+  const { connect: connectWithCasperDash } = useConnect({
+    connector: new CasperDashConnector({}),
+  });
+
+  if (publicKey)
+    return (
+      <div>
+        Connected to {publicKey}
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    )
+
+  return (
+    <div>
+      <button onClick={() => connectWithCasperSigner()}>Connect with Casper Signer</button>
+      </br>
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button> 
+    </div>
+  )
+}
+```
+
+In the above snippet, we create a useDApp ```client``` and pass it to the CasperProvider React Context. The client is set up to use the Casper Wallet Default Provider and automatically connect to previously connected wallets.
+
+Next, we use the useConnect hook to connect injected supporting wallets (Casper Signer and CasperDash) to the app. Finally, we show the connected account's public key with useAccount and allow them to disconnect with useDisconnect.
+
+# Features
+
+- 💼 In-app support for CasperDash and CasperSigner Wallet
+
+- 👟 Optimized with caching and duplicated request elimination
+
+- 🌀 Automatic data updates during account switches and disconnections 
+
+- 🦄 TypeScript compatibility included
+
+... and a lot more.
