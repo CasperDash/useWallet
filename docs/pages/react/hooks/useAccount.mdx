@@ -1,0 +1,43 @@
+---
+title: 'useAccount'
+description: 'React Hook for accessing account data and connection status.'
+---
+
+# useAccount
+
+Hook for accessing account data and connection status.
+
+```ts
+import { useAccount } from '@useWallet/react';
+```
+
+## Usage
+
+```tsx
+import { useAccount } from '@useWallet/react'
+
+function App() {
+  const { publicKey } = useAccount()
+
+  return <div>Wallet Address: {publicKey}</div>
+}
+```
+
+## Return Value
+
+```ts
+{
+  publicKey?: string
+}
+```
+
+## Configuration
+
+### onConnect (optional)
+
+Function to invoke when account connects.
+
+
+### onDisconnect (optional)
+
+Function to invoke when account disconnects.
