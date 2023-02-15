@@ -29,8 +29,13 @@ npm install @usedapp/react casper-js-sdk
 Connect a Casper Wallet likes 👻 speed.
 
 ```tsx
-import { CasperDashConnector, CasperSignerConnector } from '@usedapp/core';
-import { CasperProvider, createClient } from '@usedapp/react';
+import { 
+  CasperDashConnector, 
+  CasperSignerConnector, 
+  CasperProvider, 
+  createClient 
+} from '@usedapp/core';
+
 
 const client = createClient({
   connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],

@@ -33,9 +33,9 @@ yarn add useWallet
 </Tabs>
 {/* prettier-ignore-end */}
 
-### Create a wagmi client
+### Create a useWallet client
 
-Next, create a wagmi `Client` instance using [`createClient`](/react/client), and pass the connectors.
+Next, create a useWallet `Client` instance using [`createClient`](/react/client), and pass the connectors.
 
 ```tsx {9-13}
 import { 
@@ -43,7 +43,7 @@ import {
   CasperSignerConnector, 
   CasperProvider, 
   createClient 
-} from '@usedapp/core';
+} from '@casperdash/useWallet/core';
 
 
 const client = createClient({
@@ -54,3 +54,60 @@ const client = createClient({
 
 ### Wrap app with CasperProvider
 
+Then, wrap your app with the CasperProvider component, passing `client` to it.
+
+```tsx {8-10}
+const client = createClient({
+  connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],
+  autoConnect: true,
+});
+
+function App() {
+  return (
+    <CasperProvider client={client}>
+      <YourRoutes />
+    </CasperProvider>
+  )
+}
+```
+
+### Here we go
+
+Time to use hooks in any components inside the `CasperProvider`.
+
+```tsx {8-17}
+import {
+  CasperSignerConnector,
+  CasperDashConnector
+} from '@casperdash/useWallet/core';
+import { useAccount, useDisconnect, useConnect } from '@casperdash/useWallet/react';
+
+function WalletProfile() {
+  const { publicKey } = useAccount();
+  const { disconnect } = useDisconnect();
+
+  const { connect: connectWithCasperSigner } = useConnect({
+    connector: new CasperSignerConnector({}),
+  });
+
+  const { connect: connectWithCasperDash } = useConnect({
+    connector: new CasperDashConnector({}),
+  });
+
+  if (publicKey)
+    return (
+      <div>
+        Connected to {publicKey}
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    )
+
+  return (
+    <div>
+      <button onClick={() => connectWithCasperSigner()}>Connect with Casper Signer</button>
+      </br>
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button> 
+    </div>
+  )
+}
+````
