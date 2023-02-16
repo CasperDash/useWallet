@@ -16,7 +16,7 @@ import { useSign } from '@casperdash/useWallet';
 ```tsx
 import { useSign } from '@casperdash/useWallet';
 
-function WalletProfile() {
+function App() {
   const { sign, data } = useSign({
     deploy: {},
     signingPublicKeyHex: 'abc',
@@ -42,6 +42,22 @@ function WalletProfile() {
 ```
 
 ## Configuration
+
+### onError (optional)
+
+Function to call when signing error occurs.
+
+```ts
+import { useSign } from '@casperdash/useWallet';
+
+function App() {
+  const { sign } = useSign({
+    onError(error) {
+      console.log('Sign', error);
+    },
+  });
+}
+```
 
 ### onMutate (optional)
 

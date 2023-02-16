@@ -42,6 +42,22 @@ function WalletProfile() {
 
 ## Configuration
 
+### onError (optional)
+
+Function to call when signing message error occurs.
+
+```ts
+import { useSignMessage } from '@casperdash/useWallet';
+
+function App() {
+  const { signMessage } = useSignMessage({
+    onError(error) {
+      console.log('SignMessage', error);
+    },
+  });
+}
+```
+
 ### onMutate (optional)
 
 Function is called before any attempt to sign message, receiving all relevant data, allowing for manipulation of this data before the operation itself is committed. Return value of this function will be passed to both onError and onSettled in event of a failure.

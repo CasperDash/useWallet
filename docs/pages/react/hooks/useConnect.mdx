@@ -52,6 +52,22 @@ function App() {
 }
 ```
 
+### onError (optional)
+
+Function to call when connecting error occurs.
+
+```ts
+import { useConnect } from '@casperdash/useWallet';
+
+function App() {
+  const { connect } = useConnect({
+    onError(error) {
+      console.log('Connect', error);
+    },
+  });
+}
+```
+
 ### onMutate (optional)
 
 This allows the useConnect Hook to pre-process the parameters given to the connect function before the account is connected, in the event those parameters would result in a connection failure. The return value of this function is used by both the onError and onSettled function.
