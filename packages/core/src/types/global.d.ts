@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    casperDashPluginHelpers?: {
+    casperDashHelper?: {
       isConnected: Promise<boolean>;
     };
     casperlabsHelper?: {

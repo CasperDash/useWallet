@@ -75,8 +75,8 @@ importers:
     specifiers:
       '@types/react': ^18.0.26
       '@types/react-dom': ^18.0.9
-      '@usedapp/core': workspace:core
-      '@usedapp/react': workspace:react
+      '@usewallet/core': workspace:core
+      '@usewallet/react': workspace:react
       '@vitejs/plugin-react-swc': ^3.0.0
       casper-js-sdk: ^2.10.1
       react: ^18.2.0
@@ -85,8 +85,8 @@ importers:
       typescript: ^4.9.3
       vite: ^4.0.0
     dependencies:
-      '@usedapp/core': link:../../packages/core
-      '@usedapp/react': link:../../packages/react
+      '@usewallet/core': link:../../packages/core
+      '@usewallet/react': link:../../packages/react
       casper-js-sdk: 2.10.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -123,7 +123,7 @@ importers:
       '@tanstack/react-query-persist-client': ^4.22.3
       '@testing-library/react': ^13.4.0
       '@types/react': ^18.0.26
-      '@usedapp/core': workspace:*
+      '@usewallet/core': workspace:*
       react: ^18.2.0
       react-dom: ^18.2.0
       typescript: ^4.9.4
@@ -132,7 +132,7 @@ importers:
       '@tanstack/query-sync-storage-persister': 4.22.0_7c7prdbk4jtxz56sswerepgrwm
       '@tanstack/react-query': 4.22.3_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-persist-client': 4.22.3_hi6nanrdv6rtmfyk7ck2g44aiy
-      '@usedapp/core': link:../core
+      '@usewallet/core': link:../core
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:

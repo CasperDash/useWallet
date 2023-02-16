@@ -141,7 +141,7 @@
     "@typescript-eslint/prefer-optional-chain": "error",
     "@typescript-eslint/promise-function-async": "error",
     "@typescript-eslint/restrict-template-expressions": "off",
-    "@typescript-eslint/return-await": "error",
+    "@typescript-eslint/return-await": "off",
     "@typescript-eslint/typedef": [
       "error",
       {

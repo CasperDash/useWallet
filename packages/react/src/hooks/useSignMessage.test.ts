@@ -1,16 +1,16 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { Connector } from '@usedapp/core';
+import { Connector } from '@usewallet/core';
 import { describe, expect, it, vi } from 'vitest';
 
 import { wrapper } from '../../test';
 
 import { useSignMessage } from './useSignMessage';
 
-vi.mock('@usedapp/core/actions/account', () => ({
+vi.mock('@usewallet/core/actions/account', () => ({
   signMessage: vi.fn().mockResolvedValue('signed'),
 }));
 
-vi.mock('@usedapp/core/utils/client', () => ({
+vi.mock('@usewallet/core/utils/client', () => ({
   getClient: vi.fn(() => ({
     data: { activeKey: 'testPublicKey' },
     connector: {
@@ -27,7 +27,7 @@ describe('useSignMessage', () => {
     const onSuccess = vi.fn();
     const { result } = renderHook(() => useSignMessage({
       message: '123',
-      signingPublicKey: '123',
+      signingPublicKeyHex: '123',
       onSuccess,
     }), {
       wrapper: wrapper,
@@ -44,7 +44,7 @@ describe('useSignMessage', () => {
       undefined,
       {
         message: '123',
-        signingPublicKey: '123',
+        signingPublicKeyHex: '123',
       },
       undefined,
     ]);
@@ -55,7 +55,7 @@ describe('useSignMessage', () => {
     const onSuccess = vi.fn();
     const { result } = renderHook(() => useSignMessage({
       message: '123',
-      signingPublicKey: '123',
+      signingPublicKeyHex: '123',
       onSuccess,
     }), {
       wrapper: wrapper,
@@ -72,13 +72,13 @@ describe('useSignMessage', () => {
       undefined,
       {
         message: '123',
-        signingPublicKey: '123',
+        signingPublicKeyHex: '123',
       },
       undefined,
     ]);
   });
 
-  it('should throw an error if signingPublicKey is not provided', async () => {
+  it('should throw an error if signingPublicKeyHex is not provided', async () => {
     console.error = vi.fn();
     const { result } = renderHook(() => useSignMessage(), {
       wrapper: wrapper,
@@ -90,7 +90,7 @@ describe('useSignMessage', () => {
           message: 'abc',
         });
       } catch (error) {
-        expect(error).toEqual(new Error('signingPublicKey must be a non-empty string'));
+        expect(error).toEqual(new Error('signingPublicKeyHex must be a non-empty string'));
       }
     });
 
@@ -106,7 +106,7 @@ describe('useSignMessage', () => {
     await act(async () => {
       try {
         await result.current.signMessageAsync({
-          signingPublicKey: 'abc',
+          signingPublicKeyHex: 'abc',
         });
       } catch (error) {
         expect(error).toEqual(

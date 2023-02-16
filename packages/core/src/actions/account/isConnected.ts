@@ -1,4 +1,4 @@
-import { getClient } from '@usedapp/core/utils/client';
+import { getClient } from '@usewallet/core/utils/client';
 
 export const isConnected = async (): Promise<boolean> => {
   const connector = getClient()?.connector;

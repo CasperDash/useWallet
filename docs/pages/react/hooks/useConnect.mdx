@@ -1,0 +1,117 @@
+---
+title: 'useConnect'
+description: 'Hook for connecting to account with connectors.'
+---
+
+# useConnect
+
+Easy-to-use hook for quickly connecting to an account with compatible connectors. It provides a convenient way to quickly and securely sync accounts with a variety of services and applications.
+
+```ts
+import { useConnect } from '@casperdash/useWallet';
+```
+
+## Usage
+
+```tsx
+import { CasperDashConnector } from '@casperdash/useWallet';
+import { useConnect } from '@casperdash/useWallet';
+
+function WalletProfile() {
+  const { connect: connectWithCasperDash } = useConnect({
+    connector: new CasperDashConnector(),
+  });
+
+  return (
+    <div>
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button>
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```ts
+{
+  connect: function
+}
+```
+
+## Configuration
+
+### connector (Required)
+
+Connector to use for connecting wallet
+
+```tsx
+function App() {
+  const { connect } = useConnect({
+    connector: new CasperDashConnector(),
+  })
+}
+```
+
+### onError (optional)
+
+Function to call when connecting error occurs.
+
+```ts
+import { useConnect } from '@casperdash/useWallet';
+
+function App() {
+  const { connect } = useConnect({
+    onError(error) {
+      console.log('Connect', error);
+    },
+  });
+}
+```
+
+### onMutate (optional)
+
+This allows the useConnect Hook to pre-process the parameters given to the connect function before the account is connected, in the event those parameters would result in a connection failure. The return value of this function is used by both the onError and onSettled function.
+
+```ts
+import { useConnect } from '@casperdash/useWallet';
+
+function App() {
+  const { connect } = useConnect({
+    onMutate(connector) {
+      console.log('Connect');
+    },
+  });
+}
+```
+
+### onSuccess (optional)
+
+Function that is invoked when the connection to the account is successful.
+
+```ts
+import { useConnect } from '@casperdash/useWallet';
+
+function App() {
+  const { connect } = useConnect({
+    onSuccess() {
+      console.log('Connect');
+    },
+  });
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when the connection attempt has completed, providing information about success or failure of the connection.
+
+```ts
+import { useConnect } from '@casperdash/useWallet';
+
+function App() {
+  const { connect } = useConnect({
+    onSettled(data, error) {
+      console.log('Settled', { data, error });
+    },
+  });
+}
+```

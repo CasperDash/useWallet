@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { connect as connectDapp, ConnectParams, ConnectResult } from '@usedapp/core';
-import { MutationKeysEnum } from '@usedapp/react';
+import { connect as connectDapp, ConnectParams, ConnectResult } from '@usewallet/core';
+import { MutationKeysEnum } from '@usewallet/react';
 
 export type UseConnectParams = Partial<ConnectParams>;
 
