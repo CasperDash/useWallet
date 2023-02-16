@@ -6,7 +6,7 @@ import { useConnect } from '@usedapp/react';
 
 export const CasperSignerButton = () => {
   const { connect } = useConnect({
-    connector: new CasperSignerConnector({}),
+    connector: new CasperSignerConnector(),
   });
 
   return (

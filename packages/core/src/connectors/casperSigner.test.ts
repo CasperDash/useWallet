@@ -8,7 +8,7 @@ import { CasperSignerConnector, CasperSignerConnectorOptions } from './casperSig
 describe('CasperSignerConnector', () => {
   let connector: CasperSignerConnector;
   let providerMock: CasperLabsHelper;
-  let eventProviderMock: any;
+  let eventProviderMock: Window;
   let options: CasperSignerConnectorOptions;
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('CasperSignerConnector', () => {
     eventProviderMock = {
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
-    };
+    } as unknown as Window;
     options = {
       getProvider: vi.fn().mockReturnValue(providerMock),
       getEventProvider: vi.fn().mockReturnValue(eventProviderMock),
@@ -42,13 +42,13 @@ describe('CasperSignerConnector', () => {
         requestConnection: vi.fn(async () => Promise.resolve()),
         getActivePublicKey: vi.fn(async () => Promise.resolve('public key')),
       } as unknown as CasperLabsHelper;
-      const casperConnector = new CasperSignerConnector({});
+      const casperConnector = new CasperSignerConnector();
 
       expect(await casperConnector.getProvider()).equal(window.casperlabsHelper);
     });
 
     it('should get provider with casperlabsHelper does not exist', async () => {
-      const casperConnector = new CasperSignerConnector({});
+      const casperConnector = new CasperSignerConnector();
 
       try {
         await casperConnector.getProvider();
@@ -58,7 +58,7 @@ describe('CasperSignerConnector', () => {
     });
 
     it('should get event provider', async () => {
-      const casperConnector = new CasperSignerConnector({});
+      const casperConnector = new CasperSignerConnector();
 
       expect(await casperConnector.getEventProvider()).equal(window);
     });
@@ -102,7 +102,7 @@ describe('CasperSignerConnector', () => {
     it('throws an error if the provider is not found', async () => {
       connector = new CasperSignerConnector({
         options: {
-          getProvider: (): any => undefined,
+          getProvider: (): CasperLabsHelper | undefined => undefined,
           getEventProvider: () => eventProviderMock,
         },
       });
@@ -124,8 +124,8 @@ describe('CasperSignerConnector', () => {
     it('throws an error if the event provider is not found', async () => {
       connector = new CasperSignerConnector({
         options: {
-          getProvider: (): any => providerMock,
-          getEventProvider: (): any => undefined,
+          getProvider: (): CasperLabsHelper => providerMock,
+          getEventProvider: (): Window => window,
         },
       });
       try {

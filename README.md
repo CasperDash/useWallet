@@ -8,7 +8,7 @@ useDApp is a library/react component which designed for DApp to interact with Ca
 
 - 👟 Optimized with caching and duplicated request elimination
 
-- 🌀 Automatic data updates during account switches and disconnections 
+- 🌀 Automatic data updates during account switches and disconnections
 
 - 🦄 TypeScript compatibility included
 
@@ -29,16 +29,16 @@ npm install @usedapp/react casper-js-sdk
 Connect a Casper Wallet likes 👻 speed.
 
 ```tsx
-import { 
-  CasperDashConnector, 
-  CasperSignerConnector, 
-  CasperProvider, 
-  createClient 
+import {
+  CasperDashConnector,
+  CasperSignerConnector,
+  CasperProvider,
+  createClient
 } from '@usedapp/core';
 
 
 const client = createClient({
-  connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],
+  connectors: [new CasperSignerConnector(), new CasperDashConnector()],
   autoConnect: true,
 });
 
@@ -63,11 +63,11 @@ function WalletProfile() {
   const { disconnect } = useDisconnect();
 
   const { connect: connectWithCasperSigner } = useConnect({
-    connector: new CasperSignerConnector({}),
+    connector: new CasperSignerConnector(),
   });
 
   const { connect: connectWithCasperDash } = useConnect({
-    connector: new CasperDashConnector({}),
+    connector: new CasperDashConnector(),
   });
 
   if (publicKey)
@@ -82,9 +82,9 @@ function WalletProfile() {
     <div>
       <button onClick={() => connectWithCasperSigner()}>Connect with Casper Signer</button>
       </br>
-      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button> 
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button>
     </div>
-    
+
   )
 }
 ```

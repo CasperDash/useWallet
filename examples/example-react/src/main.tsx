@@ -7,7 +7,7 @@ import App from './App';
 import './index.css';
 
 const client = createClient({
-  connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],
+  connectors: [new CasperSignerConnector(), new CasperDashConnector()],
   autoConnect: true,
 });
 

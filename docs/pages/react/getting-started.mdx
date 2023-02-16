@@ -22,7 +22,7 @@ npm i @casperdash/useWallet
   </Tab>
   <Tab>
 ```bash
-pnpm i @casperdash/useWallet
+pnpm add @casperdash/useWallet
 ```
   </Tab>
   <Tab>
@@ -47,7 +47,7 @@ import {
 
 
 const client = createClient({
-  connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],
+  connectors: [new CasperSignerConnector(), new CasperDashConnector()],
   autoConnect: true,
 });
 ```
@@ -87,11 +87,11 @@ function WalletProfile() {
   const { disconnect } = useDisconnect();
 
   const { connect: connectWithCasperSigner } = useConnect({
-    connector: new CasperSignerConnector({}),
+    connector: new CasperSignerConnector(),
   });
 
   const { connect: connectWithCasperDash } = useConnect({
-    connector: new CasperDashConnector({}),
+    connector: new CasperDashConnector(),
   });
 
   if (publicKey)

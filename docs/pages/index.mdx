@@ -12,7 +12,7 @@ npm i @casperdash/useWallet
     </Tab>
     <Tab>
 ```bash
-pnpm i @casperdash/useWallet
+pnpm add @casperdash/useWallet
 ```
     </Tab>
     <Tab>
@@ -31,15 +31,15 @@ yarn add @casperdash/useWallet
 Connect a Casper Wallet likes 👻 speed.
 
 ```tsx
-import { 
-	CasperProvider, 
-	createClient, 
-	CasperDashConnector, 
-	CasperSignerConnector 
+import {
+	CasperProvider,
+	createClient,
+	CasperDashConnector,
+	CasperSignerConnector
 } from '@casperdash/useWallet/react';
 
 const client = createClient({
-  connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],
+  connectors: [new CasperSignerConnector(), new CasperDashConnector()],
   autoConnect: true,
 });
 
@@ -53,12 +53,12 @@ function App() {
 ```
 
 ```tsx
-import { 
-	useAccount, 
-	useDisconnect, 
-	useConnect, 
-	CasperSignerConnector, 
-	CasperDashConnector 
+import {
+	useAccount,
+	useDisconnect,
+	useConnect,
+	CasperSignerConnector,
+	CasperDashConnector
 } from '@casperdash/useWallet/react';
 
 function WalletProfile() {
@@ -66,11 +66,11 @@ function WalletProfile() {
   const { disconnect } = useDisconnect();
 
   const { connect: connectWithCasperSigner } = useConnect({
-    connector: new CasperSignerConnector({}),
+    connector: new CasperSignerConnector(),
   });
 
   const { connect: connectWithCasperDash } = useConnect({
-    connector: new CasperDashConnector({}),
+    connector: new CasperDashConnector(),
   });
 
   if (publicKey)
@@ -85,7 +85,7 @@ function WalletProfile() {
     <div>
       <button onClick={() => connectWithCasperSigner()}>Connect with Casper Signer</button>
       </br>
-      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button> 
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button>
     </div>
   )
 }
@@ -101,7 +101,7 @@ Next, we use the useConnect hook to connect injected supporting wallets (Casper 
 
 - 👟 Optimized with caching and duplicated request elimination
 
-- 🌀 Automatic data updates during account switches and disconnections 
+- 🌀 Automatic data updates during account switches and disconnections
 
 - 🦄 TypeScript compatibility included
 
