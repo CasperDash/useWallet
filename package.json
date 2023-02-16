@@ -1,9 +1,9 @@
 {
   "name": "root",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.2-beta.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CasperDash/useDApp.git"
+    "url": "https://github.com/CasperDash/useWallet.git"
   },
   "author": "dev@casperdash.io",
   "license": "MIT",
@@ -52,9 +52,6 @@
     "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.26.3"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [

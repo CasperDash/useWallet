@@ -1,16 +1,16 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { Connector } from '@usewallet/core';
+import { Connector } from '@casperdash/usewallet-core';
 import { describe, expect, it, vi } from 'vitest';
 
 import { wrapper } from '../../test';
 
 import { useSignMessage } from './useSignMessage';
 
-vi.mock('@usewallet/core/actions/account', () => ({
+vi.mock('@casperdash/usewallet-core/actions/account', () => ({
   signMessage: vi.fn().mockResolvedValue('signed'),
 }));
 
-vi.mock('@usewallet/core/utils/client', () => ({
+vi.mock('@casperdash/usewallet-core/utils/client', () => ({
   getClient: vi.fn(() => ({
     data: { activeKey: 'testPublicKey' },
     connector: {

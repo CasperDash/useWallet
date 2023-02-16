@@ -1,8 +1,7 @@
 import {
   CasperSignerConnector,
-} from '@usewallet/core';
-import { useConnect } from '@usewallet/react';
-
+  useConnect,
+} from '@casperdash/usewallet';
 
 export const CasperSignerButton = () => {
   const { connect } = useConnect({

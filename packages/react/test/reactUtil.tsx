@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
-import { CasperDashConnector } from '@usewallet/core';
-import { CasperProvider, Client, createClient } from '@usewallet/react';
+import { CasperDashConnector } from '@casperdash/usewallet-core';
+import { CasperProvider, Client, createClient } from '@casperdash/usewallet';
 
 export const queryClient = new QueryClient({
   defaultOptions: {

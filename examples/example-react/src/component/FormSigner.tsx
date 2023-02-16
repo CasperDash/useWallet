@@ -1,4 +1,4 @@
-import { useAccount, useSign } from '@usewallet/react';
+import { useAccount, useSign } from '@casperdash/usewallet';
 import { useForm } from 'react-hook-form';
 
 import { getTransferDeploy } from '../utils/valueBuilder';

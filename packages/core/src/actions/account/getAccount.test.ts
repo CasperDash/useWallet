@@ -1,7 +1,7 @@
-import { createClient, getClient } from '@usewallet/core/utils';
+import { createClient, getClient } from '@casperdash/usewallet-core/utils';
 import { describe, expect, it, vi } from 'vitest';
-import { CasperDashConnector } from '@usewallet/core/connectors';
-import { StatusEnum } from '@usewallet/core/enums';
+import { CasperDashConnector } from '@casperdash/usewallet-core/connectors';
+import { StatusEnum } from '@casperdash/usewallet-core/enums';
 
 import { getAccount } from './getAccount';
 

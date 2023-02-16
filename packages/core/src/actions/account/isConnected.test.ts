@@ -1,8 +1,8 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { CasperDashConnector, CasperSignerConnector, Connector } from '@usewallet/core/connectors';
-import { createClient, getClient } from '@usewallet/core/utils';
-import { StatusEnum } from '@usewallet/core/enums';
-import { ConnectorNotFoundError } from '@usewallet/core/errors';
+import { CasperDashConnector, CasperSignerConnector, Connector } from '@casperdash/usewallet-core/connectors';
+import { createClient, getClient } from '@casperdash/usewallet-core/utils';
+import { StatusEnum } from '@casperdash/usewallet-core/enums';
+import { ConnectorNotFoundError } from '@casperdash/usewallet-core/errors';
 
 import { isConnected } from './isConnected';
 

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { sign as signDapp, SignParams, SignResult } from '@usewallet/core';
-import { MutationKeysEnum } from '@usewallet/react';
+import { sign as signDapp, SignParams, SignResult } from '@casperdash/usewallet-core';
+import { MutationKeysEnum } from '@casperdash/usewallet';
 
 export type UseSignParams = Partial<SignParams>;
 

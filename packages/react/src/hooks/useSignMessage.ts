@@ -4,8 +4,8 @@ import {
   signMessage as signMessageDapp,
   SignMessageParams,
   SignMessageResult,
-} from '@usewallet/core';
-import { MutationKeysEnum } from '@usewallet/react';
+} from '@casperdash/usewallet-core';
+import { MutationKeysEnum } from '@casperdash/usewallet';
 
 export type UseSignMessageParams = Partial<SignMessageParams>;
 

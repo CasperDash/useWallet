@@ -3,13 +3,13 @@ import { DocsThemeConfig } from 'nextra-theme-docs';
 const config: DocsThemeConfig = {
   logo: <span>useWallet</span>,
   project: {
-    link: 'https://github.com/CasperDash/useDApp',
+    link: 'https://github.com/CasperDash/useWallet',
   },
   darkMode: true,
   chat: {
     link: 'https://discord.com',
   },
-  docsRepositoryBase: 'https://github.com/CasperDash/useDApp',
+  docsRepositoryBase: 'https://github.com/CasperDash/useWallet',
   footer: {
     text: 'Built by CasperDash team',
   },

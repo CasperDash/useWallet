@@ -1,6 +1,6 @@
-import { Connector } from '@usewallet/core/connectors';
-import { StatusEnum } from '@usewallet/core/enums';
-import { getClient } from '@usewallet/core/utils';
+import { Connector } from '@casperdash/usewallet-core/connectors';
+import { StatusEnum } from '@casperdash/usewallet-core/enums';
+import { getClient } from '@casperdash/usewallet-core/utils';
 
 export type Account = {
   publicKey?: string;

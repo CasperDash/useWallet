@@ -1,7 +1,7 @@
-import { CasperDashConnector, Connector } from '@usewallet/core/connectors';
-import { ConnectorNotFoundError } from '@usewallet/core/errors';
-import { getClient } from '@usewallet/core/utils/client';
-import { createClient } from '@usewallet/core/utils';
+import { CasperDashConnector, Connector } from '@casperdash/usewallet-core/connectors';
+import { ConnectorNotFoundError } from '@casperdash/usewallet-core/errors';
+import { getClient } from '@casperdash/usewallet-core/utils/client';
+import { createClient } from '@casperdash/usewallet-core/utils';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 import { getActivePublicKey } from './getActivePublicKey';

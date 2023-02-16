@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { createClient, getClient } from '@usewallet/core/utils/client';
-import { CasperDashConnector, Connector } from '@usewallet/core/connectors';
+import { createClient, getClient } from '@casperdash/usewallet-core/utils/client';
+import { CasperDashConnector, Connector } from '@casperdash/usewallet-core/connectors';
 
 import { disconnect } from './disconnect';
 
