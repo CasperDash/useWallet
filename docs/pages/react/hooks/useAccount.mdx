@@ -1,30 +1,27 @@
 ---
 title: 'useAccount'
-description: 'Hook for checking the connection status and access account data.'
+description: 'Hook to get account data or connection status.'
 ---
 
 # useAccount
 
-Easy-to-use hook for quickly connecting to an account with compatible connectors. It provides a convenient way to quickly and securely sync accounts with a variety of services and applications.
+This is a hook used to get the data associated with an account or the current connection status for that account. It allows for the collection of essential account information.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useAccount } from '@casperdash/useWallet';
 ```
 
 ## Usage
 
 ```tsx
-import { CasperDashConnector } from '@casperdash/useWallet/react';
-import { useConnect } from '@casperdash/useWallet/react';
+import { useAccount } from '@casperdash/useWallet';
 
-function WalletProfile() {
-  const { connect: connectWithCasperDash } = useConnect({
-    connector: new CasperDashConnector(),
-  });
+function App() {
+  const { publicKey } = useAccount();
 
   return (
     <div>
-      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button>
+      Public key: {publicKey}
     </div>
   )
 }
@@ -34,67 +31,41 @@ function WalletProfile() {
 
 ```ts
 {
-  connect: function
+  publicKey: string,
+  status: string
 }
 ```
 
 ## Configuration
 
-### connector (Required)
 
-Connector to use for connecting wallet
+### onConnect (optional)
 
-```tsx
-function App() {
-  const { connect } = useConnect({
-    connector: new CasperDashConnector(),
-  })
-}
-```
-
-### onMutate (optional)
-
-This allows the useConnect Hook to pre-process the parameters given to the connect function before the account is connected, in the event those parameters would result in a connection failure. The return value of this function is used by both the onError and onSettled function.
+Function to invoke when account connects.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useAccount } from '@casperdash/useWallet';
 
 function App() {
-  const { connect } = useConnect({
-    onMutate(connector) {
-      console.log('Connect');
+  const { publicKey } = useAccount({
+    onConnect(status) {
+      console.log(status);
     },
   })
 }
 ```
 
-### onSuccess (optional)
+### onDisconnect (optional)
 
-Function that is invoked when the connection to the account is successful.
+Function to invoke when account disconnects.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useConnect } from '@casperdash/useWallet';
 
 function App() {
   const { connect } = useConnect({
-    onSuccess() {
-      console.log('Connect');
-    },
-  })
-}
-```
-
-### onSettled (optional)
-
-Function to invoke when the connection attempt has completed, providing information about success or failure of the connection.
-
-```ts
-import { useConnect } from '@casperdash/useWallet/react';
-
-function App() {
-  const { connect } = useConnect({
-    onSettled(data, error) {
-      console.log('Settled', { data, error });
+    onDisconnect(status) {
+      console.log(status);
     },
   })
 }

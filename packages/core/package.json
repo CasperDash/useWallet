@@ -1,5 +1,5 @@
 {
-  "name": "@usedapp/core",
+  "name": "@usewallet/core",
   "version": "0.0.1-beta.1",
   "description": "Vanilla JS library for Casper",
   "repository": {

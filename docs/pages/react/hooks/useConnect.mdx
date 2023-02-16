@@ -8,14 +8,14 @@ description: 'Hook for connecting to account with connectors.'
 Easy-to-use hook for quickly connecting to an account with compatible connectors. It provides a convenient way to quickly and securely sync accounts with a variety of services and applications.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useConnect } from '@casperdash/useWallet';
 ```
 
 ## Usage
 
 ```tsx
-import { CasperDashConnector } from '@casperdash/useWallet/react';
-import { useConnect } from '@casperdash/useWallet/react';
+import { CasperDashConnector } from '@casperdash/useWallet';
+import { useConnect } from '@casperdash/useWallet';
 
 function WalletProfile() {
   const { connect: connectWithCasperDash } = useConnect({
@@ -57,7 +57,7 @@ function App() {
 This allows the useConnect Hook to pre-process the parameters given to the connect function before the account is connected, in the event those parameters would result in a connection failure. The return value of this function is used by both the onError and onSettled function.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useConnect } from '@casperdash/useWallet';
 
 function App() {
   const { connect } = useConnect({
@@ -73,7 +73,7 @@ function App() {
 Function that is invoked when the connection to the account is successful.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useConnect } from '@casperdash/useWallet';
 
 function App() {
   const { connect } = useConnect({
@@ -89,7 +89,7 @@ function App() {
 Function to invoke when the connection attempt has completed, providing information about success or failure of the connection.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useConnect } from '@casperdash/useWallet';
 
 function App() {
   const { connect } = useConnect({

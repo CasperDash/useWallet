@@ -8,13 +8,13 @@ description: 'Hook for disconnecting account.'
 Easy-to-use hook for quickly connecting to an account with compatible connectors. It provides a convenient way to quickly and securely sync accounts with a variety of services and applications.
 
 ```ts
-import { useDisconnect } from '@casperdash/useWallet/react';
+import { useDisconnect } from '@casperdash/useWallet';
 ```
 
 ## Usage
 
 ```tsx
-import { useDisconnect } from '@casperdash/useWallet/react';
+import { useDisconnect } from '@casperdash/useWallet';
 
 function WalletProfile() {
   const { disconnect } = useDisconnect();
@@ -42,7 +42,7 @@ function WalletProfile() {
 Function to call when a disconnection error occurs.
 
 ```ts
-import { useDisconnect } from '@casperdash/useWallet/react';
+import { useDisconnect } from '@casperdash/useWallet';
 
 function App() {
   const { disconnect } = useDisconnect({
@@ -58,7 +58,7 @@ function App() {
 Function fires before disconnect function. The return value of this function is used by both the onError and onSettled function.
 
 ```ts
-import { useDisconnect } from '@casperdash/useWallet/react';
+import { useDisconnect } from '@casperdash/useWallet';
 
 function App() {
   const { disconnect } = useDisconnect({
@@ -74,7 +74,7 @@ function App() {
 Function to call when the disconnect has completed successfully.
 
 ```ts
-import { useDisconnect } from '@casperdash/useWallet/react';
+import { useDisconnect } from '@casperdash/useWallet';
 
 function App() {
   const { disconnect } = useDisconnect({
@@ -90,7 +90,7 @@ function App() {
 Function to execute when disconnect completes (successfully disconnected or error is thrown).
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useConnect } from '@casperdash/useWallet';
 
 function App() {
   const { connect } = useConnect({

@@ -43,7 +43,7 @@ import {
   CasperSignerConnector,
   CasperProvider,
   createClient
-} from '@casperdash/useWallet/react';
+} from '@casperdash/useWallet';
 
 
 const client = createClient({
@@ -79,8 +79,8 @@ Time to use hooks in any components inside the `CasperProvider`.
 import {
   CasperSignerConnector,
   CasperDashConnector
-} from '@casperdash/useWallet/react';
-import { useAccount, useDisconnect, useConnect } from '@casperdash/useWallet/react';
+} from '@casperdash/useWallet';
+import { useAccount, useDisconnect, useConnect } from '@casperdash/useWallet';
 
 function WalletProfile() {
   const { publicKey } = useAccount();

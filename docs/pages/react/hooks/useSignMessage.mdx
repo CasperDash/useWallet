@@ -8,13 +8,13 @@ description: 'Hook for signing message.'
 Hook for signing transaction prior to submitting to the Casper network.
 
 ```ts
-import { useSignMessage } from '@casperdash/useWallet/react';
+import { useSignMessage } from '@casperdash/useWallet';
 ```
 
 ## Usage
 
 ```tsx
-import { useSignMessage } from '@casperdash/useWallet/react';
+import { useSignMessage } from '@casperdash/useWallet';
 
 function WalletProfile() {
   const { signMessage, data } = useSignMessage({
@@ -47,7 +47,7 @@ function WalletProfile() {
 Function is called before any attempt to sign message, receiving all relevant data, allowing for manipulation of this data before the operation itself is committed. Return value of this function will be passed to both onError and onSettled in event of a failure.
 
 ```ts
-import { useSignMessage } from '@casperdash/useWallet/react';
+import { useSignMessage } from '@casperdash/useWallet';
 
 function App() {
   const { signMessage } = useSignMessage({
@@ -65,7 +65,7 @@ function App() {
 Function that is invoked when the sign message successful.
 
 ```ts
-import { useSignMessage } from '@casperdash/useWallet/react';
+import { useSignMessage } from '@casperdash/useWallet';
 
 function App() {
   const { signMessage } = useSignMessage({
@@ -83,7 +83,7 @@ function App() {
 Function to invoke when sign message has completed, providing information about success or failure of the connection.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet/react';
+import { useConnect } from '@casperdash/useWallet';
 
 function App() {
   const { signMessage } = useSignMessage({
