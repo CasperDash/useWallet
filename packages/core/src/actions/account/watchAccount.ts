@@ -1,7 +1,7 @@
 import { shallow } from 'zustand/shallow';
-import { Connector } from '@usewallet/core/connectors/base';
-import { StatusEnum } from '@usewallet/core/enums';
-import { getClient, StateParams } from '@usewallet/core/utils/client';
+import { Connector } from '@casperdash/usewallet-core/connectors/base';
+import { StatusEnum } from '@casperdash/usewallet-core/enums';
+import { getClient, StateParams } from '@casperdash/usewallet-core/utils/client';
 
 import { Account, getAccount } from './getAccount';
 

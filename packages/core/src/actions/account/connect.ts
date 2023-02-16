@@ -1,5 +1,5 @@
-import { Connector, StatusEnum, ConnectorAlreadyConnectedError } from '@usewallet/core';
-import { getClient, StateParams } from '@usewallet/core/utils/client';
+import { Connector, StatusEnum, ConnectorAlreadyConnectedError } from '@casperdash/usewallet-core';
+import { getClient, StateParams } from '@casperdash/usewallet-core/utils/client';
 
 export type ConnectParams = {
   connector: Connector;

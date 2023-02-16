@@ -1,8 +1,8 @@
 
 import { useCallback } from 'react';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { disconnect as disconnectDapp } from '@usewallet/core';
-import { MutationKeysEnum } from '@usewallet/react';
+import { disconnect as disconnectDapp } from '@casperdash/usewallet-core';
+import { MutationKeysEnum } from '@casperdash/usewallet';
 
 export type UseDisconnectConfig = Partial<UseMutationOptions>;
 

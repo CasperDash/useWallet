@@ -1,5 +1,5 @@
-import { StatusEnum } from '@usewallet/core/enums';
-import { getClient, StateParams } from '@usewallet/core/utils/client';
+import { StatusEnum } from '@casperdash/usewallet-core/enums';
+import { getClient, StateParams } from '@casperdash/usewallet-core/utils/client';
 
 export const disconnect = async (): Promise<void> => {
   const client = getClient();

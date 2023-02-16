@@ -1,10 +1,10 @@
-import { ConnectorNotFoundError } from '@usewallet/core/errors';
-import { Client, getClient } from '@usewallet/core/utils/client';
+import { ConnectorNotFoundError } from '@casperdash/usewallet-core/errors';
+import { Client, getClient } from '@casperdash/usewallet-core/utils/client';
 import { describe, expect, it, vi, afterEach, beforeEach, MockedFunction } from 'vitest';
 
 import { signMessage } from './signMessage';
 
-vi.mock('@usewallet/core/utils/client', () => ({
+vi.mock('@casperdash/usewallet-core/utils/client', () => ({
   getClient: vi.fn(),
 }));
 

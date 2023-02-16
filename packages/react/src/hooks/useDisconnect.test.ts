@@ -1,16 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { Connector } from '@usewallet/core';
+import { Connector } from '@casperdash/usewallet-core';
 
 import { wrapper } from '../../test';
 
 import { useDisconnect } from './useDisconnect';
 
-vi.mock('@usewallet/core/actions/account', () => ({
+vi.mock('@casperdash/usewallet-core/actions/account', () => ({
   disconnect: vi.fn(),
 }));
 
-vi.mock('@usewallet/core/utils/client', () => ({
+vi.mock('@casperdash/usewallet-core/utils/client', () => ({
   getClient: vi.fn(() => ({
     data: { activeKey: 'testPublicKey' },
     connector: {

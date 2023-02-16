@@ -1,5 +1,5 @@
-import { Deploy } from '@usewallet/core/types/deploy';
-import { getClient } from '@usewallet/core/utils/client';
+import { Deploy } from '@casperdash/usewallet-core/types/deploy';
+import { getClient } from '@casperdash/usewallet-core/utils/client';
 import { JsonTypes } from 'typedjson';
 
 export type SignParams = {

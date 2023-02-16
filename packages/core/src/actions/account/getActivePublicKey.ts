@@ -1,4 +1,4 @@
-import { getClient } from '@usewallet/core/utils/client';
+import { getClient } from '@casperdash/usewallet-core/utils/client';
 
 export const getActivePublicKey = async (): Promise<string | undefined> => {
   const connector = getClient()?.connector;

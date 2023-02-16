@@ -1,10 +1,10 @@
 import { renderHook } from '@testing-library/react';
-import { getAccount, StatusEnum } from '@usewallet/core';
+import { getAccount, StatusEnum } from '@casperdash/usewallet-core';
 import { beforeEach, describe, expect, it, MockedFunction, vi } from 'vitest';
 
 import { useAccount } from './useAccount';
 
-vi.mock('@usewallet/core', () => ({
+vi.mock('@casperdash/usewallet-core', () => ({
   getAccount: vi.fn(),
   watchAccount: vi.fn(),
   StatusEnum: {

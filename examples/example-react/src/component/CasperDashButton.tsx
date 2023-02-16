@@ -1,7 +1,7 @@
 import {
   CasperDashConnector,
-} from '@usewallet/core';
-import { useConnect } from '@usewallet/react';
+  useConnect,
+} from '@casperdash/usewallet';
 
 
 export const CasperDashButton = () => {

@@ -1,4 +1,4 @@
-import { useAccount, useDisconnect } from '@usewallet/react';
+import { useAccount, useDisconnect } from '@casperdash/usewallet';
 
 import './App.css';
 import CasperDashButton from './component/CasperDashButton';
@@ -21,7 +21,7 @@ function App() {
         ) : (
           <>
             <div>
-              <a href="https://casperdash.io" target="_blank">
+              <a href="https://usewallet.casperdash.io/" target="_blank">
                 <img
                   src="/casperdash.png"
                   className="logo"
@@ -30,7 +30,7 @@ function App() {
               </a>
             </div>
             <div className="card">
-              <h1>UseDApp Connector</h1>
+              <h1>useWallet Connector</h1>
               <CasperSignerButton />
               <br />
               <CasperDashButton />

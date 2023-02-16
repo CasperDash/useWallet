@@ -24,7 +24,7 @@ yarn add @casperdash/useWallet
 </div>
 {/* prettier-ignore-end */}
 
-[Get Started](/react/getting-started) · [GitHub Repository](https://github.com/CasperDash/useDApp)
+[Get Started](/react/getting-started) · [GitHub Repository](https://github.com/CasperDash/useWallet)
 
 # Overview
 
@@ -91,7 +91,7 @@ function WalletProfile() {
 }
 ```
 
-In the above snippet, we create a useDApp ```client``` and pass it to the CasperProvider React Context. The client is set up to use the Casper Wallet Default Provider and automatically connect to previously connected wallets.
+In the above snippet, we create a useWallet ```client``` and pass it to the CasperProvider React Context. The client is set up to use the Casper Wallet Default Provider and automatically connect to previously connected wallets.
 
 Next, we use the useConnect hook to connect injected supporting wallets (Casper Signer and CasperDash) to the app. Finally, we show the connected account's public key with useAccount and allow them to disconnect with useDisconnect.
 

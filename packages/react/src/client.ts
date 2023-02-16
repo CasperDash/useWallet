@@ -3,7 +3,7 @@ import {
   ClientConfig as CasperClientConfig,
   createClient as createCasperClient,
   Client as CasperClient,
-} from '@usewallet/core';
+} from '@casperdash/usewallet-core';
 
 export type CreateClientConfig = CasperClientConfig & {
   queryClient?: QueryClient;
@@ -33,4 +33,4 @@ export const createClient = ({
 };
 
 export type Client = CasperClient & { queryClient: QueryClient };
-export { CasperDashConnector, CasperSignerConnector } from '@usewallet/core';
+export { CasperDashConnector, CasperSignerConnector } from '@casperdash/usewallet-core';

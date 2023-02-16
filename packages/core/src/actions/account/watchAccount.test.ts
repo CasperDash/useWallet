@@ -1,5 +1,5 @@
-import { CasperDashConnector } from '@usewallet/core/connectors';
-import { createClient } from '@usewallet/react';
+import { CasperDashConnector } from '@casperdash/usewallet-core/connectors';
+import { createClient } from '@casperdash/usewallet';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 import { watchAccount } from './watchAccount';

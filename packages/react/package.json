@@ -1,13 +1,13 @@
 {
-  "name": "@usewallet/react",
-  "version": "0.0.1-beta.1",
+  "name": "@casperdash/usewallet",
+  "version": "0.0.1",
   "description": "React Hooks for Casper",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CasperDash/useDApp.git",
+    "url": "https://github.com/CasperDash/useWallet.git",
     "directory": "packages/react"
   },
-  "homepage": "https://casperdash.io",
+  "homepage": "https://usewallet.casperdash.io/",
   "contributors": [
     "dev <dev@casperdash.io>"
   ],
@@ -29,7 +29,7 @@
     "@tanstack/query-sync-storage-persister": "^4.22.0",
     "@tanstack/react-query": "^4.22.3",
     "@tanstack/react-query-persist-client": "^4.22.3",
-    "@usewallet/core": "workspace:*",
+    "@casperdash/usewallet-core": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
