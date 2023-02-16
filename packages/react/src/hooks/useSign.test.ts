@@ -1,16 +1,16 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { Connector } from '@usedapp/core';
+import { Connector } from '@usewallet/core';
 import { describe, expect, it, vi } from 'vitest';
 
 import { wrapper } from '../../test';
 
 import { useSign } from './useSign';
 
-vi.mock('@usedapp/core/actions/account', () => ({
+vi.mock('@usewallet/core/actions/account', () => ({
   sign: vi.fn().mockResolvedValue({ deploy: { hash: '123' } }),
 }));
 
-vi.mock('@usedapp/core/utils/client', () => ({
+vi.mock('@usewallet/core/utils/client', () => ({
   getClient: vi.fn(() => ({
     data: { activeKey: 'testPublicKey' },
     connector: {

@@ -29,7 +29,7 @@
     "@tanstack/query-sync-storage-persister": "^4.22.0",
     "@tanstack/react-query": "^4.22.3",
     "@tanstack/react-query-persist-client": "^4.22.3",
-    "@usedapp/core": "workspace:*",
+    "@usewallet/core": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

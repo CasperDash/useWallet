@@ -3,7 +3,7 @@ import { DocsThemeConfig } from 'nextra-theme-docs';
 const config: DocsThemeConfig = {
   logo: <span>useWallet</span>,
   project: {
-    link: 'https://casperdash.io/',
+    link: 'https://github.com/CasperDash/useDApp',
   },
   darkMode: true,
   chat: {
@@ -16,6 +16,13 @@ const config: DocsThemeConfig = {
   useNextSeoProps() {
     return {
       titleTemplate: '%s – useWallet',
+      description:
+      'useWallet is a collection of React Hooks containing everything you need to start working with Casper.',
+      openGraph: {
+        description:
+          'useWallet is a collection of React Hooks containing everything you need to start working with Casper.',
+        titleTemplate: '%s – useWallet',
+      },
     };
   },
 };

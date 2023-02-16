@@ -3,7 +3,7 @@ import {
   watchAccount,
   StatusEnum,
   getAccount,
-} from '@usedapp/core';
+} from '@usewallet/core';
 import { useEffect, useState } from 'react';
 
 export type UserAccounProps = {

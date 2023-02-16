@@ -18,10 +18,10 @@ useDApp is a library/react component which designed for DApp to interact with Ca
 
 ### Installation
 
-Install @usedapp/react and Casper dependency.
+Install @usewallet/react and Casper dependency.
 
 ```bash
-npm install @usedapp/react casper-js-sdk
+npm install @usewallet/react casper-js-sdk
 ```
 
 ### Quick Start
@@ -34,7 +34,7 @@ import {
   CasperSignerConnector,
   CasperProvider,
   createClient
-} from '@usedapp/core';
+} from '@usewallet/core';
 
 
 const client = createClient({
@@ -55,8 +55,8 @@ function App() {
 import {
   CasperSignerConnector,
   CasperDashConnector
-} from '@usedapp/core';
-import { useAccount, useDisconnect, useConnect } from '@usedapp/react';
+} from '@usewallet/core';
+import { useAccount, useDisconnect, useConnect } from '@usewallet/react';
 
 function WalletProfile() {
   const { publicKey } = useAccount();

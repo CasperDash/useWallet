@@ -1,5 +1,5 @@
-import { Deploy } from '@usedapp/core/types/deploy';
-import { getClient } from '@usedapp/core/utils/client';
+import { Deploy } from '@usewallet/core/types/deploy';
+import { getClient } from '@usewallet/core/utils/client';
 import { JsonTypes } from 'typedjson';
 
 export type SignParams = {
@@ -14,7 +14,7 @@ export const sign = async ({ deploy, signingPublicKeyHex, targetPublicKeyHex }: 
   const connector = getClient()?.connector;
 
   try {
-    return await connector?.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
+    return connector?.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
   } catch (error) {
     console.error(error);
   }

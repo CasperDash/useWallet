@@ -1,4 +1,4 @@
-import { getClient } from '@usedapp/core/utils/client';
+import { getClient } from '@usewallet/core/utils/client';
 
 export type SignMessageParams = {
   message: string;
