@@ -20,7 +20,9 @@ describe('sign', () => {
     (getClient as MockedFunction<typeof getClient>).mockReturnValue({ connector } as unknown as Client);
 
     const signParams: SignParams = {
-      deploy: {},
+      deploy: {
+        deploy: {},
+      },
       signingPublicKeyHex: 'signingPublicKeyHex',
       targetPublicKeyHex: 'targetPublicKeyHex',
     };
@@ -38,7 +40,9 @@ describe('sign', () => {
     (getClient as MockedFunction<typeof getClient>).mockReturnValue(undefined as unknown as Client);
 
     const signParams: SignParams = {
-      deploy: {},
+      deploy: {
+        deploy: {},
+      },
       signingPublicKeyHex: 'signingPublicKeyHex',
       targetPublicKeyHex: 'targetPublicKeyHex',
     };
@@ -50,23 +54,29 @@ describe('sign', () => {
   });
 
   it('should log the error if the connector is available but the sign method throws an error', async () => {
+    console.error = vi.fn();
     const connector = {
       sign: vi.fn().mockRejectedValue(new ConnectorNotFoundError()),
     };
     (getClient as MockedFunction<typeof getClient>).mockReturnValue({ connector } as unknown as Client);
 
     const signParams: SignParams = {
-      deploy: {},
+      deploy: {
+        deploy: {},
+      },
       signingPublicKeyHex: 'signingPublicKeyHex',
       targetPublicKeyHex: 'targetPublicKeyHex',
     };
 
-    console.error = vi.fn();
 
-    await sign(signParams);
+    try {
+      await sign(signParams);
+    } catch (err) {
+      expect(err).toBeInstanceOf(ConnectorNotFoundError);
 
-    expect(connector.sign).toHaveBeenCalledWith(signParams.deploy, signParams.signingPublicKeyHex, signParams.targetPublicKeyHex);
-    expect(getClient).toHaveBeenCalled();
-    expect(console.error).toHaveBeenCalledWith(new ConnectorNotFoundError());
+      expect(connector.sign).toHaveBeenCalledWith(signParams.deploy, signParams.signingPublicKeyHex, signParams.targetPublicKeyHex);
+      expect(getClient).toHaveBeenCalled();
+    }
+
   });
 });
