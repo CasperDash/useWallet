@@ -2,15 +2,9 @@ import { JsonTypes } from 'typedjson';
 
 import { ConnectorNotFoundError } from '../errors';
 import { CasperLabsHelper } from '../types/casperLabsHelper';
+import { Deploy } from '../types/deploy';
 
 import { Connector } from './base';
-
-declare global {
-  interface Window {
-    casperlabsHelper: CasperLabsHelper;
-  }
-}
-
 
 type CasperLabWindowGlobal = CasperLabsHelper;
 type Provider = CasperLabsHelper;
@@ -22,7 +16,11 @@ export type CasperSignerConnectorOptions = {
   getEventProvider?: () => EventProvider;
 };
 
-export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Window, CasperSignerConnectorOptions> {
+export class CasperSignerConnector extends Connector<
+CasperLabWindowGlobal,
+Window,
+CasperSignerConnectorOptions
+> {
   public readonly id: string = 'casperSigner';
 
   private provider: Provider | undefined;
@@ -34,7 +32,9 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     const options = {
       name: 'CasperSigner',
       getProvider: (): Provider | undefined => {
-        return typeof window !== 'undefined' ? window.casperlabsHelper : undefined;
+        return typeof window !== 'undefined'
+          ? window.casperlabsHelper
+          : undefined;
       },
       getEventProvider: (): EventProvider => {
         return window;
@@ -83,8 +83,14 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
 
     const eventProvider = await this.getEventProvider();
 
-    eventProvider?.removeEventListener('signer:activeKeyChanged', this.onActiveKeyChanged);
-    eventProvider?.removeEventListener('signer:disconnected', this.onDisconnected);
+    eventProvider?.removeEventListener(
+      'signer:activeKeyChanged',
+      this.onActiveKeyChanged,
+    );
+    eventProvider?.removeEventListener(
+      'signer:disconnected',
+      this.onDisconnected,
+    );
     eventProvider?.removeEventListener('signer:connected', this.onConnected);
 
     provider.disconnectFromSite();
@@ -95,8 +101,11 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
 
     const eventProvider = await this.getEventProvider();
 
-    eventProvider?.addEventListener('signer:activeKeyChanged', this.onActiveKeyChanged);
-    eventProvider?.addEventListener('signer:disconnected',  this.onDisconnected);
+    eventProvider?.addEventListener(
+      'signer:activeKeyChanged',
+      this.onActiveKeyChanged,
+    );
+    eventProvider?.addEventListener('signer:disconnected', this.onDisconnected);
     eventProvider?.addEventListener('signer:connected', this.onConnected);
 
     provider.requestConnection();
@@ -108,13 +117,20 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     return provider.getActivePublicKey();
   }
 
-  public async signMessage(message: string, signingPublicKeyHex: string): Promise<string> {
+  public async signMessage(
+    message: string,
+    signingPublicKeyHex: string,
+  ): Promise<string> {
     const provider = await this.getProvider();
 
     return provider.signMessage(message, signingPublicKeyHex);
   }
 
-  public async sign(deploy: any, signingPublicKeyHex: string, targetPublicKeyHex: string): Promise<{ deploy: JsonTypes }> {
+  public async sign(
+    deploy: { deploy: JsonTypes },
+    signingPublicKeyHex: string,
+    targetPublicKeyHex: string,
+  ): Promise<Deploy> {
     const provider = await this.getProvider();
 
     return provider.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
@@ -126,13 +142,17 @@ export class CasperSignerConnector extends Connector<CasperLabWindowGlobal, Wind
     // this.emit('disconnect');
   }
 
-  public onActiveKeyChanged(event: CustomEventInit<{ activeKey: string; isConnected: boolean }>): void {
+  public onActiveKeyChanged(
+    event: CustomEventInit<{ activeKey: string; isConnected: boolean }>,
+  ): void {
     const customEvent = new CustomEvent('casper:change', event);
     window.dispatchEvent(customEvent);
     // this.emit('change', { isConnected: event.detail?.isConnected, activeKey: event.detail?.activeKey });
   }
 
-  public onConnected(event: CustomEventInit<{ activeKey: string; isConnected: boolean }>): void {
+  public onConnected(
+    event: CustomEventInit<{ activeKey: string; isConnected: boolean }>,
+  ): void {
     const customEvent = new CustomEvent('casper:connect', event);
     window.dispatchEvent(customEvent);
     // this.emit('connect', { isConnected: event.detail?.isConnected, activeKey: event.detail?.activeKey });

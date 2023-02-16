@@ -1,5 +1,7 @@
 import { JsonTypes } from 'typedjson';
 
+import { Deploy } from './deploy';
+
 export interface CasperLabsHelper {
   /**
    * Returns Signer version
@@ -32,7 +34,7 @@ export interface CasperLabsHelper {
     deploy: { deploy: JsonTypes },
     signingPublicKeyHex: string,
     targetPublicKeyHex?: string
-  ) => Promise<{ deploy: JsonTypes }>;
+  ) => Promise<Deploy>;
 
   /**
    * Send raw string message to Signer for signing.

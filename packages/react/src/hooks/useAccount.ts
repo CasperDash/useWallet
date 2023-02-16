@@ -11,7 +11,7 @@ export type UserAccounProps = {
   onDisconnect?: (status: StatusEnum) => void;
 };
 
-export const useAccount = ({ onConnect, onDisconnect }: UserAccounProps) => {
+export const useAccount = ({ onConnect, onDisconnect }: UserAccounProps = {}) => {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [status, setStatus] = useState<StatusEnum>(StatusEnum.DISCONNECTED);
 

@@ -18,8 +18,11 @@ const FormSigner = () => {
     },
   });
   const onSubmit = (formValues: FormValues) => {
+    if (!publicKey) {
+      return;
+    }
     const transferDeploy = getTransferDeploy({
-      fromAddress: publicKey!,
+      fromAddress: publicKey,
       toAddress: formValues.walletAddress,
       amount: formValues.amount,
       transferId: 1,
@@ -28,7 +31,7 @@ const FormSigner = () => {
 
     sign({
       deploy: transferDeploy,
-      signingPublicKeyHex: publicKey!,
+      signingPublicKeyHex: publicKey,
       targetPublicKeyHex: formValues.walletAddress,
     });
   };
@@ -42,7 +45,7 @@ const FormSigner = () => {
         Send
       </button>
 
-      {data?.deploy ? (data?.deploy as Record<string, string>).hash : ''}
+      {data?.deploy.hash}
     </form>
   );
 };

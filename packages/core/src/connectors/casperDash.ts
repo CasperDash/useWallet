@@ -1,6 +1,7 @@
 import { JsonTypes } from 'typedjson';
 
 import { ConnectorNotFoundError } from '../errors';
+import { Deploy } from '../types/deploy';
 
 import { Connector } from './base';
 
@@ -9,7 +10,7 @@ declare global {
     casperDashHelper?: {
       isConnected: () => Promise<boolean>;
       signMessage: (message: string, signingPublicKeyHex: string) => Promise<string>;
-      sign: (deploy: unknown, signingPublicKeyHex: string, targetPublicKey: string) => Promise<{ deploy: JsonTypes }>;
+      sign: (deploy: unknown, signingPublicKeyHex: string, targetPublicKey: string) => Promise<Deploy>;
       disconnectFromSite: () => Promise<void>;
       requestConnection: () => Promise<void>;
       getActivePublicKey: () => Promise<string>;
@@ -90,7 +91,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     eventProvider?.removeEventListener('casperdash:disconnected', () => this.onDisconnected());
     eventProvider?.removeEventListener('casperdash:connected', this.onConnected);
 
-    await provider!.disconnectFromSite();
+    await provider?.disconnectFromSite();
   }
 
   public async connect(): Promise<void> {
@@ -117,7 +118,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     return provider!.signMessage(message, signingPublicKeyHex);
   }
 
-  public async sign(deploy: any, signingPublicKeyHex: string, targetPublicKey: string): Promise<{ deploy: JsonTypes }> {
+  public async sign(deploy: { deploy: JsonTypes }, signingPublicKeyHex: string, targetPublicKey: string): Promise<Deploy> {
     const provider = await this.getProvider();
 
     return provider!.sign(deploy, signingPublicKeyHex, targetPublicKey);
