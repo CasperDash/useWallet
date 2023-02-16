@@ -25,7 +25,8 @@
     "test:typecheck": "vitest typecheck",
     "test:ui": "vitest --ui",
     "test:update": "vitest --update",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
@@ -50,6 +51,18 @@
     "typescript": "^4.9.4",
     "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.26.3"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "eslint",
+        "prettier",
+        "react"
+      ]
+    }
   },
   "husky": {
     "hooks": {

@@ -191,6 +191,9 @@ packages:
     peerDependencies:
       '@babel/core': '>=7.11.0'
       eslint: ^7.5.0 || ^8.0.0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       '@babel/core': 7.20.12
       '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
@@ -833,6 +836,9 @@ packages:
     peerDependencies:
       react: ^16 || ^17 || ^18
       react-dom: ^16 || ^17 || ^18
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       client-only: 0.0.1
       react: 18.2.0
@@ -951,6 +957,9 @@ packages:
     resolution: {integrity: sha512-YdXcMcEnqZhzql98RNrqYo9cEhTTesBiCclEtoiQUbJwx87q9453GTapYU6kJ8ZZ2ek1Vp25SiAXEFy5O/eAPw==}
     peerDependencies:
       react: '>=16'
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       '@types/mdx': 2.0.3
       '@types/react': 18.0.27
@@ -1392,6 +1401,8 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-native: '*'
     peerDependenciesMeta:
+      react:
+        optional: true
       react-dom:
         optional: true
       react-native:
@@ -1423,6 +1434,9 @@ packages:
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       '@babel/runtime': 7.20.13
       '@testing-library/dom': 8.20.0
@@ -1631,6 +1645,8 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
       typescript: '*'
     peerDependenciesMeta:
+      eslint:
+        optional: true
       typescript:
         optional: true
     dependencies:
@@ -1657,6 +1673,8 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
       typescript: '*'
     peerDependenciesMeta:
+      eslint:
+        optional: true
       typescript:
         optional: true
     dependencies:
@@ -1685,6 +1703,8 @@ packages:
       eslint: '*'
       typescript: '*'
     peerDependenciesMeta:
+      eslint:
+        optional: true
       typescript:
         optional: true
     dependencies:
@@ -1729,6 +1749,9 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       '@types/json-schema': 7.0.11
       '@types/semver': 7.3.13
@@ -3281,6 +3304,9 @@ packages:
     peerDependencies:
       eslint: ^7.32.0 || ^8.2.0
       eslint-plugin-import: ^2.25.2
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       confusing-browser-globals: 1.0.11
       eslint: 8.31.0
@@ -3297,6 +3323,9 @@ packages:
       '@typescript-eslint/parser': ^5.0.0
       eslint: ^7.32.0 || ^8.2.0
       eslint-plugin-import: ^2.25.3
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.48.0_k73wpmdolxikpyqun3p36akaaq
       '@typescript-eslint/parser': 5.48.0_iukboom6ndih5an6iafl45j2fe
@@ -3310,6 +3339,9 @@ packages:
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       eslint: 8.31.0
     dev: true
@@ -3361,6 +3393,8 @@ packages:
     peerDependenciesMeta:
       '@typescript-eslint/parser':
         optional: true
+      eslint:
+        optional: true
     dependencies:
       '@typescript-eslint/parser': 5.48.0_iukboom6ndih5an6iafl45j2fe
       array-includes: 3.1.6
@@ -3391,7 +3425,11 @@ packages:
       eslint-config-prettier: '*'
       prettier: '>=1.13.0'
     peerDependenciesMeta:
+      eslint:
+        optional: true
       eslint-config-prettier:
+        optional: true
+      prettier:
         optional: true
     dependencies:
       prettier-linter-helpers: 1.0.0
@@ -3404,7 +3442,11 @@ packages:
       eslint-config-prettier: '*'
       prettier: '>=2.0.0'
     peerDependenciesMeta:
+      eslint:
+        optional: true
       eslint-config-prettier:
+        optional: true
+      prettier:
         optional: true
     dependencies:
       prettier-linter-helpers: 1.0.0
@@ -3418,7 +3460,11 @@ packages:
       eslint-config-prettier: '*'
       prettier: '>=2.0.0'
     peerDependenciesMeta:
+      eslint:
+        optional: true
       eslint-config-prettier:
+        optional: true
+      prettier:
         optional: true
     dependencies:
       eslint: 8.31.0
@@ -3432,6 +3478,9 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       eslint: 8.31.0
     dev: true
@@ -3441,6 +3490,9 @@ packages:
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       array-includes: 3.1.6
       array.prototype.flatmap: 1.3.1
@@ -3466,6 +3518,9 @@ packages:
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
       typescript: ^4.0.0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       '@babel/eslint-parser': 7.19.1_ucmnolur3r335ullwiyt3zl3pi
       builtin-modules: 3.3.0
@@ -3487,6 +3542,9 @@ packages:
     engines: {node: '>=12'}
     peerDependencies:
       eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       eslint: 8.31.0
     dev: true
@@ -3511,6 +3569,9 @@ packages:
     engines: {node: ^10.0.0 || ^12.0.0 || >= 14.0.0}
     peerDependencies:
       eslint: '>=5'
+    peerDependenciesMeta:
+      eslint:
+        optional: true
     dependencies:
       eslint: 8.31.0
       eslint-visitor-keys: 2.1.0
@@ -5745,6 +5806,9 @@ packages:
     peerDependencies:
       react: '>=16.x <=18.x'
       react-dom: '>=16.x <=18.x'
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       '@mdx-js/mdx': 2.2.1
       '@mdx-js/react': 2.2.1_react@18.2.0
@@ -5762,6 +5826,9 @@ packages:
       next: ^8.1.1-canary.54 || >=9.0.0
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -5774,6 +5841,9 @@ packages:
       next: '*'
       react: '*'
       react-dom: '*'
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -5794,6 +5864,8 @@ packages:
       fibers:
         optional: true
       node-sass:
+        optional: true
+      react:
         optional: true
       sass:
         optional: true
@@ -5831,6 +5903,9 @@ packages:
       nextra: 2.2.14
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       '@headlessui/react': 1.7.10_biqbaboplfbrettd7655fr4n2y
       '@popperjs/core': 2.11.6
@@ -5856,6 +5931,9 @@ packages:
       next: '>=9.5.3'
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       '@mdx-js/mdx': 2.2.1
       '@mdx-js/react': 2.2.1_react@18.2.0
@@ -6407,6 +6485,9 @@ packages:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
       react: ^18.2.0
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       loose-envify: 1.4.0
       react: 18.2.0
@@ -6417,6 +6498,9 @@ packages:
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       react: 18.2.0
     dev: false
@@ -7166,6 +7250,8 @@ packages:
         optional: true
       babel-plugin-macros:
         optional: true
+      react:
+        optional: true
     dependencies:
       client-only: 0.0.1
       react: 18.2.0
@@ -7736,12 +7822,18 @@ packages:
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
     dev: false
 
   /use-sync-external-store/1.2.0_react@18.2.0:
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       react: 18.2.0
     dev: false
