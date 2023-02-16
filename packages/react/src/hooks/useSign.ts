@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { sign as signDapp, SignParams, SignResult } from '@usedapp/core';
-import { MutationKeysEnum } from '@usedapp/react';
+import { sign as signDapp, SignParams, SignResult } from '@usewallet/core';
+import { MutationKeysEnum } from '@usewallet/react';
 
 export type UseSignParams = Partial<SignParams>;
 
@@ -11,23 +11,23 @@ UseMutationOptions<SignResult, unknown, UseSignParams>
 
 export type UseSignProps = Partial<UseSignParams & UseSignConfig>;
 
-const mutationFn = async ({ deploy, signingPublicKey, targetPublicKeyHex }: UseSignParams) => {
+const mutationFn = async ({ deploy, signingPublicKeyHex, targetPublicKeyHex }: UseSignParams) => {
   if (!deploy) {
     throw new Error('Deploy must be a non-empty');
   }
-  if (!signingPublicKey) {
-    throw new Error('signingPublicKey must be a non-empty string');
+  if (!signingPublicKeyHex) {
+    throw new Error('signingPublicKeyHex must be a non-empty string');
   }
   if (!targetPublicKeyHex) {
     throw new Error('targetPublicKeyHex must be a non-empty string');
   }
 
-  return signDapp({ deploy, signingPublicKey, targetPublicKeyHex });
+  return signDapp({ deploy, signingPublicKeyHex, targetPublicKeyHex });
 };
 
 export const useSign = ({
   deploy,
-  signingPublicKey,
+  signingPublicKeyHex,
   targetPublicKeyHex,
   onError,
   onMutate,
@@ -56,18 +56,18 @@ export const useSign = ({
   const sign = useCallback((params?: UseSignParams) => {
     return mutate(params || {
       deploy,
-      signingPublicKey,
+      signingPublicKeyHex,
       targetPublicKeyHex,
     });
-  }, [deploy, signingPublicKey, targetPublicKeyHex, mutate]);
+  }, [deploy, signingPublicKeyHex, targetPublicKeyHex, mutate]);
 
   const signAsync = useCallback(async (params?: UseSignParams) => {
     return mutateAsync(params || {
       deploy,
-      signingPublicKey,
+      signingPublicKeyHex,
       targetPublicKeyHex,
     });
-  }, [deploy, signingPublicKey, targetPublicKeyHex, mutateAsync]);
+  }, [deploy, signingPublicKeyHex, targetPublicKeyHex, mutateAsync]);
 
   return {
     sign,

@@ -1,13 +1,13 @@
-import { Connector } from '@usedapp/core/connectors/base';
-import { StatusEnum } from '@usedapp/core/enums';
-import { ConnectorAlreadyConnectedError, ConnectorNotFoundError } from '@usedapp/core/errors';
-import { StateParams } from '@usedapp/core/utils';
+import { Connector } from '@usewallet/core/connectors/base';
+import { StatusEnum } from '@usewallet/core/enums';
+import { ConnectorAlreadyConnectedError, ConnectorNotFoundError } from '@usewallet/core/errors';
+import { StateParams } from '@usewallet/core/utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { connect } from './connect';
 
 const callBackSpy = vi.fn().mockImplementation((cb: (params: Partial<StateParams>) => StateParams) => cb({}));
-vi.mock('@usedapp/core/utils/client', () => ({
+vi.mock('@usewallet/core/utils/client', () => ({
   getClient: vi.fn(() => ({
     data: { activeKey: 'testPublicKey' },
     connector: {

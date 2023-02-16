@@ -1,5 +1,7 @@
 import { JsonTypes } from 'typedjson';
 
+import { Deploy } from './deploy';
+
 export interface CasperLabsHelper {
   /**
    * Returns Signer version
@@ -25,24 +27,24 @@ export interface CasperLabsHelper {
    * If the `target` in the deploy is an account hash this can be used to verify it and display the hex-formatted public key in the UI.
    *
    * @throws Errors if the Signer extension is not connected.
-   * @throws Errors if signingPublicKey is not available or does not match the Active Key in the Signer.
+   * @throws Errors if signingPublicKeyHex is not available or does not match the Active Key in the Signer.
    * @throws Errors if targetPublicKeyHex is not the same as the key (or corresponding account hash) that is used as target in deploy.
    */
   sign: (
     deploy: { deploy: JsonTypes },
     signingPublicKeyHex: string,
     targetPublicKeyHex?: string
-  ) => Promise<{ deploy: JsonTypes }>;
+  ) => Promise<Deploy>;
 
   /**
    * Send raw string message to Signer for signing.
    * @param message string to be signed.
-   * @param signingPublicKey public key in hex format, the corresponding secret key (from the vault) will be used to sign.
+   * @param signingPublicKeyHex public key in hex format, the corresponding secret key (from the vault) will be used to sign.
    * @returns `Base16` signature
    */
   signMessage: (
     rawMessage: string,
-    signingPublicKey: string
+    signingPublicKeyHex: string
   ) => Promise<string>;
 
   /*

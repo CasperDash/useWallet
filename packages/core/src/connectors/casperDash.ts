@@ -1,15 +1,16 @@
 import { JsonTypes } from 'typedjson';
 
 import { ConnectorNotFoundError } from '../errors';
+import { Deploy } from '../types/deploy';
 
 import { Connector } from './base';
 
 declare global {
   interface Window {
-    casperDashPluginHelpers?: {
+    casperDashHelper?: {
       isConnected: () => Promise<boolean>;
-      signMessage: (message: string, signingPublicKey: string) => Promise<string>;
-      sign: (deploy: unknown, signingPublicKey: string, targetPublicKey: string) => Promise<{ deploy: JsonTypes }>;
+      signMessage: (message: string, signingPublicKeyHex: string) => Promise<string>;
+      sign: (deploy: unknown, signingPublicKeyHex: string, targetPublicKey: string) => Promise<Deploy>;
       disconnectFromSite: () => Promise<void>;
       requestConnection: () => Promise<void>;
       getActivePublicKey: () => Promise<string>;
@@ -17,7 +18,7 @@ declare global {
   }
 }
 
-type CasperDashWindowGlobal = Window['casperDashPluginHelpers'];
+type CasperDashWindowGlobal = Window['casperDashHelper'];
 type Provider = CasperDashWindowGlobal;
 type EventProvider = Window;
 
@@ -39,7 +40,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     const options: CasperDashConnectorOptions = {
       name: 'CasperDash',
       getProvider: (): Provider | undefined => {
-        return typeof window !== 'undefined' ? window.casperDashPluginHelpers : undefined;
+        return typeof window !== 'undefined' ? window.casperDashHelper : undefined;
       },
       getEventProvider: (): EventProvider => {
         return window;
@@ -90,7 +91,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     eventProvider?.removeEventListener('casperdash:disconnected', () => this.onDisconnected());
     eventProvider?.removeEventListener('casperdash:connected', this.onConnected);
 
-    await provider!.disconnectFromSite();
+    await provider?.disconnectFromSite();
   }
 
   public async connect(): Promise<void> {
@@ -111,16 +112,16 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     return provider!.getActivePublicKey();
   }
 
-  public async signMessage(message: string, signingPublicKey: string): Promise<string> {
+  public async signMessage(message: string, signingPublicKeyHex: string): Promise<string> {
     const provider = await this.getProvider();
 
-    return provider!.signMessage(message, signingPublicKey);
+    return provider!.signMessage(message, signingPublicKeyHex);
   }
 
-  public async sign(deploy: any, signingPublicKey: string, targetPublicKey: string): Promise<{ deploy: JsonTypes }> {
+  public async sign(deploy: { deploy: JsonTypes }, signingPublicKeyHex: string, targetPublicKey: string): Promise<Deploy> {
     const provider = await this.getProvider();
 
-    return provider!.sign(deploy, signingPublicKey, targetPublicKey);
+    return provider!.sign(deploy, signingPublicKeyHex, targetPublicKey);
   }
 
   public onDisconnected(): void {

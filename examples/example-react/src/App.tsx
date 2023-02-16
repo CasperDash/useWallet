@@ -1,4 +1,4 @@
-import { useAccount, useDisconnect } from '@usedapp/react';
+import { useAccount, useDisconnect } from '@usewallet/react';
 
 import './App.css';
 import CasperDashButton from './component/CasperDashButton';

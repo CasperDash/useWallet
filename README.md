@@ -8,7 +8,7 @@ useDApp is a library/react component which designed for DApp to interact with Ca
 
 - 👟 Optimized with caching and duplicated request elimination
 
-- 🌀 Automatic data updates during account switches and disconnections 
+- 🌀 Automatic data updates during account switches and disconnections
 
 - 🦄 TypeScript compatibility included
 
@@ -18,10 +18,10 @@ useDApp is a library/react component which designed for DApp to interact with Ca
 
 ### Installation
 
-Install @usedapp/react and Casper dependency.
+Install @usewallet/react and Casper dependency.
 
 ```bash
-npm install @usedapp/react casper-js-sdk
+npm install @usewallet/react casper-js-sdk
 ```
 
 ### Quick Start
@@ -29,16 +29,16 @@ npm install @usedapp/react casper-js-sdk
 Connect a Casper Wallet likes 👻 speed.
 
 ```tsx
-import { 
-  CasperDashConnector, 
-  CasperSignerConnector, 
-  CasperProvider, 
-  createClient 
-} from '@usedapp/core';
+import {
+  CasperDashConnector,
+  CasperSignerConnector,
+  CasperProvider,
+  createClient
+} from '@usewallet/core';
 
 
 const client = createClient({
-  connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],
+  connectors: [new CasperSignerConnector(), new CasperDashConnector()],
   autoConnect: true,
 });
 
@@ -55,19 +55,19 @@ function App() {
 import {
   CasperSignerConnector,
   CasperDashConnector
-} from '@usedapp/core';
-import { useAccount, useDisconnect, useConnect } from '@usedapp/react';
+} from '@usewallet/core';
+import { useAccount, useDisconnect, useConnect } from '@usewallet/react';
 
 function WalletProfile() {
   const { publicKey } = useAccount();
   const { disconnect } = useDisconnect();
 
   const { connect: connectWithCasperSigner } = useConnect({
-    connector: new CasperSignerConnector({}),
+    connector: new CasperSignerConnector(),
   });
 
   const { connect: connectWithCasperDash } = useConnect({
-    connector: new CasperDashConnector({}),
+    connector: new CasperDashConnector(),
   });
 
   if (publicKey)
@@ -82,9 +82,9 @@ function WalletProfile() {
     <div>
       <button onClick={() => connectWithCasperSigner()}>Connect with Casper Signer</button>
       </br>
-      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button> 
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button>
     </div>
-    
+
   )
 }
 ```

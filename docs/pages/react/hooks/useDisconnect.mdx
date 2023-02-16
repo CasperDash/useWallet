@@ -1,0 +1,102 @@
+---
+title: 'useDisconnect'
+description: 'Hook for disconnecting account.'
+---
+
+# useConnect
+
+Easy-to-use hook for quickly connecting to an account with compatible connectors. It provides a convenient way to quickly and securely sync accounts with a variety of services and applications.
+
+```ts
+import { useDisconnect } from '@casperdash/useWallet';
+```
+
+## Usage
+
+```tsx
+import { useDisconnect } from '@casperdash/useWallet';
+
+function App() {
+  const { disconnect } = useDisconnect();
+
+  return (
+    <div>
+      <button onClick={() => disconnect()}>Disconnect account</<button>
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```ts
+{
+  disconnect: function
+}
+```
+
+## Configuration
+
+### onError (optional)
+
+Function to call when a disconnection error occurs.
+
+```ts
+import { useDisconnect } from '@casperdash/useWallet';
+
+function App() {
+  const { disconnect } = useDisconnect({
+    onError(error) {
+      console.log('Disconnect', error);
+    },
+  });
+}
+```
+
+### onMutate (optional)
+
+Function fires before disconnect function. The return value of this function is used by both the onError and onSettled function.
+
+```ts
+import { useDisconnect } from '@casperdash/useWallet';
+
+function App() {
+  const { disconnect } = useDisconnect({
+    onMutate() {
+      console.log('Disconnect');
+    },
+  });
+}
+```
+
+### onSuccess (optional)
+
+Function to call when the disconnect has completed successfully.
+
+```ts
+import { useDisconnect } from '@casperdash/useWallet';
+
+function App() {
+  const { disconnect } = useDisconnect({
+    onSuccess() {
+      console.log('Disconnect');
+    },
+  });
+}
+```
+
+### onSettled (optional)
+
+Function to execute when disconnect completes (successfully disconnected or error is thrown).
+
+```ts
+import { useConnect } from '@casperdash/useWallet';
+
+function App() {
+  const { connect } = useConnect({
+    onSettled(data, error) {
+      console.log('Settled', { data, error });
+    },
+  });
+}
+```

@@ -1,6 +1,6 @@
 import { Tabs, Tab } from 'nextra-theme-docs'
 
-useWallet is a collection of React Hooks containing everything you need to start working with Casper Network. useWallet makes it easy to "Connect Casper Wallet," sign messages, interact with contracts, and much more.
+useWallet is a collection of React Hooks containing everything you need to start working with Casper Network. Makes it easy to "Connect Casper Wallet," sign messages, interact with contracts, and much more.
 
 {/* prettier-ignore-start */}
 <div className="max-w-xs mx-auto mt-5 mb-8 text-center install">
@@ -12,7 +12,7 @@ npm i @casperdash/useWallet
     </Tab>
     <Tab>
 ```bash
-pnpm i @casperdash/useWallet
+pnpm add @casperdash/useWallet
 ```
     </Tab>
     <Tab>
@@ -31,15 +31,15 @@ yarn add @casperdash/useWallet
 Connect a Casper Wallet likes 👻 speed.
 
 ```tsx
-import { 
-	CasperProvider, 
-	createClient, 
-	CasperDashConnector, 
-	CasperSignerConnector 
-} from '@casperdash/useWallet/react';
+import {
+	CasperProvider,
+	createClient,
+	CasperDashConnector,
+	CasperSignerConnector
+} from '@casperdash/useWallet';
 
 const client = createClient({
-  connectors: [new CasperSignerConnector({}), new CasperDashConnector({})],
+  connectors: [new CasperSignerConnector(), new CasperDashConnector()],
   autoConnect: true,
 });
 
@@ -53,24 +53,24 @@ function App() {
 ```
 
 ```tsx
-import { 
-	useAccount, 
-	useDisconnect, 
-	useConnect, 
-	CasperSignerConnector, 
-	CasperDashConnector 
-} from '@casperdash/useWallet/react';
+import {
+	useAccount,
+	useDisconnect,
+	useConnect,
+	CasperSignerConnector,
+	CasperDashConnector
+} from '@casperdash/useWallet';
 
 function WalletProfile() {
   const { publicKey } = useAccount();
   const { disconnect } = useDisconnect();
 
   const { connect: connectWithCasperSigner } = useConnect({
-    connector: new CasperSignerConnector({}),
+    connector: new CasperSignerConnector(),
   });
 
   const { connect: connectWithCasperDash } = useConnect({
-    connector: new CasperDashConnector({}),
+    connector: new CasperDashConnector(),
   });
 
   if (publicKey)
@@ -85,7 +85,7 @@ function WalletProfile() {
     <div>
       <button onClick={() => connectWithCasperSigner()}>Connect with Casper Signer</button>
       </br>
-      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button> 
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button>
     </div>
   )
 }
@@ -101,7 +101,7 @@ Next, we use the useConnect hook to connect injected supporting wallets (Casper 
 
 - 👟 Optimized with caching and duplicated request elimination
 
-- 🌀 Automatic data updates during account switches and disconnections 
+- 🌀 Automatic data updates during account switches and disconnections
 
 - 🦄 TypeScript compatibility included
 
