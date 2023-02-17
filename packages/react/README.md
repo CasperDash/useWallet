@@ -34,7 +34,7 @@ import {
   CasperSignerConnector,
   CasperProvider,
   createClient
-} from '@casperdash/usewallet-core';
+} from '@casperdash/usewallet';
 
 
 const client = createClient({
