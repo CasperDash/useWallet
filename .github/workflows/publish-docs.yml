@@ -46,6 +46,7 @@ jobs:
         uses: eisberg-labs/static-website-to-s3@main
         with:
           target: docs/out
+          exclusions: docs\/out\/(index|404).html$
           bucket: s3://usewallet.casperdash.io 
       
       - name: Invalidate cloudfront
