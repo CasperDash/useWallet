@@ -6,9 +6,6 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/CasperDash/useWallet',
   },
   darkMode: true,
-  chat: {
-    link: 'https://discord.com',
-  },
   docsRepositoryBase: 'https://github.com/CasperDash/useWallet',
   footer: {
     text: 'Built by CasperDash team',
@@ -17,7 +14,7 @@ const config: DocsThemeConfig = {
     return {
       titleTemplate: '%s – useWallet',
       description:
-      'useWallet is a collection of React Hooks containing everything you need to start working with Casper.',
+        'useWallet is a collection of React Hooks containing everything you need to start working with Casper.',
       openGraph: {
         description:
           'useWallet is a collection of React Hooks containing everything you need to start working with Casper.',
