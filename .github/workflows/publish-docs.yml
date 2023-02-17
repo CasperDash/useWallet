@@ -9,6 +9,7 @@ on:
 jobs:
   publish-docs:
     runs-on: ubuntu-latest
+    environment: Deploy
 
     strategy:
         matrix:
