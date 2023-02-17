@@ -2,7 +2,7 @@ name: Publish docs
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, doc ]
     tags:
       - docs-*
 
@@ -41,7 +41,14 @@ jobs:
       - name: Export docs
         run : |
           pnpm docs:export
+
       - name: Publish docs to S3
+        uses: eisberg-labs/static-website-to-s3@main
+        with:
+          target: docs/out
+          bucket: s3://usewallet.casperdash.io 
+      
+      - name: Invalidate cloudfront
         run : |
           aws s3 sync ./docs/out s3://usewallet.casperdash.io --delete
           aws cloudfront create-invalidation --distribution-id ${{ secrets.MAINNET_DISTRIBUTION_ID }} --paths "/*" --no-cli-pager
