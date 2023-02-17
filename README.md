@@ -102,8 +102,11 @@ We welcome contributions to useWallet! If you're interested in helping out, take
 ## License
 
 useWallet is licensed under the [MIT License](https://github.com/CasperDash/useWallet/blob/master/LICENSE).
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d5dbb8d (chore: rename workspace)
 
 
 
