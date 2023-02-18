@@ -48,7 +48,7 @@ jobs:
           target: docs/out
           dest: deploy
           exclusions: docs\/out\/(index|404).html$
-          bucket: arn:aws:s3:::usewallet.casperdash.io
+          bucket: usewallet.casperdash.io
       
       - name: Invalidate cloudfront
         run : |
