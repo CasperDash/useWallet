@@ -52,5 +52,4 @@ jobs:
       
       - name: Invalidate cloudfront
         run : |
-          aws s3 copy s3://usewallet.casperdash.io/deploy s3://usewallet.casperdash.io --recursive
           aws cloudfront create-invalidation --distribution-id ${{ secrets.MAINNET_DISTRIBUTION_ID }} --paths "/*" --no-cli-pager
