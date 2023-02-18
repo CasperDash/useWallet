@@ -52,5 +52,4 @@ jobs:
       
       - name: Invalidate cloudfront
         run : |
-          aws s3 sync ./docs/out s3://usewallet.casperdash.io --delete
           aws cloudfront create-invalidation --distribution-id ${{ secrets.MAINNET_DISTRIBUTION_ID }} --paths "/*" --no-cli-pager
