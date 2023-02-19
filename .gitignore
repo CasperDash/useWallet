@@ -21,3 +21,6 @@ graph*.html
 .yarn/*
 
 .DS_Store
+
+
+docs/out

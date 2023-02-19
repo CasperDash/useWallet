@@ -34,7 +34,7 @@ import {
   CasperSignerConnector,
   CasperProvider,
   createClient
-} from '@casperdash/usewallet-core';
+} from '@casperdash/usewallet';
 
 
 const client = createClient({
@@ -97,16 +97,10 @@ Next, we use the useConnect hook to connect injected supporting wallets (Casper 
 
 ## Contributing
 
-We welcome contributions to useWallet! If you're interested in helping out, take a look at our [contributing guidelines](https://github.com/CasperDash/useWallet/blob/master/CONTRIBUTING.md) for more information.
+We welcome contributions to useWallet! If you're interested in helping out, take a look at our [contributing guidelines](https://github.com/CasperDash/useWallet/blob/main/CONTRIBUTING.md) for more information.
 
 ## License
-
-useWallet is licensed under the [MIT License](https://github.com/CasperDash/useWallet/blob/master/LICENSE).
-<<<<<<< HEAD
-
-
-=======
->>>>>>> d5dbb8d (chore: rename workspace)
+useWallet is licensed under the [MIT License](https://github.com/CasperDash/useWallet/blob/main/LICENSE).
 
 
 
