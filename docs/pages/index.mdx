@@ -38,7 +38,7 @@ import {
 	createClient,
 	CasperDashConnector,
 	CasperSignerConnector
-} from '@casperdash/useWallet';
+} from '@casperdash/usewallet';
 
 const client = createClient({
   connectors: [new CasperSignerConnector(), new CasperDashConnector()],
@@ -61,7 +61,7 @@ import {
 	useConnect,
 	CasperSignerConnector,
 	CasperDashConnector
-} from '@casperdash/useWallet';
+} from '@casperdash/usewallet';
 
 function WalletProfile() {
   const { publicKey } = useAccount();

@@ -17,17 +17,17 @@ Install useWallet and its ethers peer dependency.
 <Tabs items={['npm', 'pnpm', 'yarn']}>
   <Tab>
 ```bash
-npm i @casperdash/useWallet
+npm i @casperdash/usewallet
 ```
   </Tab>
   <Tab>
 ```bash
-pnpm add @casperdash/useWallet
+pnpm add @casperdash/usewallet
 ```
   </Tab>
   <Tab>
 ```bash
-yarn add @casperdash/useWallet
+yarn add @casperdash/usewallet
 ```
   </Tab>
 </Tabs>
@@ -43,7 +43,7 @@ import {
   CasperSignerConnector,
   CasperProvider,
   createClient
-} from '@casperdash/useWallet';
+} from '@casperdash/usewallet';
 
 
 const client = createClient({
@@ -79,8 +79,8 @@ Time to use hooks in any components inside the `CasperProvider`.
 import {
   CasperSignerConnector,
   CasperDashConnector
-} from '@casperdash/useWallet';
-import { useAccount, useDisconnect, useConnect } from '@casperdash/useWallet';
+} from '@casperdash/usewallet';
+import { useAccount, useDisconnect, useConnect } from '@casperdash/usewallet';
 
 function WalletProfile() {
   const { publicKey } = useAccount();

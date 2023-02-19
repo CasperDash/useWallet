@@ -8,13 +8,13 @@ description: 'Hook to get account data or connection status.'
 This is a hook used to get the data associated with an account or the current connection status for that account. It allows for the collection of essential account information.
 
 ```ts
-import { useAccount } from '@casperdash/useWallet';
+import { useAccount } from '@casperdash/usewallet';
 ```
 
 ## Usage
 
 ```tsx
-import { useAccount } from '@casperdash/useWallet';
+import { useAccount } from '@casperdash/usewallet';
 
 function App() {
   const { publicKey } = useAccount();
@@ -44,7 +44,7 @@ function App() {
 Function to invoke when account connects.
 
 ```ts
-import { useAccount } from '@casperdash/useWallet';
+import { useAccount } from '@casperdash/usewallet';
 
 function App() {
   const { publicKey } = useAccount({
@@ -60,7 +60,7 @@ function App() {
 Function to invoke when account disconnects.
 
 ```ts
-import { useConnect } from '@casperdash/useWallet';
+import { useConnect } from '@casperdash/usewallet';
 
 function App() {
   const { connect } = useConnect({
