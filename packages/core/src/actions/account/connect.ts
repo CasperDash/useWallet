@@ -9,6 +9,11 @@ export type ConnectResult = {
   connector: Connector;
 };
 
+/**
+ * It connects to a connector, and returns the connector
+ * @param {ConnectParams}  - `connector` - the connector to connect to
+ * @returns The connector that was passed in.
+ */
 export const connect = async ({ connector }: ConnectParams): Promise<ConnectResult> => {
   const client = getClient();
   const activeConnector = client?.connector;
@@ -24,6 +29,7 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
     let isConnected = false;
 
     try {
+      /* Getting the active public key from the connector. */
       const activeKey = await connector.getActivePublicKey();
       customData = {
         activeKey: activeKey,

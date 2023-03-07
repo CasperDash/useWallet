@@ -10,6 +10,11 @@ export type SignParams = {
 
 export type SignResult = Deploy | undefined;
 
+/**
+ * It signs a deploy with the signing public key and the target public key
+ * @param {SignParams}  - `deploy` - the deploy object to sign
+ * @returns The signature of the deploy.
+ */
 export const sign = async ({ deploy, signingPublicKeyHex, targetPublicKeyHex }: SignParams): Promise<SignResult> => {
   const connector = getClient()?.connector;
 

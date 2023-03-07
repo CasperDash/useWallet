@@ -23,11 +23,23 @@ export type WatchAccountOptions = {
   }: WatchAccountSelectorParams) => any;
 };
 
+/**
+ * `watchAccount` is a function that takes a callback and returns a function that unsubscribes the
+ * callback from the client
+ * @param callback - (account: Account | null) => void
+ * @param {WatchAccountOptions}  - `callback` - a function that will be called when the account
+ * changes.
+ * @returns A function that can be called to unsubscribe from the watchAccount function.
+ */
 export const watchAccount = (
   callback: (account: Account | null) => void,
   { selector = (params: WatchAccountSelectorParams) => params } : WatchAccountOptions = {}): any => {
   const client = getClient();
 
+  /**
+   * It takes a callback function as an argument, and then calls that callback function with the result
+   * of another function as an argument
+   */
   const handleOnChange = () => callback(getAccount());
   const unsubscribe = client.subscribe(
     ({ data, connector, status }: StateParams) => {
