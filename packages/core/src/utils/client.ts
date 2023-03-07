@@ -16,6 +16,7 @@ export type StateParams = {
 
 export type ClientConfig = StateParams;
 
+/* It's a wrapper around a state management library called Zustand */
 export class Client {
   private store: Mutate<
   StoreApi<StateParams>,
@@ -104,6 +105,7 @@ export class Client {
 
     let isConnected = false;
     for (const connector of this.connectors || []) {
+      /* It's checking if the connector is connected. */
       const isConnectedWithConnector = await connector?.isConnected();
 
       if (isConnectedWithConnector) {
@@ -137,6 +139,10 @@ export class Client {
   }
 
   private triggerEvent(): void {
+    /**
+     * It sets the state of the component.
+     * @param {ConnectorData} data - ConnectorData - The data that is passed to the connector.
+     */
     const onChange = (data: ConnectorData) => {
       this.setState((x: StateParams) => ({
         ...x,
@@ -144,10 +150,18 @@ export class Client {
       }));
     };
 
+    /**
+     * It clears the state of the component.
+     */
     const onDisconnect = () => {
       this.clearState();
     };
 
+    /**
+     * It sets the state of the component to the data passed in.
+     * @param {ConnectorData} data - ConnectorData - this is the data that is returned from the
+     * connector.
+     */
     const onConnect = (data: ConnectorData) => {
       this.setState((x: StateParams) => ({
         ...x,
@@ -156,6 +170,7 @@ export class Client {
       }));
     };
 
+    
     this.store.subscribe(
       ({ connector }: StateParams) => connector!,
       (connector: Connector) => {
@@ -174,12 +189,18 @@ export class Client {
 
 export let client: Client;
 
+/**
+ * It creates a new instance of the Client class and returns it
+ * @param {ClientConfig} clientConfig - ClientConfig
+ * @returns A Client object
+ */
 export const createClient = (clientConfig: ClientConfig): Client => {
   client = new Client(clientConfig);
 
   return client;
 };
 
+/* It's a function that returns the client. */
 export const getClient = (): Client => {
   if (!client) {
     throw new ClientNotFoundError();

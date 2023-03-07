@@ -7,6 +7,11 @@ export type SignMessageParams = {
 
 export type SignMessageResult = string | undefined;
 
+/**
+ * It takes a message and a signing public key, and returns a signature
+ * @param {SignMessageParams}  - `message` - the message to sign
+ * @returns The result of the signMessage function.
+ */
 export const signMessage = async ({ message, signingPublicKeyHex }: SignMessageParams): Promise<SignMessageResult> => {
   const connector = getClient()?.connector;
 
