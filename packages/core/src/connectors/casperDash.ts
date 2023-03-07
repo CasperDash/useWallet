@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { JsonTypes } from 'typedjson';
 
 import { ConnectorNotFoundError } from '../errors';
@@ -122,14 +123,14 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     eventProvider?.addEventListener('casperdash:disconnected', this.onDisconnected);
     eventProvider?.addEventListener('casperdash:connected', this.onConnected);
 
-    await provider!.requestConnection();
+    await provider?.requestConnection();
   }
 
   /**
    * It returns the active public key of the account.
    * @returns The public key of the active account.
    */
-  public async getActivePublicKey(): Promise<any> {
+  public async getActivePublicKey(): Promise<string> {
     const provider = await this.getProvider();
 
     return provider!.getActivePublicKey();
@@ -137,7 +138,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
 
   /**
    * "This function takes a message and a signing public key, and returns a signature."
-   * 
+   *
    * The first line of the function is a comment. Comments are ignored by the compiler
    * @param {string} message - The message to sign.
    * @param {string} signingPublicKeyHex - The public key of the account that will sign the message.
@@ -151,7 +152,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
 
   /**
    * "Sign a deploy using the given signing key and target key."
-   * 
+   *
    * The first parameter is a deploy object. The second parameter is the signing key. The third
    * parameter is the target key
    * @param deploy - { deploy: JsonTypes }

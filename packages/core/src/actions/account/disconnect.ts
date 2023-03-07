@@ -11,7 +11,7 @@ export const disconnect = async (): Promise<void> => {
   try {
     /* Calling the `disconnect` method of the connector. */
     await client.connector?.disconnect();
-   /* Updating the state of the client. */
+    /* Updating the state of the client. */
     client.setState((oldState: StateParams) => ({
       ...oldState,
       status: StatusEnum.DISCONNECTED,

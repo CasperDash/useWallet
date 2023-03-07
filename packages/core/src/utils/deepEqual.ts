@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const deepEqual = (a: any, b: any) => {
   // check if a and b are both null or undefined
   if (a === null && b === null) return true;

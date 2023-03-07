@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { JsonTypes } from 'typedjson';
 import { describe, expect, it, beforeEach, vi, afterEach } from 'vitest';
 
