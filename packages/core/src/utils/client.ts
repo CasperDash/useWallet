@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { createStore, Mutate, StoreApi } from 'zustand/vanilla';
 import { subscribeWithSelector } from 'zustand/middleware';
 
@@ -170,7 +171,7 @@ export class Client {
       }));
     };
 
-    
+
     this.store.subscribe(
       ({ connector }: StateParams) => connector!,
       (connector: Connector) => {
