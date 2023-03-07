@@ -16,6 +16,7 @@ export type CasperSignerConnectorOptions = {
   getEventProvider?: () => EventProvider;
 };
 
+/* It's a connector that connects to the Casper Signer extension */
 export class CasperSignerConnector extends Connector<
 CasperLabWindowGlobal,
 Window,
@@ -45,7 +46,12 @@ CasperSignerConnectorOptions
     super({ options });
   }
 
+  
   // eslint-disable-next-line @typescript-eslint/require-await
+  /**
+   * It returns a promise that resolves to the provider object
+   * @returns The provider is being returned.
+   */
   public async getProvider(): Promise<CasperLabWindowGlobal> {
     const provider = this.options.getProvider?.();
     if (!provider) {
@@ -56,7 +62,12 @@ CasperSignerConnectorOptions
     return this.provider;
   }
 
+  
   // eslint-disable-next-line @typescript-eslint/require-await
+ /**
+  * It returns the event provider that was passed in the options object
+  * @returns The eventProvider
+  */
   public async getEventProvider(): Promise<EventProvider> {
     const eventProvider = this.options.getEventProvider?.();
     if (!eventProvider) {
@@ -68,6 +79,11 @@ CasperSignerConnectorOptions
     return this.eventProvider;
   }
 
+  /**
+   * It returns a promise that resolves to a boolean value that indicates whether the user is connected
+   * to the blockchain
+   * @returns A boolean value.
+   */
   public async isConnected(): Promise<boolean> {
     try {
       const provider = await this.getProvider();
@@ -78,6 +94,9 @@ CasperSignerConnectorOptions
     }
   }
 
+  /**
+   * It disconnects the user from the site.
+   */
   public async disconnect(): Promise<void> {
     const provider = await this.getProvider();
 
@@ -96,6 +115,9 @@ CasperSignerConnectorOptions
     provider.disconnectFromSite();
   }
 
+  /**
+   * It requests a connection to the provider, and then adds event listeners to the event provider
+   */
   public async connect(): Promise<void> {
     const provider = await this.getProvider();
 
@@ -111,12 +133,25 @@ CasperSignerConnectorOptions
     provider.requestConnection();
   }
 
+  /**
+   * It returns the active public key of the account.
+   * @returns The public key of the active account.
+   */
   public async getActivePublicKey(): Promise<string> {
     const provider = await this.getProvider();
 
     return provider.getActivePublicKey();
   }
 
+  /**
+   * "Sign a message with the signing key of the account associated with the given public key."
+   * 
+   * The first parameter is the message to sign. The second parameter is the public key of the account
+   * that will sign the message
+   * @param {string} message - The message to sign.
+   * @param {string} signingPublicKeyHex - The public key of the account that will sign the message.
+   * @returns A string
+   */
   public async signMessage(
     message: string,
     signingPublicKeyHex: string,
@@ -126,6 +161,14 @@ CasperSignerConnectorOptions
     return provider.signMessage(message, signingPublicKeyHex);
   }
 
+  /**
+   * It takes a deploy, a signing public key, and a target public key, and returns a signed deploy
+   * @param deploy - { deploy: JsonTypes }
+   * @param {string} signingPublicKeyHex - The public key of the account that is signing the deploy.
+   * @param {string} targetPublicKeyHex - The public key of the account that will be paying for the
+   * deploy.
+   * @returns A deploy object.
+   */
   public async sign(
     deploy: { deploy: JsonTypes },
     signingPublicKeyHex: string,
