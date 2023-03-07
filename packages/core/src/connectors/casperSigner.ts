@@ -46,7 +46,7 @@ CasperSignerConnectorOptions
     super({ options });
   }
 
-  
+
   // eslint-disable-next-line @typescript-eslint/require-await
   /**
    * It returns a promise that resolves to the provider object
@@ -62,9 +62,9 @@ CasperSignerConnectorOptions
     return this.provider;
   }
 
-  
+
   // eslint-disable-next-line @typescript-eslint/require-await
- /**
+  /**
   * It returns the event provider that was passed in the options object
   * @returns The eventProvider
   */
@@ -145,7 +145,7 @@ CasperSignerConnectorOptions
 
   /**
    * "Sign a message with the signing key of the account associated with the given public key."
-   * 
+   *
    * The first parameter is the message to sign. The second parameter is the public key of the account
    * that will sign the message
    * @param {string} message - The message to sign.
