@@ -20,7 +20,7 @@ export type WatchAccountOptions = {
     publicKey,
     connector,
     status,
-  }: WatchAccountSelectorParams) => void;
+  }: WatchAccountSelectorParams) => unknown;
 };
 
 /**
@@ -33,7 +33,7 @@ export type WatchAccountOptions = {
  */
 export const watchAccount = (
   callback: (account: Account | null) => void,
-  { selector = (params: WatchAccountSelectorParams) => params } : WatchAccountOptions = {}) => {
+  { selector = (params: WatchAccountSelectorParams) => params } : WatchAccountOptions = {}): unknown => {
   const client = getClient();
 
   /**
@@ -43,7 +43,6 @@ export const watchAccount = (
   const handleOnChange = () => callback(getAccount());
   const unsubscribe = client.subscribe(
     ({ data, connector, status }: StateParams) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return selector?.({
         publicKey: data?.activeKey,
         status,

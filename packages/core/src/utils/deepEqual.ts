@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const deepEqual = (a: any, b: any) => {
-  // check if a and b are both null or undefined
-  if (a === null && b === null) return true;
-  if (a === undefined && b === undefined) return true;
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/** Forked from https://github.com/epoberezkin/fast-deep-equal */
+
+export function deepEqual(a: any, b: any) {
   if (a === b) return true;
 
   if (a && b && typeof a === 'object' && typeof b === 'object') {
@@ -42,4 +41,4 @@ export const deepEqual = (a: any, b: any) => {
 
   // true if both NaN, false otherwise
   return a !== a && b !== b;
-};
+}
