@@ -1,4 +1,4 @@
-import { OnConnectParams, useAccount, useDisconnect } from '@casperdash/usewallet';
+import { OnConnectParams, useAccount, useDisconnect, useSignMessage } from '@casperdash/usewallet';
 
 import './App.css';
 import CasperDashButton from './component/CasperDashButton';
@@ -6,12 +6,18 @@ import CasperSignerButton from './component/CasperSignerButton';
 import FormSigner from './component/FormSigner';
 
 function App() {
+  const { signMessageAsync } = useSignMessage();
   const { publicKey } = useAccount({
-    onConnect({ publicKey: publicKeyOnConnect }: OnConnectParams) {
-      console.log(publicKeyOnConnect);
+    onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
+      console.log('onConnect: ', publicKeyOnConnect);
+      const message = await signMessageAsync({
+        signingPublicKeyHex: publicKeyOnConnect,
+        message: 'Hello Casper!!!',
+      });
+      console.log('message: ', message);
     },
     onDisconnect() {
-      console.log('Disconnect');
+      console.log('onDisconnect');
     },
   });
   const { disconnect } = useDisconnect();

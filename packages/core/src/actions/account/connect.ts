@@ -23,18 +23,20 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
   }
 
   try {
-    client.setState((x: StateParams) => ({ ...x, status: StatusEnum.CONNECTING }));
+    client.setState((x: StateParams) => ({ ...x, status: StatusEnum.CONNECTING, connector }));
     await connector.connect();
     let customData = {};
     let isConnected = false;
 
     try {
-      /* Getting the active public key from the connector. */
-      const activeKey = await connector.getActivePublicKey();
-      customData = {
-        activeKey: activeKey,
-      };
-      isConnected = !!activeKey;
+      isConnected = !!await connector.isConnected();
+      if (isConnected) {
+        /* Getting the active public key from the connector. */
+        const activeKey = await connector.getActivePublicKey();
+        customData = {
+          activeKey: activeKey,
+        };
+      }
     } catch (err) {
       console.error(err);
     }
