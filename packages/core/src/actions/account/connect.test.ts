@@ -29,6 +29,7 @@ describe('connect', () => {
       id: 'test',
       connect: vi.fn(),
       getActivePublicKey: vi.fn().mockReturnValue('active-key'),
+      isConnected: vi.fn().mockResolvedValueOnce(true),
     } as unknown as Connector;
     const connectSpy = vi.spyOn(connector, 'connect');
     const getActivePublicKeySpy = vi.spyOn(connector, 'getActivePublicKey');
@@ -55,6 +56,7 @@ describe('connect', () => {
       id: 'test2',
       connect: vi.fn(),
       getActivePublicKey: vi.fn(),
+      isConnected: vi.fn().mockRejectedValueOnce(false),
     } as unknown as Connector;
     const connectSpy = vi.spyOn(connector, 'connect');
     const getActivePublicKeySpy = vi.spyOn(connector, 'getActivePublicKey');
@@ -75,6 +77,7 @@ describe('connect', () => {
       id: 'test',
       connect: vi.fn(),
       getActivePublicKey: vi.fn().mockRejectedValueOnce(new ConnectorNotFoundError()),
+      isConnected: vi.fn().mockResolvedValueOnce(true),
     } as unknown as Connector;
     const connectSpy = vi.spyOn(connector, 'connect');
     const getActivePublicKeySpy = vi.spyOn(connector, 'getActivePublicKey');
@@ -95,6 +98,7 @@ describe('connect', () => {
       id: 'test',
       connect: vi.fn().mockRejectedValueOnce(new ConnectorNotFoundError()),
       getActivePublicKey: vi.fn(),
+      isConnected: vi.fn().mockResolvedValueOnce(true),
     } as unknown as Connector;
     const connectSpy = vi.spyOn(connector, 'connect');
     const getActivePublicKeySpy = vi.spyOn(connector, 'getActivePublicKey');
