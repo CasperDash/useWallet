@@ -3,17 +3,22 @@ import {
   watchAccount,
   StatusEnum,
   getAccount,
+  deepEqual,
+  Connector,
 } from '@casperdash/usewallet-core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+export type OnConnectParams = { publicKey: string; connector?: Connector };
 
 export type UserAccounProps = {
-  onConnect?: (status: StatusEnum) => void;
-  onDisconnect?: (status: StatusEnum) => void;
+  onConnect?: ({ publicKey, connector }: OnConnectParams) => void;
+  onDisconnect?: () => void;
 };
 
 export const useAccount = ({ onConnect, onDisconnect }: UserAccounProps = {}) => {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [status, setStatus] = useState<StatusEnum>(StatusEnum.DISCONNECTED);
+  const ref = useRef<Account>(null!);
 
   useEffect(() => {
     const initAccount = async (): Promise<void> => {
@@ -22,8 +27,6 @@ export const useAccount = ({ onConnect, onDisconnect }: UserAccounProps = {}) =>
       if (account?.publicKey && account.status === StatusEnum.CONNECTED) {
         setPublicKey(account.publicKey);
         setStatus(account.status);
-
-        onConnect?.(account.status);
       }
     };
 
@@ -34,14 +37,23 @@ export const useAccount = ({ onConnect, onDisconnect }: UserAccounProps = {}) =>
         return;
       }
 
-      const currentStatus = account.status ? account.status : StatusEnum.DISCONNECTED;
+      setPublicKey(account.publicKey || null);
+      setStatus(account.status || StatusEnum.DISCONNECTED);
 
-      setPublicKey(account.publicKey ? account.publicKey : null);
-      setStatus(currentStatus);
+      if (!deepEqual(account, ref.current)) {
+        if (account?.publicKey && account.status === StatusEnum.CONNECTED) {
+          onConnect?.({
+            publicKey: account.publicKey,
+            connector: account.connector,
+          });
+        }
 
-      if (currentStatus === StatusEnum.DISCONNECTED) {
-        onDisconnect?.(status);
+        if (account.status === StatusEnum.DISCONNECTED) {
+          onDisconnect?.();
+        }
       }
+
+      ref.current = account;
     });
   }, []);
 
