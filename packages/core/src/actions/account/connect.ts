@@ -29,8 +29,8 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
   }
 
   try {
-    // change the state of the client and set the status property as "CONNECTING" and set the specified connector
-    client.setState((x: StateParams) => ({ ...x, status: StatusEnum.CONNECTING, connector }));
+    // change the state of the client and set the status property as "CONNECTING"
+    client.setState((x: StateParams) => ({ ...x, status: StatusEnum.CONNECTING }));
 
     // Call the `connect()` method on the specified connector and wait until the connection is established
     await connector.connect();
