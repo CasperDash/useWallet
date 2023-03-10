@@ -3,4 +3,5 @@ export enum StatusEnum {
   CONNECTING = 'connecting',
   RECONNECTING = 'reconnecting',
   DISCONNECTED = 'disconnected',
+  LOCKED = 'locked',
 }

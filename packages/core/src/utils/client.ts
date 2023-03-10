@@ -41,7 +41,20 @@ export class Client {
     this.triggerEvent();
 
     if (autoConnect) {
-      setTimeout(async () => this.autoConnect(), 0);
+      let x = 0;
+      const intervalID = setInterval(() => {
+        let isReady = false;
+        for (const connector of connectors) {
+          if (connector.getProvider()) {
+            isReady = true;
+          }
+        }
+
+        if (++x === 5 || isReady) {
+          setTimeout(async () => this.autoConnect(), 0);
+          window.clearInterval(intervalID);
+        }
+      }, 1000);
     }
   }
 
@@ -74,6 +87,7 @@ export class Client {
       ...x,
       connector: undefined,
       data: undefined,
+      status: StatusEnum.DISCONNECTED,
     }));
   }
 
@@ -97,33 +111,53 @@ export class Client {
       return;
     }
     this.isAutoConnecting = true;
+    console.log('connectors: ', this.connectors);
 
     this.setState((x: StateParams) => ({
       ...x,
       status: x.data?.activeKey ? StatusEnum.RECONNECTING : StatusEnum.CONNECTING,
     }));
 
-
     let isConnected = false;
     for (const connector of this.connectors || []) {
       /* It's checking if the connector is connected. */
       const isConnectedWithConnector = await connector?.isConnected();
-
       if (isConnectedWithConnector) {
-        await this.connector?.connect();
-        const publicKey = await connector?.getActivePublicKey();
-        this.setState((x: StateParams) => ({
-          ...x,
-          status: StatusEnum.CONNECTED,
-          connector,
-          data: {
-            ...x.data,
-            activeKey: publicKey,
-          },
-        }));
-        isConnected = true;
+        let publicKey: string | undefined;
+        try {
+          publicKey = await connector?.getActivePublicKey();
+        } catch (err) {
+          publicKey = undefined;
+        }
+        if (!publicKey) {
+          this.setState((x: StateParams) => ({
+            ...x,
+            connector,
+          }));
+          try {
+            await connector.connect();
+          } catch (err) {
+            console.error(err);
+          }
+        }
+        try {
+          publicKey = await connector?.getActivePublicKey();
 
-        break;
+          this.setState((x: StateParams) => ({
+            ...x,
+            status: StatusEnum.CONNECTED,
+            connector,
+            data: {
+              ...x.data,
+              activeKey: publicKey,
+            },
+          }));
+          isConnected = true;
+          break;
+        } catch (err) {
+          console.error(err);
+        }
+
       }
     }
 
@@ -154,6 +188,25 @@ export class Client {
     /**
      * It clears the state of the component.
      */
+    const onUnlock = async ({ isUnlocked }: { isUnlocked: boolean; isConnected:boolean }) => {
+      if (!isUnlocked) {
+        return;
+      }
+      let publicKey: string | undefined;
+      try {
+        publicKey = await this.connector?.getActivePublicKey();
+      } catch (err) {
+        console.error(err);
+        publicKey = undefined;
+      }
+
+      this.setState((x: StateParams) => ({
+        ...x,
+        data: { ...x.data, activeKey: publicKey },
+        status: publicKey ? StatusEnum.CONNECTED : StatusEnum.DISCONNECTED,
+      }));
+    };
+
     const onDisconnect = () => {
       this.clearState();
     };
@@ -181,6 +234,9 @@ export class Client {
         window?.addEventListener('casper:disconnect', () => onDisconnect());
         window?.addEventListener('casper:connect',
           (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onConnect(event.detail!));
+        window?.addEventListener('casper:unlocked',
+          async (event: CustomEventInit<{ isUnlocked: boolean; isConnected: boolean }>) => onUnlock(event.detail!));
+
       },
     );
   }

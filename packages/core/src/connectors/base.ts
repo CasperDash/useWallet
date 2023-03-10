@@ -20,6 +20,7 @@ export interface ConnectorEvents {
 export abstract class Connector<Provider = unknown, EventProvider = unknown, Options = unknown> extends EventEmitter<ConnectorEvents> {
   protected readonly options: Options;
   public abstract readonly id: string;
+  public abstract isReady: boolean;
 
   constructor({
     options,
@@ -34,7 +35,7 @@ export abstract class Connector<Provider = unknown, EventProvider = unknown, Opt
     return this.options;
   }
 
-  public abstract getProvider(): Promise<Provider>;
+  public abstract getProvider(): Provider;
   public abstract getEventProvider(): Promise<EventProvider>;
 
   public abstract isConnected(): Promise<boolean>;

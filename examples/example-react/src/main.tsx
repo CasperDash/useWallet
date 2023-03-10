@@ -1,4 +1,9 @@
-import { CasperDashConnector, CasperSignerConnector, CasperProvider, createClient } from '@casperdash/usewallet';
+import {
+  CasperDashConnector,
+  CasperSignerConnector,
+  CasperProvider,
+  createClient,
+} from '@casperdash/usewallet';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
