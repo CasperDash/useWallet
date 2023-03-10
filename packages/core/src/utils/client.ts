@@ -40,8 +40,10 @@ export class Client {
 
     this.triggerEvent();
 
-    if (autoConnect) {
-      setTimeout(async () => this.autoConnect(), 0);
+    if (autoConnect && typeof window !== 'undefined') {
+      window.addEventListener('load', () => {
+        setTimeout(async () => this.autoConnect(), 0);
+      });
     }
   }
 
@@ -103,27 +105,38 @@ export class Client {
       status: x.data?.activeKey ? StatusEnum.RECONNECTING : StatusEnum.CONNECTING,
     }));
 
-
     let isConnected = false;
     for (const connector of this.connectors || []) {
       /* It's checking if the connector is connected. */
       const isConnectedWithConnector = await connector?.isConnected();
-
       if (isConnectedWithConnector) {
-        await this.connector?.connect();
-        const publicKey = await connector?.getActivePublicKey();
-        this.setState((x: StateParams) => ({
-          ...x,
-          status: StatusEnum.CONNECTED,
-          connector,
-          data: {
-            ...x.data,
-            activeKey: publicKey,
-          },
-        }));
-        isConnected = true;
+        let publicKey: string;
+        try {
+          publicKey = await connector?.getActivePublicKey();
+        } catch (err) {
+          publicKey = '';
+        }
+        if (!publicKey) {
+          await connector.connect();
+        }
+        try {
+          publicKey = await connector?.getActivePublicKey();
 
-        break;
+          this.setState((x: StateParams) => ({
+            ...x,
+            status: StatusEnum.CONNECTED,
+            connector,
+            data: {
+              ...x.data,
+              activeKey: publicKey,
+            },
+          }));
+          isConnected = true;
+          break;
+        } catch (err) {
+          console.error(err);
+        }
+
       }
     }
 

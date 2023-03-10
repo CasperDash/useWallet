@@ -23,7 +23,7 @@ Window,
 CasperSignerConnectorOptions
 > {
   public readonly id: string = 'casperSigner';
-
+  public readonly isReady: boolean = false;
   private provider: Provider | undefined;
   private eventProvider: Window | undefined;
 
@@ -42,8 +42,10 @@ CasperSignerConnectorOptions
       },
       ...defaultOptions,
     };
-
     super({ options });
+
+    const provider = options.getProvider();
+    this.isReady = !!provider;
   }
 
 
