@@ -23,7 +23,7 @@ Window,
 CasperSignerConnectorOptions
 > {
   public readonly id: string = 'casperSigner';
-  public readonly isReady: boolean = false;
+  public isReady: boolean = false;
   private provider: Provider | undefined;
   private eventProvider: Window | undefined;
 
@@ -54,12 +54,13 @@ CasperSignerConnectorOptions
    * It returns a promise that resolves to the provider object
    * @returns The provider is being returned.
    */
-  public async getProvider(): Promise<CasperLabWindowGlobal> {
+  public getProvider(): CasperLabWindowGlobal {
     const provider = this.options.getProvider?.();
     if (!provider) {
       throw new ConnectorNotFoundError();
     }
     this.provider = provider;
+    this.isReady = true;
 
     return this.provider;
   }
@@ -113,6 +114,7 @@ CasperSignerConnectorOptions
       this.onDisconnected,
     );
     eventProvider?.removeEventListener('signer:connected', this.onConnected);
+    eventProvider?.removeEventListener('signer:unlocked', this.onUnlocked);
 
     provider.disconnectFromSite();
   }
@@ -131,6 +133,7 @@ CasperSignerConnectorOptions
     );
     eventProvider?.addEventListener('signer:disconnected', this.onDisconnected);
     eventProvider?.addEventListener('signer:connected', this.onConnected);
+    eventProvider?.addEventListener('signer:unlocked', this.onUnlocked);
 
     provider.requestConnection();
   }
@@ -140,7 +143,7 @@ CasperSignerConnectorOptions
    * @returns The public key of the active account.
    */
   public async getActivePublicKey(): Promise<string> {
-    const provider = await this.getProvider();
+    const provider = this.getProvider();
 
     return provider.getActivePublicKey();
   }
@@ -158,7 +161,7 @@ CasperSignerConnectorOptions
     message: string,
     signingPublicKeyHex: string,
   ): Promise<string> {
-    const provider = await this.getProvider();
+    const provider = this.getProvider();
 
     return provider.signMessage(message, signingPublicKeyHex);
   }
@@ -176,7 +179,7 @@ CasperSignerConnectorOptions
     signingPublicKeyHex: string,
     targetPublicKeyHex: string,
   ): Promise<Deploy> {
-    const provider = await this.getProvider();
+    const provider = this.getProvider();
 
     return provider.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
   }
@@ -201,5 +204,12 @@ CasperSignerConnectorOptions
     const customEvent = new CustomEvent('casper:connect', event);
     window.dispatchEvent(customEvent);
     // this.emit('connect', { isConnected: event.detail?.isConnected, activeKey: event.detail?.activeKey });
+  }
+
+  public onUnlocked(
+    event: CustomEventInit<{ isUnlocked: string; isConnected: boolean }>,
+  ): void {
+    const customEvent = new CustomEvent('casper:unlocked', event);
+    window.dispatchEvent(customEvent);
   }
 }

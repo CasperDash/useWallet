@@ -1,3 +1,4 @@
+import { ConnectorNotFoundError } from '@casperdash/usewallet-core/errors';
 import { Deploy } from '@casperdash/usewallet-core/types/deploy';
 import { getClient } from '@casperdash/usewallet-core/utils/client';
 import { JsonTypes } from 'typedjson';
@@ -19,7 +20,10 @@ export const sign = async ({ deploy, signingPublicKeyHex, targetPublicKeyHex }: 
   const connector = getClient()?.connector;
 
   try {
-    return connector?.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
+    if (!connector) {
+      throw new ConnectorNotFoundError();
+    }
+    return connector.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
   } catch (error) {
     console.error(error);
   }

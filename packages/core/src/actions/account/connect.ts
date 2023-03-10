@@ -9,13 +9,17 @@ export type ConnectResult = {
   connector: Connector;
 };
 
-/**
- * It connects to a connector, and returns the connector
- *
- * @param {ConnectParams}  - `connector` - the connector to connect to
- * @returns The connector that was passed in.
- */
-// connect function which will receive an object (specifically connector params) and return a promise which will resolve into ConnectResult.
+const getActiveKey = async (connector: Connector) => {
+  const activeKey = await connector.getActivePublicKey();
+  if (!activeKey) {
+    throw new Error('Public key not found');
+  }
+
+  return {
+    activeKey,
+  };
+};
+
 export const connect = async ({ connector }: ConnectParams): Promise<ConnectResult> => {
 
   // get the client object of @casperdash/usewallet-core
@@ -36,35 +40,54 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
     await connector.connect();
 
     // Declare and initialize variables for storing custom data and the status of connection establishment
-    let customData = {};
     let isConnected = false;
 
+    let customData: { activeKey?: string } = {};
     try {
       // Specify to check whether the connector is connected or not by calling the `isConnected()` method on connector
       isConnected = !!await connector.isConnected();
       if (isConnected) {
         // If the connection is established successfully, get the active public key from the connector
-        const activeKey = await connector.getActivePublicKey();
+        const { activeKey } = await getActiveKey(connector);
+
         customData = {
           activeKey: activeKey,
         };
       }
     } catch (err) {
-      console.error(err);
+      await connector.connect();
+      try {
+        const { activeKey } = await getActiveKey(connector);
+        customData = {
+          activeKey,
+        };
+      } catch {
+        customData = {};
+      }
     }
 
-    // Set the connector in the client state along with its custom data
+    console.log('connector: ', connector);
+
     client.setState((oldState: StateParams) => ({
       ...oldState,
       connector,
-      status: isConnected ? StatusEnum.CONNECTED : StatusEnum.CONNECTING,
-      data: { ...oldState.data, ...customData },
+      status: customData.activeKey ? StatusEnum.CONNECTED : StatusEnum.CONNECTING,
+      data: {
+        ...oldState.data,
+        ...customData,
+      },
     }));
 
     // Finally, Return an object containing the connector that was passed in.
     return { connector };
 
   } catch (error) {
+    client.setState((x: StateParams) => {
+      return {
+        ...x,
+        status: x.connector ? StatusEnum.CONNECTED : StatusEnum.DISCONNECTED,
+      };
+    });
     console.error(error);
 
     // Propagate the error up the call stack by throwing the error
