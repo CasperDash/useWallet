@@ -32,6 +32,7 @@ export type CasperDashConnectorOptions = {
 /* It's a connector that uses the CasperDash browser extension to sign messages and deploys */
 export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Window, CasperDashConnectorOptions> {
   public readonly id: string = 'casperDash';
+  public readonly isReady: boolean = false;
 
   private provider: Provider;
   private eventProvider: Window | undefined;
@@ -39,7 +40,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
   constructor({
     options: defaultOptions,
   }: { options?: CasperDashConnectorOptions } = {}) {
-    const options: CasperDashConnectorOptions = {
+    const options = {
       name: 'CasperDash',
       getProvider: (): Provider | undefined => {
         return typeof window !== 'undefined' ? window.casperDashHelper : undefined;
@@ -51,6 +52,9 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
     };
 
     super({ options });
+
+    const provider = options.getProvider();
+    this.isReady = !!provider;
   }
 
   /**
