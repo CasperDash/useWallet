@@ -1,3 +1,4 @@
+import { ConnectorNotFoundError } from '@casperdash/usewallet-core/errors';
 import { getClient } from '@casperdash/usewallet-core/utils/client';
 
 export type SignMessageParams = {
@@ -16,7 +17,10 @@ export const signMessage = async ({ message, signingPublicKeyHex }: SignMessageP
   const connector = getClient()?.connector;
 
   try {
-    return await connector?.signMessage(message, signingPublicKeyHex);
+    if (!connector) {
+      throw new ConnectorNotFoundError();
+    }
+    return await connector.signMessage(message, signingPublicKeyHex);
   } catch (error) {
     console.error(error);
   }

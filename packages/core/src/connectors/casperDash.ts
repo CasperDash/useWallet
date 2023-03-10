@@ -32,7 +32,7 @@ export type CasperDashConnectorOptions = {
 /* It's a connector that uses the CasperDash browser extension to sign messages and deploys */
 export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Window, CasperDashConnectorOptions> {
   public readonly id: string = 'casperDash';
-  public readonly isReady: boolean = false;
+  public isReady: boolean = false;
 
   private provider: Provider;
   private eventProvider: Window | undefined;
@@ -61,12 +61,13 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
    * It returns a promise that resolves to the provider object
    * @returns The provider is being returned.
    */
-  public async getProvider(): Promise<CasperDashWindowGlobal> {
+  public getProvider(): Provider {
     const provider = this.options.getProvider?.();
     if (!provider) {
       throw new ConnectorNotFoundError();
     }
     this.provider = provider;
+    this.isReady = true;
 
     return this.provider;
   }
@@ -92,10 +93,11 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
    */
   public async isConnected(): Promise<boolean> {
     try {
-      const provider = await this.getProvider();
+      const provider = this.getProvider();
 
       return await provider!.isConnected();
     } catch (err) {
+      console.error(err);
       return false;
     }
   }
@@ -104,12 +106,12 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
    * It removes all event listeners and disconnects from the site
    */
   public async disconnect(): Promise<void> {
-    const provider = await this.getProvider();
+    const provider = this.getProvider();
 
     const eventProvider = await this.getEventProvider();
 
     eventProvider?.removeEventListener('casperdash:activeKeyChanged', this.onActiveKeyChanged);
-    eventProvider?.removeEventListener('casperdash:disconnected', () => this.onDisconnected());
+    eventProvider?.removeEventListener('casperdash:disconnected', this.onDisconnected);
     eventProvider?.removeEventListener('casperdash:connected', this.onConnected);
 
     await provider?.disconnectFromSite();
@@ -119,7 +121,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
    * It gets the provider, gets the event provider, adds event listeners, and requests a connection
    */
   public async connect(): Promise<void> {
-    const provider = await this.getProvider();
+    const provider = this.getProvider();
 
     const eventProvider = await this.getEventProvider();
 
@@ -135,7 +137,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
    * @returns The public key of the active account.
    */
   public async getActivePublicKey(): Promise<string> {
-    const provider = await this.getProvider();
+    const provider = this.getProvider();
 
     return provider!.getActivePublicKey();
   }
@@ -149,7 +151,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
    * @returns A promise that resolves to a string.
    */
   public async signMessage(message: string, signingPublicKeyHex: string): Promise<string> {
-    const provider = await this.getProvider();
+    const provider = this.getProvider();
 
     return provider!.signMessage(message, signingPublicKeyHex);
   }
@@ -165,7 +167,7 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
    * @returns A deploy object.
    */
   public async sign(deploy: { deploy: JsonTypes }, signingPublicKeyHex: string, targetPublicKey: string): Promise<Deploy> {
-    const provider = await this.getProvider();
+    const provider = this.getProvider();
 
     return provider!.sign(deploy, signingPublicKeyHex, targetPublicKey);
   }
