@@ -62,8 +62,8 @@ importers:
       typescript: ^4.9.3
     dependencies:
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
-      nextra: 2.2.14_3vryta7zmbcsw4rrqf4axjqggm
-      nextra-theme-docs: 2.2.14_u6qwm625rg3t7ll2t4ybomvrai
+      nextra: 2.2.19_3vryta7zmbcsw4rrqf4axjqggm
+      nextra-theme-docs: 2.2.19_lzh67riyd6q5wh5q33hsgfs3gy
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
@@ -73,9 +73,9 @@ importers:
 
   examples/example-react:
     specifiers:
+      '@casperdash/usewallet': workspace:*
       '@types/react': ^18.0.26
       '@types/react-dom': ^18.0.9
-      '@casperdash/usewallet': workspace:*
       '@vitejs/plugin-react-swc': ^3.0.0
       casper-js-sdk: ^2.10.1
       react: ^18.2.0
@@ -98,6 +98,8 @@ importers:
 
   packages/core:
     specifiers:
+      '@ledgerhq/hw-transport-webusb': ^6.27.12
+      '@zondax/ledger-casper': ^2.5.3
       casper-js-sdk: ^2.10.1
       eslint-plugin-prettier: ^4.2.1
       eventemitter3: ^4.0.7
@@ -105,6 +107,8 @@ importers:
       typedjson: ^1.8.0
       zustand: ^4.3.2
     dependencies:
+      '@ledgerhq/hw-transport-webusb': 6.27.12
+      '@zondax/ledger-casper': 2.5.3
       eventemitter3: 4.0.7
       typedjson: 1.8.0
       zustand: 4.3.2
@@ -115,22 +119,22 @@ importers:
 
   packages/react:
     specifiers:
+      '@casperdash/usewallet-core': workspace:*
       '@tanstack/query-core': ^4.22.0
       '@tanstack/query-sync-storage-persister': ^4.22.0
       '@tanstack/react-query': ^4.22.3
       '@tanstack/react-query-persist-client': ^4.22.3
       '@testing-library/react': ^13.4.0
       '@types/react': ^18.0.26
-      '@casperdash/usewallet-core': workspace:*
       react: ^18.2.0
       react-dom: ^18.2.0
       typescript: ^4.9.4
     dependencies:
+      '@casperdash/usewallet-core': link:../core
       '@tanstack/query-core': 4.22.0
       '@tanstack/query-sync-storage-persister': 4.22.0_7c7prdbk4jtxz56sswerepgrwm
       '@tanstack/react-query': 4.22.3_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-persist-client': 4.22.3_hi6nanrdv6rtmfyk7ck2g44aiy
-      '@casperdash/usewallet-core': link:../core
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
@@ -907,6 +911,40 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
+  /@ledgerhq/devices/8.0.0:
+    resolution: {integrity: sha512-gSnRT0KPca+LIpaC6D/WZQjOAlSI5uCvK1dmxXtKhODLAj735rX5Z3SnGnLUavRCHNbUi44FzgvloF5BKTkh7A==}
+    dependencies:
+      '@ledgerhq/errors': 6.12.3
+      '@ledgerhq/logs': 6.10.1
+      rxjs: 6.6.7
+      semver: 7.3.8
+    dev: false
+
+  /@ledgerhq/errors/6.12.3:
+    resolution: {integrity: sha512-djiMSgB/7hnK3aLR/c5ZMMivxjcI7o2+y3VKcsZZpydPoVf9+FXqeJPRfOwmJ0JxbQ//LinUfWpIfHew8LkaVw==}
+    dev: false
+
+  /@ledgerhq/hw-transport-webusb/6.27.12:
+    resolution: {integrity: sha512-U96UWLZIurD9ifHlm77PAgBbvDCe99DAJk64O2SdR41WRF3WaRq/pjrzCq2UvvammdCd1p7nS4zbhlse0wZplg==}
+    dependencies:
+      '@ledgerhq/devices': 8.0.0
+      '@ledgerhq/errors': 6.12.3
+      '@ledgerhq/hw-transport': 6.28.1
+      '@ledgerhq/logs': 6.10.1
+    dev: false
+
+  /@ledgerhq/hw-transport/6.28.1:
+    resolution: {integrity: sha512-RaZe+abn0zBIz82cE9tp7Y7aZkHWWbEaE2yJpfxT8AhFz3fx+BU0kLYzuRN9fmA7vKueNJ1MTVUCY+Ex9/CHSQ==}
+    dependencies:
+      '@ledgerhq/devices': 8.0.0
+      '@ledgerhq/errors': 6.12.3
+      events: 3.3.0
+    dev: false
+
+  /@ledgerhq/logs/6.10.1:
+    resolution: {integrity: sha512-z+ILK8Q3y+nfUl43ctCPuR4Y2bIxk/ooCQFwZxhtci1EhAtMDzMAx2W25qx8G1PPL9UUOdnUax19+F0OjXoj4w==}
+    dev: false
+
   /@manypkg/find-root/1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
     dependencies:
@@ -927,8 +965,8 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@mdx-js/mdx/2.2.1:
-    resolution: {integrity: sha512-hZ3ex7exYLJn6FfReq8yTvA6TE53uW9UHJQM9IlSauOuS55J9y8RtA7W+dzp6Yrzr00/U1sd7q+Wf61q6SfiTQ==}
+  /@mdx-js/mdx/2.3.0:
+    resolution: {integrity: sha512-jLuwRlz8DQfQNiUCJR50Y09CGPq3fLtmtUQfVrj79E0JWu3dvsVcxVIcfhR5h0iXu+/z++zDrYeiJqifRynJkA==}
     dependencies:
       '@types/estree-jsx': 1.0.0
       '@types/mdx': 2.0.3
@@ -951,8 +989,8 @@ packages:
       - supports-color
     dev: false
 
-  /@mdx-js/react/2.2.1_react@18.2.0:
-    resolution: {integrity: sha512-YdXcMcEnqZhzql98RNrqYo9cEhTTesBiCclEtoiQUbJwx87q9453GTapYU6kJ8ZZ2ek1Vp25SiAXEFy5O/eAPw==}
+  /@mdx-js/react/2.3.0_react@18.2.0:
+    resolution: {integrity: sha512-zQH//gdOmuu7nt2oJR29vFhDv88oGPmVw6BggmrHeMI+xgEkp1B2dX9/bMBSYtK0dyLX/aOmesKS09g222K1/g==}
     peerDependencies:
       react: '>=16'
     peerDependenciesMeta:
@@ -1548,6 +1586,12 @@ packages:
     resolution: {integrity: sha512-DUlIj2nk0YnJdlWgsFuVKcX27MLW0KbKmGVoUHmFr+74FYYNUDAaj9ZqTADvsbE8rfxuVmSFc7KczYn5Y09ozg==}
     dev: false
 
+  /@types/ledgerhq__hw-transport/4.21.4:
+    resolution: {integrity: sha512-vep+6yZnGv6owAthIY0w3f72w4dJIb4+yE5PCHveInTlZE9wukvU6Wc5Eig0OUUxcdhTazzeZx1xUaNVLqyQSg==}
+    dependencies:
+      '@types/node': 18.11.18
+    dev: false
+
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
     dependencies:
@@ -1942,6 +1986,14 @@ packages:
   /@xtuc/long/4.2.2:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
 
+  /@zondax/ledger-casper/2.5.3:
+    resolution: {integrity: sha512-FuMwid4K0ClyY+0mRGKN9XVamr8yBZjtjSkqjy6Cx0CYeFe1LWyCM/xWJGws+v6arYt02DnT7ORwoH5YVynm+A==}
+    dependencies:
+      '@babel/runtime': 7.20.13
+      '@ledgerhq/hw-transport': 6.28.1
+      '@types/ledgerhq__hw-transport': 4.21.4
+    dev: false
+
   /abab/2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     dev: true
@@ -2035,6 +2087,10 @@ packages:
     resolution: {integrity: sha512-n5M855fKb2SsfMIiFFoVrABHJC8QtHwVx+mHWP3QcEqBHYienj5dHSgjbxtC0WEZXYt4wcD6zrQElDPhFuZgfA==}
     engines: {node: '>=12'}
     dev: true
+
+  /ansi-sequence-parser/1.1.0:
+    resolution: {integrity: sha512-lEm8mt52to2fT8GhciPCGeCXACSz2UwIN4X2e2LJSnZ5uAbn2/dsYdOmUXq0AtWS5cpAupysIneExOgH0Vd2TQ==}
+    dev: false
 
   /ansi-styles/3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
@@ -5059,7 +5115,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-    dev: true
 
   /lz-string/1.4.4:
     resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}
@@ -5781,12 +5836,6 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  /nanoid/4.0.1:
-    resolution: {integrity: sha512-udKGtCCUafD3nQtJg9wBhRP3KMbPglUsgV5JVsXhvyBs/oefqb4sqMEhKBBgqZncYowu58p1prsZQBYvAj/Gww==}
-    engines: {node: ^14 || ^16 || >=18}
-    hasBin: true
-    dev: false
-
   /natural-compare-lite/1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: true
@@ -5808,8 +5857,8 @@ packages:
       react:
         optional: true
     dependencies:
-      '@mdx-js/mdx': 2.2.1
-      '@mdx-js/react': 2.2.1_react@18.2.0
+      '@mdx-js/mdx': 2.3.0
+      '@mdx-js/react': 2.3.0_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       vfile: 5.3.6
@@ -5894,11 +5943,11 @@ packages:
       - babel-plugin-macros
     dev: false
 
-  /nextra-theme-docs/2.2.14_u6qwm625rg3t7ll2t4ybomvrai:
-    resolution: {integrity: sha512-QQcHOcAXSfrpbSX3FqXgcQ2favKLnBAczqKWbSDVEtgHiUG6s7pVpxclpKm5F1c/fP47v19USRq3BL/SZ4JEIQ==}
+  /nextra-theme-docs/2.2.19_lzh67riyd6q5wh5q33hsgfs3gy:
+    resolution: {integrity: sha512-+5PcNgHwxwSAmQZlbV2cbjbvxj7CPYnN44OtWNxHQ8L3dzlw6fUyIJtyCUcGbDHpFC3sHmwYgB3OCWH8m4P35Q==}
     peerDependencies:
       next: '>=9.5.3'
-      nextra: 2.2.14
+      nextra: 2.2.19
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
     peerDependenciesMeta:
@@ -5916,15 +5965,15 @@ packages:
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       next-seo: 5.15.0_3vryta7zmbcsw4rrqf4axjqggm
       next-themes: 0.2.1_3vryta7zmbcsw4rrqf4axjqggm
-      nextra: 2.2.14_3vryta7zmbcsw4rrqf4axjqggm
+      nextra: 2.2.19_3vryta7zmbcsw4rrqf4axjqggm
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       scroll-into-view-if-needed: 3.0.4
       zod: 3.20.2
     dev: false
 
-  /nextra/2.2.14_3vryta7zmbcsw4rrqf4axjqggm:
-    resolution: {integrity: sha512-kToTiTiE4qrQsQ9snFRqCGLLSjKSFgFV/BJm3yp/SRmkmCr1WaWrlmUTAuXlxM7PREbNaZouNSOJ0hGS92rM8A==}
+  /nextra/2.2.19_3vryta7zmbcsw4rrqf4axjqggm:
+    resolution: {integrity: sha512-QmgbJvT1lfmFCM8n5gfGTA5p8efw20N/oZP9ojBhWhmatq/PwAp7VoSeTan6TT9Yspv6PmnrgpqKhYGzPSkFVw==}
     peerDependencies:
       next: '>=9.5.3'
       react: '>=16.13.1'
@@ -5933,8 +5982,8 @@ packages:
       react:
         optional: true
     dependencies:
-      '@mdx-js/mdx': 2.2.1
-      '@mdx-js/react': 2.2.1_react@18.2.0
+      '@mdx-js/mdx': 2.3.0
+      '@mdx-js/react': 2.3.0_react@18.2.0
       '@napi-rs/simple-git': 0.1.8
       github-slugger: 2.0.0
       graceful-fs: 4.2.10
@@ -5947,11 +5996,11 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       rehype-katex: 6.0.2
-      rehype-pretty-code: 0.9.2_shiki@0.12.1
+      rehype-pretty-code: 0.9.3_shiki@0.14.1
       remark-gfm: 3.0.1
       remark-math: 5.1.1
       remark-reading-time: 2.0.1
-      shiki: 0.12.1
+      shiki: 0.14.1
       slash: 3.0.0
       title: 3.5.3
       unist-util-remove: 3.1.1
@@ -6628,16 +6677,15 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /rehype-pretty-code/0.9.2_shiki@0.12.1:
-    resolution: {integrity: sha512-l369pvBK6ihBEuy2+VDpHU+zbbY8I+Z4LiyIOunHAt3xyw6selaOFKc/DnX94jI5OJb3+NgjbOxXx2yaAypjZw==}
+  /rehype-pretty-code/0.9.3_shiki@0.14.1:
+    resolution: {integrity: sha512-57i+ifrttqpeQxub0NZ2pRw0aiUPYeBpr234NLWfZ4BfbEaP+29+iCXB1rUMkzoPi6IBC4w4I93mUPgw36IajQ==}
     engines: {node: ^12.16.0 || >=13.2.0}
     peerDependencies:
       shiki: '*'
     dependencies:
       hash-obj: 4.0.0
-      nanoid: 4.0.1
       parse-numeric-range: 1.3.0
-      shiki: 0.12.1
+      shiki: 0.14.1
     dev: false
 
   /remark-gfm/3.0.1:
@@ -6786,6 +6834,13 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
+  /rxjs/6.6.7:
+    resolution: {integrity: sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==}
+    engines: {npm: '>=2.0.0'}
+    dependencies:
+      tslib: 1.14.1
+    dev: false
+
   /rxjs/7.8.0:
     resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
     dependencies:
@@ -6898,7 +6953,6 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
-    dev: true
 
   /serialize-javascript/6.0.0:
     resolution: {integrity: sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==}
@@ -6941,9 +6995,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /shiki/0.12.1:
-    resolution: {integrity: sha512-aieaV1m349rZINEBkjxh2QbBvFFQOlgqYTNtCal82hHj4dDZ76oMlQIX+C7ryerBTDiga3e5NfH6smjdJ02BbQ==}
+  /shiki/0.14.1:
+    resolution: {integrity: sha512-+Jz4nBkCBe0mEDqo1eKRcCdjRtrCjozmcbTUjbPTX7OOJfEbTZzlUWlZtGe3Gb5oV1/jnojhG//YZc3rs9zSEw==}
     dependencies:
+      ansi-sequence-parser: 1.1.0
       jsonc-parser: 3.2.0
       vscode-oniguruma: 1.7.0
       vscode-textmate: 8.0.0
@@ -8392,7 +8447,6 @@ packages:
 
   /yallist/4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
-    dev: true
 
   /yaml/1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
