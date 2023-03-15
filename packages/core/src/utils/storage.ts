@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 type BaseStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
 export type ClientStorage = {
