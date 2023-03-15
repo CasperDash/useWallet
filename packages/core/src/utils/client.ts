@@ -146,12 +146,7 @@ export class Client {
       /* It's checking if the connector is connected. */
       const isConnectedWithConnector = await connector?.isConnected();
       if (isConnectedWithConnector) {
-        let publicKey: string | undefined;
-        try {
-          publicKey = await connector?.getActivePublicKey();
-        } catch (err) {
-          publicKey = undefined;
-        }
+        let publicKey = await this.getPublicKeyFromConnector(connector);
         if (!publicKey) {
           this.setState((x: StateParams) => ({
             ...x,
@@ -215,17 +210,11 @@ export class Client {
       if (!isUnlocked) {
         return;
       }
-      let publicKey: string | undefined;
-      try {
-        publicKey = await this.connector?.getActivePublicKey();
-      } catch (err) {
-        console.error(err);
-        publicKey = undefined;
-      }
+      const publicKey = await this.getPublicKeyFromConnector(this.connector);
 
-      this.setState((x: StateParams) => ({
-        ...x,
-        data: { ...x.data, activeKey: publicKey },
+      this.setState((oldState: StateParams) => ({
+        ...oldState,
+        data: { ...oldState.data, activeKey: publicKey },
         status: publicKey ? StatusEnum.CONNECTED : StatusEnum.DISCONNECTED,
       }));
     };
@@ -264,7 +253,16 @@ export class Client {
     );
   }
 
+  private async getPublicKeyFromConnector(connector?: Connector) {
+    let publicKey: string | undefined;
+    try {
+      publicKey = await connector?.getActivePublicKey();
+    } catch (err) {
+      publicKey = undefined;
+    }
 
+    return publicKey;
+  }
 }
 
 export let client: Client;
