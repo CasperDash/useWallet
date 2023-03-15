@@ -82,10 +82,10 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
     return { connector };
 
   } catch (error) {
-    client.setState((x: StateParams) => {
+    client.setState((oldState: StateParams) => {
       return {
-        ...x,
-        status: x.connector ? StatusEnum.CONNECTED : StatusEnum.DISCONNECTED,
+        ...oldState,
+        status: oldState.connector ? StatusEnum.CONNECTED : StatusEnum.DISCONNECTED,
       };
     });
     console.error(error);
