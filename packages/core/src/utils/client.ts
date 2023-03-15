@@ -6,6 +6,8 @@ import { Connector, ConnectorData } from '../connectors/base';
 import { ClientNotFoundError } from '../errors';
 import { StatusEnum } from '../enums';
 
+import { ClientStorage, createStorage, noopStorage } from './storage';
+
 export type StateParams = {
   connectors: Connector[];
   connector?: Connector;
@@ -15,7 +17,9 @@ export type StateParams = {
 };
 
 
-export type ClientConfig = StateParams;
+export type ClientConfig = StateParams & {
+  storage: ClientStorage;
+};
 
 /* It's a wrapper around a state management library called Zustand */
 export class Client {
@@ -26,11 +30,17 @@ export class Client {
   ]
   >;
 
-  private isAutoConnecting: boolean | undefined;
+  private isAutoConnecting?: boolean;
+  private lastUsedConnector?: string | null;
+  private storage?: ClientStorage;
 
   constructor({
     autoConnect = false,
     connectors,
+    storage = createStorage({
+      storage:
+        typeof window !== 'undefined' ? window.localStorage : noopStorage,
+    }),
   }: ClientConfig) {
     this.store = createStore(subscribeWithSelector(() => ({
       connectors: connectors,
@@ -39,6 +49,8 @@ export class Client {
     })));
 
     this.triggerEvent();
+    this.lastUsedConnector = storage.getItem('wallet');
+    this.storage = storage;
 
     if (autoConnect) {
       let x = 0;
@@ -82,6 +94,10 @@ export class Client {
     return this.store.getState().status;
   }
 
+  public setLastUsedConnector(lastUsedConnector: string | null = null) {
+    this.storage?.setItem('wallet', lastUsedConnector);
+  }
+
   public clearState() {
     this.setState((x: StateParams) => ({
       ...x,
@@ -119,7 +135,14 @@ export class Client {
     }));
 
     let isConnected = false;
-    for (const connector of this.connectors || []) {
+
+    const sortedConnectors = this.lastUsedConnector && this.connectors
+      ? [...this.connectors].sort((connector: Connector) =>
+        connector.id === this.lastUsedConnector ? -1 : 1,
+      )
+      : this.connectors;
+
+    for (const connector of sortedConnectors || []) {
       /* It's checking if the connector is connected. */
       const isConnectedWithConnector = await connector?.isConnected();
       if (isConnectedWithConnector) {
