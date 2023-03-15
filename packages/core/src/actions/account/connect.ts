@@ -66,7 +66,7 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
       }
     }
 
-    console.log('connector: ', connector);
+    client.setLastUsedConnector(connector.id);
 
     client.setState((oldState: StateParams) => ({
       ...oldState,
