@@ -178,7 +178,7 @@ describe('CasperSignerConnector', () => {
     it('should remove all event listeners from the event provider', async () => {
       await connector.disconnect();
 
-      expect(eventProviderMock.removeEventListener).toHaveBeenCalledTimes(3);
+      expect(eventProviderMock.removeEventListener).toHaveBeenCalledTimes(4);
       expect(eventProviderMock.removeEventListener).toHaveBeenCalledWith(
         'signer:activeKeyChanged',
         connector.onActiveKeyChanged,
@@ -201,10 +201,10 @@ describe('CasperSignerConnector', () => {
   });
 
   describe('connect', () => {
-    it('should add 3 event listeners to eventProvider', async () => {
+    it('should add 4 event listeners to eventProvider', async () => {
       await connector.connect();
 
-      expect(eventProviderMock.addEventListener).toHaveBeenCalledTimes(3);
+      expect(eventProviderMock.addEventListener).toHaveBeenCalledTimes(4);
       expect(eventProviderMock.addEventListener).toHaveBeenCalledWith(
         'signer:activeKeyChanged',
         connector.onActiveKeyChanged,
