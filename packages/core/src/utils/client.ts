@@ -18,7 +18,7 @@ export type StateParams = {
 
 
 export type ClientConfig = StateParams & {
-  storage: ClientStorage;
+  storage?: ClientStorage;
 };
 
 /* It's a wrapper around a state management library called Zustand */
@@ -52,22 +52,7 @@ export class Client {
     this.lastUsedConnector = storage.getItem('wallet');
     this.storage = storage;
 
-    if (autoConnect) {
-      let x = 0;
-      const intervalID = setInterval(() => {
-        let isReady = false;
-        for (const connector of connectors) {
-          if (connector.getProvider()) {
-            isReady = true;
-          }
-        }
-
-        if (++x === 5 || isReady) {
-          setTimeout(async () => this.autoConnect(), 0);
-          window.clearInterval(intervalID);
-        }
-      }, 1000);
-    }
+    void this.triggerAutoConnect(autoConnect, connectors);
   }
 
   public get state() {
@@ -127,7 +112,6 @@ export class Client {
       return;
     }
     this.isAutoConnecting = true;
-    console.log('connectors: ', this.connectors);
 
     this.setState((x: StateParams) => ({
       ...x,
@@ -189,6 +173,29 @@ export class Client {
     this.isAutoConnecting = false;
 
     return this.data;
+  }
+
+  private async triggerAutoConnect(autoConnect: boolean, connectors: Connector[]) {
+    if (autoConnect) {
+      let x = 0;
+      const intervalID = setInterval(() => {
+        let isReady = false;
+        for (const connector of connectors) {
+          try {
+            if (connector.getProvider()) {
+              isReady = true;
+            }
+          } catch (err) {
+            // No handle error.
+          }
+        }
+
+        if (++x === 5 || isReady) {
+          setTimeout(async () => this.autoConnect(), 0);
+          window.clearInterval(intervalID);
+        }
+      }, 100);
+    }
   }
 
   private triggerEvent(): void {
