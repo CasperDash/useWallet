@@ -16,6 +16,7 @@ vi.mock('@casperdash/usewallet-core/utils/client', () => ({
       getActivePublicKey: vi.fn(),
     } as unknown as Connector,
     setState: callBackSpy,
+    setLastUsedConnector: vi.fn(),
   })),
 }));
 
@@ -75,8 +76,8 @@ describe('connect', () => {
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const connector = {
       id: 'test',
-      connect: vi.fn(),
-      getActivePublicKey: vi.fn().mockRejectedValueOnce(new ConnectorNotFoundError()),
+      connect: vi.fn().mockRejectedValueOnce(new ConnectorNotFoundError()),
+      getActivePublicKey: vi.fn(),
       isConnected: vi.fn().mockResolvedValueOnce(true),
     } as unknown as Connector;
     const connectSpy = vi.spyOn(connector, 'connect');
@@ -88,7 +89,7 @@ describe('connect', () => {
     }
 
     expect(connectSpy).toHaveBeenCalledOnce();
-    expect(getActivePublicKeySpy).toHaveBeenCalledOnce();
+    expect(getActivePublicKeySpy).toBeCalledTimes(0);
     expect(errorSpy).toHaveBeenCalledOnce();
   });
 
