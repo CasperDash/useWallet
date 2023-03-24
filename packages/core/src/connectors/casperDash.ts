@@ -198,6 +198,6 @@ export class CasperDashConnector extends Connector<CasperDashWindowGlobal, Windo
   public onConnected(event: CustomEventInit<{ activeKey: string; isConnected: boolean }>): void {
     const customEvent = new CustomEvent('casper:connect', event);
     window.dispatchEvent(customEvent);
-    // this.emit('connect', { isConnected: event.detail?.isConnected, activeKey: event.detail?.activeKey });
+    // super.emit('connect', { isConnected: event.detail?.isConnected, activeKey: event.detail?.activeKey });
   }
 }
