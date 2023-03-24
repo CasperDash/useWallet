@@ -99,8 +99,3 @@ interface SignerTestingHelper {
    */
   signTestDeploy: (msgId: number) => Promise<void>;
 }
-
-interface Window {
-  casperlabsHelper?: CasperLabsHelper;
-  signerTestingHelper?: SignerTestingHelper;
-}

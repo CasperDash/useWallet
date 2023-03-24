@@ -3,6 +3,7 @@ import {
   CasperSignerConnector,
   CasperProvider,
   createClient,
+  CasperWalletConnector,
 } from '@casperdash/usewallet';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -11,7 +12,7 @@ import App from './App';
 import './index.css';
 
 const client = createClient({
-  connectors: [new CasperSignerConnector(), new CasperDashConnector()],
+  connectors: [new CasperSignerConnector(), new CasperDashConnector(), new CasperWalletConnector()],
   autoConnect: true,
 });
 
