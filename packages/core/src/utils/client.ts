@@ -7,6 +7,7 @@ import { ClientNotFoundError } from '../errors';
 import { StatusEnum } from '../enums';
 
 import { ClientStorage, createStorage, noopStorage } from './storage';
+import { maybeParseDetailEvent } from './parser';
 
 export type StateParams = {
   connectors: Connector[];
@@ -243,21 +244,27 @@ export class Client {
       }));
     };
 
+    window?.addEventListener('casper:change',
+      (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onChange(maybeParseDetailEvent(event.detail!)));
+    window?.addEventListener('casper:disconnect', () => onDisconnect());
+    window?.addEventListener('casper:connect',
+      (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onConnect(maybeParseDetailEvent(event.detail!)));
+    window?.addEventListener('casper:unlocked',
+      async (event: CustomEventInit<{ isUnlocked: boolean; isConnected: boolean }>) => onUnlock(maybeParseDetailEvent(event.detail!)));
 
-    this.store.subscribe(
-      ({ connector }: StateParams) => connector!,
-      (connector: Connector) => {
-        if (!connector) return;
-        window?.addEventListener('casper:change',
-          (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onChange(event.detail!));
-        window?.addEventListener('casper:disconnect', () => onDisconnect());
-        window?.addEventListener('casper:connect',
-          (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onConnect(event.detail!));
-        window?.addEventListener('casper:unlocked',
-          async (event: CustomEventInit<{ isUnlocked: boolean; isConnected: boolean }>) => onUnlock(event.detail!));
+    // this.store.subscribe(
+    //   ({ connector }: StateParams) => connector!,
+    //   (connector: Connector, prevConnector: Connector) => {
+    //     prevConnector?.off?.('change', console.log);
+    //     prevConnector?.off?.('disconnect', console.log);
+    //     prevConnector?.off?.('error', console.log);
 
-      },
-    );
+    //     if (!connector) return;
+    //     connector.on?.('change', console.log);
+    //     connector.on?.('disconnect', console.log);
+    //     connector.on?.('error', console.log);
+    //   },
+    // );
   }
 
   private async getPublicKeyFromConnector(connector?: Connector) {

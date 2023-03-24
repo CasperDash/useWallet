@@ -29,6 +29,8 @@ const FormSigner = () => {
       fee: 0.2,
     });
 
+    console.log('publicKey: ', publicKey);
+
     sign({
       deploy: transferDeploy,
       signingPublicKeyHex: publicKey,

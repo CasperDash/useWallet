@@ -3,21 +3,16 @@ import { OnConnectParams, useAccount, useDisconnect, useSignMessage } from '@cas
 import './App.css';
 import CasperDashButton from './component/CasperDashButton';
 import CasperSignerButton from './component/CasperSignerButton';
+import CasperWalletButton from './component/CasperWalletButton';
 import FormSigner from './component/FormSigner';
 
 function App() {
-  const { signMessageAsync } = useSignMessage();
   const { publicKey } = useAccount({
     onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
       console.log('onConnect: ', publicKeyOnConnect);
-      const message = await signMessageAsync({
-        signingPublicKeyHex: publicKeyOnConnect,
-        message: 'Hello Casper!!!',
-      });
-      console.log('message: ', message);
     },
     onDisconnect() {
-      console.log('onDisconnect');
+      console.log('onDisconnect Wallet');
     },
   });
   const { disconnect } = useDisconnect();
@@ -47,6 +42,8 @@ function App() {
               <CasperSignerButton />
               <br />
               <CasperDashButton />
+              <br/>
+              <CasperWalletButton />
             </div>
           </>
         )}
