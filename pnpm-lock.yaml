@@ -100,13 +100,13 @@ importers:
     specifiers:
       casper-js-sdk: ^2.10.1
       eslint-plugin-prettier: ^4.2.1
-      eventemitter3: ^4.0.7
+      eventemitter3: ^5.0.0
       tsup: ^6.5.0
       typedjson: ^1.8.0
       zustand: ^4.3.2
     dependencies:
       casper-js-sdk: 2.10.1
-      eventemitter3: 4.0.7
+      eventemitter3: 5.0.0
       typedjson: 1.8.0
       zustand: 4.3.2
     devDependencies:
@@ -3837,8 +3837,8 @@ packages:
       setimmediate: 1.0.5
     dev: false
 
-  /eventemitter3/4.0.7:
-    resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
+  /eventemitter3/5.0.0:
+    resolution: {integrity: sha512-riuVbElZZNXLeLEoprfNYoDSwTBRR44X3mnhdI1YcnENpWTCsTTVZ2zFuqQcpoyqPQIUXdiPEU0ECAq0KQRaHg==}
     dev: false
 
   /events/3.3.0:
