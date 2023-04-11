@@ -9,12 +9,22 @@ export type ConnectorData<Provider = unknown> = {
   provider?: Provider;
 };
 
+export type SignedParams = {
+  deploy: {
+    deploy: JsonTypes;
+  };
+};
+
 export interface ConnectorEvents {
   change(data: ConnectorData): void;
   connect(data: ConnectorData): void;
   message({ type, data }: { type: string; data?: unknown }): void;
   disconnect(): void;
   error(error: Error): void;
+  approvedSign(data: SignedParams): void;
+  rejectedSign(): void;
+  approvedSignMessage(signedMessage: string): void;
+  rejectedSignMessage(): void;
 }
 
 export abstract class Connector<Provider = unknown, EventProvider = unknown, Options = unknown> extends EventEmitter<ConnectorEvents> {

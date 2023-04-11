@@ -7,7 +7,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": ["es2021", "dom"],
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noEmit": true,
     "noImplicitAny": true,
@@ -24,7 +24,7 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "es2021",
+    "target": "ESNext",
     "typeRoots": [
       "packages/core/src/types/*.d.ts"
     ]
