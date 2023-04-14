@@ -42,13 +42,14 @@ CasperDashWebConnectorOptions
   private popup?: Window | null;
   private publicKey?: string;
   private nextRequestId: number = 0;
+  private checkOpennerInterval?: NodeJS.Timer;
 
   constructor({
     options: defaultOptions,
   }: { options?: CasperDashWebConnectorOptions } = {}) {
     const options = {
       name: 'casperDashWeb',
-      providerUrl: 'http://localhost:3000',
+      providerUrl: 'https://testnet.casperdash.io',
       getProvider: (): Provider | undefined => {
         return this.provider;
       },
@@ -113,11 +114,13 @@ CasperDashWebConnectorOptions
     const eventProvider = await this.getEventProvider();
 
     eventProvider?.removeEventListener('message', (e: ReplyEvent<never>) => this.handleMessage(e));
+    clearInterval(this.checkOpennerInterval);
 
     if (this.popup) {
       this.popup.close();
     }
 
+    this.onDisconnected();
   }
 
   /**
@@ -137,6 +140,11 @@ CasperDashWebConnectorOptions
     const eventProvider = await this.getEventProvider();
 
     eventProvider?.addEventListener('message', (e: ReplyEvent<never>) => this.handleMessage(e));
+    this.checkOpennerInterval = setInterval(() => {
+      if (this.popup?.closed) {
+        void this.disconnect();
+      }
+    }, 500);
   }
 
   /**
@@ -210,14 +218,13 @@ CasperDashWebConnectorOptions
         return resolve(params.deploy as unknown as Deploy);
       });
       super.on('rejectedSign', () => {
-        console.log('rejectedSign');
         reject(new RejectedSignDeployError());
       });
     });
   }
 
   public onDisconnected() {
-    const customEvent = new CustomEvent('casperDashWeb:disconnect');
+    const customEvent = new CustomEvent('casper:disconnect');
     window.dispatchEvent(customEvent);
   }
 
@@ -244,6 +251,10 @@ CasperDashWebConnectorOptions
         const { data: { params } } = event as ReplyEvent<{ publicKey: string }>;
         this.publicKey = params.publicKey;
         this.onConnected(new CustomEvent('casperDashWeb:connect', { detail: { activeKey: this.publicKey, isConnected: true } }));
+        break;
+      }
+      case RepliedMessageMethodEnums.DISCONNECTED: {
+        void this.disconnect();
         break;
       }
       case RepliedMessageMethodEnums.APPROVED_SIGN:
