@@ -177,7 +177,7 @@ export class Client {
   }
 
   private async triggerAutoConnect(autoConnect: boolean, connectors: Connector[]) {
-    if (autoConnect) {
+    if (autoConnect && typeof window !== 'undefined') {
       let x = 0;
       const intervalID = setInterval(() => {
         let isReady = false;
@@ -193,13 +193,17 @@ export class Client {
 
         if (++x === 5 || isReady) {
           setTimeout(async () => this.autoConnect(), 0);
-          window.clearInterval(intervalID);
+          window?.clearInterval(intervalID);
         }
       }, 100);
     }
   }
 
   private triggerEvent(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     /**
      * It sets the state of the component.
      * @param {ConnectorData} data - ConnectorData - The data that is passed to the connector.
