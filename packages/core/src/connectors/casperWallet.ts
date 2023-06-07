@@ -1,11 +1,13 @@
 import { JsonTypes } from 'typedjson';
-import { CLPublicKey, DeployUtil } from 'casper-js-sdk';
+import * as CasperJsSdk from 'casper-js-sdk';
 
 import { ConnectorNotFoundError } from '../errors';
 import { CasperWalletProvider } from '../types/casperWalletProvider';
 import { Deploy } from '../types/deploy';
 
 import { Connector } from './base';
+
+const { DeployUtil, CLPublicKey } = CasperJsSdk;
 
 type CasperWalletWindowGlobal = CasperWalletProvider;
 type Provider = CasperWalletProvider;
