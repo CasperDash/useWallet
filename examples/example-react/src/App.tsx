@@ -1,10 +1,12 @@
-import { OnConnectParams, useAccount, useDisconnect, useSignMessage } from '@casperdash/usewallet';
+import { OnConnectParams, useAccount, useDisconnect } from '@casperdash/usewallet';
 
 import './App.css';
 import CasperDashButton from './component/CasperDashButton';
 import CasperSignerButton from './component/CasperSignerButton';
 import CasperWalletButton from './component/CasperWalletButton';
 import FormSigner from './component/FormSigner';
+import CasperDashWebButton from './component/CasperDashWebButton';
+import FormSignerMessage from './component/FormSignerMessage';
 
 function App() {
   const { publicKey } = useAccount({
@@ -24,6 +26,8 @@ function App() {
             <button style={{ marginTop: '-40px' }} onClick={() => disconnect()}>Disconnect {publicKey}</button>
             <div className="signer-form-wrapper">
               <FormSigner />
+              <br/>
+              <FormSignerMessage/>
             </div>
           </div>
         ) : (
@@ -44,6 +48,8 @@ function App() {
               <CasperDashButton />
               <br/>
               <CasperWalletButton />
+              <br/>
+              <CasperDashWebButton/>
             </div>
           </>
         )}
