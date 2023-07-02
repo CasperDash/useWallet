@@ -6,7 +6,9 @@ import {
 
 export const CasperDashWebButton = () => {
   const { connect } = useConnect({
-    connector: new CasperDashWebConnector({}),
+    connector: new CasperDashWebConnector({
+      providerUrl: 'https://testnet.casperdash.io',
+    }),
   });
 
   return (

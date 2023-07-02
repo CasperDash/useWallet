@@ -46,10 +46,11 @@ CasperDashWebConnectorOptions
 
   constructor({
     options: defaultOptions,
-  }: { options?: CasperDashWebConnectorOptions } = {}) {
+    providerUrl,
+  }: { options?: CasperDashWebConnectorOptions; providerUrl?: string } = {}) {
     const options = {
       name: 'casperDashWeb',
-      providerUrl: 'https://testnet.casperdash.io',
+      providerUrl: providerUrl || 'https://wallet.casperdash.io',
       getProvider: (): Provider | undefined => {
         return this.provider;
       },

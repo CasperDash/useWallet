@@ -24,7 +24,7 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "esnext",
+    "target": "es2021",
     "typeRoots": [
       "packages/core/src/types/*.d.ts"
     ]
