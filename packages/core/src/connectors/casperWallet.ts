@@ -201,8 +201,6 @@ CasperWalletConnectorOptions
       CLPublicKey.fromHex(signingPublicKeyHex),
     );
 
-    console.log('signedDeploy: ', signedDeploy);
-
     return DeployUtil.deployToJson(signedDeploy);
   }
 

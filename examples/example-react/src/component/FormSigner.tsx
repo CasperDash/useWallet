@@ -10,7 +10,11 @@ type FormValues = {
 
 const FormSigner = () => {
   const { publicKey } = useAccount();
-  const { sign, data } = useSign();
+  const { sign, data } = useSign({
+    onError: (err: unknown) => {
+      console.log(err);
+    },
+  });
   const { register, handleSubmit } = useForm({
     defaultValues: {
       walletAddress: '',
@@ -26,10 +30,8 @@ const FormSigner = () => {
       toAddress: formValues.walletAddress,
       amount: formValues.amount,
       transferId: 1,
-      fee: 0.2,
+      fee: 0.1,
     });
-
-    console.log('publicKey: ', publicKey);
 
     sign({
       deploy: transferDeploy,

@@ -1,0 +1,68 @@
+name: Deploy dev
+
+on:
+    push:
+      branches:
+        - feat/casper-web-wallet-connector # or main
+    workflow_dispatch:
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+    cancel-in-progress: true
+
+jobs:
+    deploy-dev:
+        name: Lint
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [18]
+                pnpm-version: [7.26.3]
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: ap-southeast-1
+
+            - uses: pnpm/action-setup@v2.2.4
+              with:
+                version: ${{ matrix.pnpm-version }}
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  cache: 'pnpm'
+                  node-version: ${{ matrix.node-version }}
+            - name: Cache pnpm
+              uses: actions/cache@v3
+              with:
+                path: ~/.pnpm-store
+                key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+                restore-keys: pnpm-
+            - name: Cache node_modules
+              uses: actions/cache@v3
+              id: cache-node-modules
+              with:
+                path: |
+                  node_modules
+                  docs/node_modules
+                  examples/**/node_modules
+                  packages/**/node_modules
+                  packages/**/dist
+                key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+            - name: Install
+              run : |
+                  pnpm i
+            - name: Build
+              run : |
+                  pnpm build
+                  pnpm build:example
+
+            - name: Deploy To S3
+              run : |
+                  aws s3 sync ./examples/example-react/dist/ s3://dev-usewallet.casperdash.io/ --delete --acl public-read

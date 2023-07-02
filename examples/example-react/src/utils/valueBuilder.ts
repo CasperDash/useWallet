@@ -20,7 +20,7 @@ export const getTransferDeploy = (transactionDetail: TransactionDetail) => {
     const toPbKey = CLPublicKey.fromHex(toAddress);
 
     const deployParams = new DeployUtil.DeployParams(fromPbKey, 'casper-test');
-    const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount, toPbKey, null, transferId);
+    const transferParams = DeployUtil.ExecutableDeployItem.newTransfer(amount * 1000000000, toPbKey, null, transferId);
     const payment = DeployUtil.standardPayment(fee * 1000000000);
     const deploy = DeployUtil.makeDeploy(deployParams, transferParams, payment);
 
