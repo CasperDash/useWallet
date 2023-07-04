@@ -33,7 +33,7 @@ export type WatchAccountOptions = {
  */
 export const watchAccount = (
   callback: (account: Account | null) => void,
-  { selector = (params: WatchAccountSelectorParams) => params } : WatchAccountOptions = {}): unknown => {
+  { selector = (params: WatchAccountSelectorParams) => params } : WatchAccountOptions = {}): () => void => {
   const client = getClient();
 
   /**
