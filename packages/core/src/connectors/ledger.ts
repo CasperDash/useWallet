@@ -20,6 +20,7 @@ export class LedgerConnector extends Connector {
   public isReady!: boolean;
   public readonly id: string = 'ledger';
   public transport!: TransportWebUSB;
+  public casperApp?: CasperApp;
 
   constructor({
     options: defaultOptions,
@@ -32,11 +33,8 @@ export class LedgerConnector extends Connector {
     super({ options });
   }
 
-  public async getProvider(): Promise<Provider> {
-    const transport = <TransportWebUSB> await TransportWebUSB.create();
-
-    this.transport = transport;
-    return new CasperApp(transport);
+  public async getProvider(): Promise<Provider | undefined> {
+    return this.casperApp;
   }
 
   public async getEventProvider(): Promise<unknown> {
@@ -52,11 +50,17 @@ export class LedgerConnector extends Connector {
   }
 
   public async connect(): Promise<void> {
-    throw new Error('Method not implemented.');
+    const transport = <TransportWebUSB> await TransportWebUSB.create();
+
+    this.transport = transport;
+    this.casperApp = new CasperApp(transport);
   }
 
   public async getActivePublicKey(): Promise<string> {
     const casperApp = await this.getProvider();
+    if (!casperApp) {
+      throw new Error('Please connect to Casper Ledger');
+    }
     const { publicKey = '' } = await casperApp.getAddressAndPubKey(`${LedgerEnum.CASPER_KEY_PATH}0`);
 
     if (!publicKey) {
@@ -68,6 +72,9 @@ export class LedgerConnector extends Connector {
   // eslint-disable-next-line @typescript-eslint/typedef, @typescript-eslint/no-unused-vars
   public async signMessage(message: string, _signingPublicKeyHex = ''): Promise<string> {
     const casperApp = await this.getProvider();
+    if (!casperApp) {
+      throw new Error('Please connect to Casper Ledger');
+    }
     const chunks = await casperApp.signGetChunks(
       `${LedgerEnum.CASPER_KEY_PATH}0`,
       <Buffer> decodeBase16(message),
@@ -88,6 +95,9 @@ export class LedgerConnector extends Connector {
   // eslint-disable-next-line @typescript-eslint/typedef, @typescript-eslint/no-unused-vars
   public async sign(deploy: { deploy: JsonTypes }, signingPublicKeyHex: string, _targetPublicKeyHex: string): Promise<Deploy> {
     const casperApp = await this.getProvider();
+    if (!casperApp) {
+      throw new Error('Please connect to Casper Ledger');
+    }
     const deployCasper = DeployUtil.deployFromJson(deploy);
     const deployJson = deployCasper.unwrap();
     const responseDeploy = await casperApp.sign(

@@ -7,6 +7,7 @@ import CasperWalletButton from './component/CasperWalletButton';
 import FormSigner from './component/FormSigner';
 import CasperDashWebButton from './component/CasperDashWebButton';
 import FormSignerMessage from './component/FormSignerMessage';
+import CasperLedgerButton from './component/CasperLedgerButton';
 
 function App() {
   const { publicKey } = useAccount<Error>({
@@ -53,6 +54,8 @@ function App() {
               <CasperWalletButton />
               <br/>
               <CasperDashWebButton/>
+              <br/>
+              <CasperLedgerButton />
             </div>
           </>
         )}
