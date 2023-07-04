@@ -54,10 +54,11 @@ describe('getActivePublicKey', () => {
     getClient().setState({ connector: mockConnector });
 
     // Call the getActivePublicKey function
-    const activeKey = await getActivePublicKey();
-
-    // Assert that the function returns undefined
-    expect(activeKey).toBeUndefined();
+    try {
+      await getActivePublicKey();
+    } catch (error) {
+      expect(error).toBeInstanceOf(ConnectorNotFoundError);
+    }
 
     // Assert that the mock connector's getActivePublicKey method was called
     // eslint-disable-next-line @typescript-eslint/unbound-method

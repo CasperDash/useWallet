@@ -1,30 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { JsonTypes } from 'typedjson';
 import { describe, expect, it, beforeEach, vi, afterEach } from 'vitest';
 
 import { ConnectorNotFoundError } from '../errors';
 
 import { CasperDashConnector, CasperDashConnectorOptions } from './casperDash';
-
-declare global {
-  interface Window {
-    casperDashHelper?: {
-      isConnected: () => Promise<boolean>;
-      signMessage: (
-        message: string,
-        signingPublicKeyHex: string,
-      ) => Promise<string>;
-      sign: (
-        deploy: unknown,
-        signingPublicKeyHex: string,
-        targetPublicKey: string,
-      ) => Promise<{ deploy: JsonTypes }>;
-      disconnectFromSite: () => Promise<void>;
-      requestConnection: () => Promise<void>;
-      getActivePublicKey: () => Promise<string>;
-    };
-  }
-}
 
 describe('CasperDashConnector', () => {
   let connector: CasperDashConnector;
@@ -170,7 +149,7 @@ describe('CasperDashConnector', () => {
 
     it('returns false if there is an error', async () => {
       const provider = {
-        isConnected: vi.fn().mockResolvedValue(true),
+        isConnected: vi.fn().mockRejectedValue(new Error()),
         disconnectFromSite: vi.fn().mockResolvedValue(undefined),
         requestConnection: vi.fn().mockResolvedValue(undefined),
         getActivePublicKey: vi.fn().mockResolvedValue('activeKey'),
@@ -190,11 +169,12 @@ describe('CasperDashConnector', () => {
         },
       });
 
-      provider.isConnected.mockRejectedValue(new Error());
+      console.error = vi.fn();
 
       const result = await mockConnector.isConnected();
 
       expect(result).toBe(false);
+      expect(console.error).toHaveBeenCalledOnce();
     });
   });
 

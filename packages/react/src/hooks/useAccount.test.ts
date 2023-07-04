@@ -29,6 +29,8 @@ describe('useAccount', () => {
     expect(result.current).toEqual({
       publicKey,
       status,
+      ledgerAccountIndex: null,
+      connector: undefined,
     });
   });
 });

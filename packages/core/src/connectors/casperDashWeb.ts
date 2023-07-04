@@ -68,7 +68,7 @@ CasperDashWebConnectorOptions
    * It returns a promise that resolves to the provider object
    * @returns The provider is being returned.
    */
-  public getProvider(): Provider {
+  public async getProvider(): Promise<Provider> {
     const provider = this.options.getProvider?.();
     if (!provider) {
       throw new ConnectorNotFoundError();

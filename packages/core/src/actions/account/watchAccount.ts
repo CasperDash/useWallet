@@ -13,6 +13,7 @@ export type WatchAccountSelectorParams = {
   publicKey?: string;
   connector?: Connector;
   status?: StatusEnum;
+  ledgerAccountIndex?: string;
 };
 
 export type WatchAccountOptions = {
@@ -47,6 +48,7 @@ export const watchAccount = (
         publicKey: data?.activeKey,
         status,
         connector,
+        ledgerAccountIndex: data?.ledgerAccountIndex || '0',
       });
     },
     handleOnChange,

@@ -57,7 +57,7 @@ CasperWalletConnectorOptions
    * It returns a promise that resolves to the provider object
    * @returns The provider is being returned.
    */
-  public getProvider(): CasperWalletWindowGlobal {
+  public async getProvider(): Promise<CasperWalletWindowGlobal> {
     const provider = this.options.getProvider?.();
     if (!provider) {
       throw new ConnectorNotFoundError();
@@ -146,7 +146,7 @@ CasperWalletConnectorOptions
    * @returns The public key of the active account.
    */
   public async getActivePublicKey(): Promise<string | undefined> {
-    const provider = this.getProvider();
+    const provider = await this.getProvider();
 
     return provider.getActivePublicKey();
   }
@@ -164,7 +164,7 @@ CasperWalletConnectorOptions
     message: string,
     signingPublicKeyHex: string,
   ): Promise<string | undefined> {
-    const provider = this.getProvider();
+    const provider = await this.getProvider();
 
     const signatureResponse = await provider.signMessage(message, signingPublicKeyHex);
     if (signatureResponse.cancelled) {
@@ -186,7 +186,7 @@ CasperWalletConnectorOptions
     deploy: { deploy: JsonTypes },
     signingPublicKeyHex: string,
   ): Promise<Deploy | undefined> {
-    const provider = this.getProvider();
+    const provider = await this.getProvider();
     const deployJson = DeployUtil.deployFromJson(deploy);
 
     const res = await provider.sign(JSON.stringify(deploy), signingPublicKeyHex);

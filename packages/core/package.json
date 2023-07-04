@@ -23,10 +23,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@ledgerhq/hw-transport-webusb": "^6.27.16",
+    "@zondax/ledger-casper": "^2.6.1",
+    "buffer": "^6.0.3",
+    "casper-js-sdk": "^2.13.3",
     "eventemitter3": "^5.0.0",
     "typedjson": "^1.8.0",
-    "zustand": "^4.3.2",
-    "casper-js-sdk": "^2.10.1"
+    "zustand": "^4.3.2"
   },
   "devDependencies": {
     "eslint-plugin-prettier": "^4.2.1",
