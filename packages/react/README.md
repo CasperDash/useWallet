@@ -78,7 +78,7 @@ function WalletProfile() {
     <div>
       <button onClick={() => connectWithCasperSigner()}>Connect with Casper Signer</button>
       </br>
-      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<button>
+      <button onClick={() => connectWithCasperDash()}>Connect with CasperDash</<utton>
     </div>
 
   )
