@@ -57,8 +57,10 @@ export abstract class Connector<Provider = unknown, EventProvider = unknown, Opt
   public abstract disconnect(): Promise<void>;
   public abstract connect(): Promise<void>;
   public abstract getActivePublicKey(): Promise<string | undefined>;
-  public abstract signMessage(message:string, signingPublicKeyHex: string): Promise<string | undefined>;
-  public abstract sign(deploy: { deploy: JsonTypes }, signingPublicKeyHex: string, targetPublicKeyHex: string): Promise<Deploy | undefined>;
+  public abstract signMessage(message:string, signingPublicKeyHex: string, options?: Record<string, unknown>): Promise<string | undefined>;
+  public abstract sign(
+    deploy: { deploy: JsonTypes }, signingPublicKeyHex: string, targetPublicKeyHex: string, options?: Record<string, unknown>
+  ): Promise<Deploy | undefined>;
 
   public abstract onConnected(event: CustomEventInit): void;
   public abstract onDisconnected(): void;
