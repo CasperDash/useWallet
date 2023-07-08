@@ -34,6 +34,7 @@ export class LedgerConnector extends Connector {
   }
 
   public async getProvider(): Promise<Provider | undefined> {
+    await this.connect();
     return this.casperApp;
   }
 
