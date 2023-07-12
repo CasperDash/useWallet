@@ -9,12 +9,15 @@ import CasperDashWebButton from './component/CasperDashWebButton';
 import FormSignerMessage from './component/FormSignerMessage';
 
 function App() {
-  const { publicKey } = useAccount({
+  const { publicKey } = useAccount<Error>({
     onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
       console.log('onConnect: ', publicKeyOnConnect);
     },
     onDisconnect() {
       console.log('onDisconnect Wallet');
+    },
+    onError: (err: Error) => {
+      console.log(err.message);
     },
   });
   const { disconnect } = useDisconnect();
