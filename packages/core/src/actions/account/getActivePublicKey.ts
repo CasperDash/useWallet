@@ -5,9 +5,8 @@ import { getClient } from '@casperdash/usewallet-core/utils/client';
  * @returns The active public key of the user.
  */
 export const getActivePublicKey = async (): Promise<string | undefined> => {
-  const connector = getClient()?.connector;
-
   try {
+    const connector = getClient()?.connector;
     const activeKey = await connector?.getActivePublicKey();
 
     return activeKey;

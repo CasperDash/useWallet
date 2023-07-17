@@ -179,11 +179,17 @@ export class Client {
   private async triggerAutoConnect(autoConnect: boolean, connectors: Connector[]) {
     if (autoConnect && typeof window !== 'undefined') {
       let x = 0;
-      const intervalID = setInterval(() => {
+      const intervalID = setInterval(async () => {
         let isReady = false;
-        for (const connector of connectors) {
+        for (let index = 0;index < connectors.length; index++) {
+          const connector = connectors[index];
+          if (!connector) {
+            continue;
+          }
+
           try {
-            if (connector.getProvider()) {
+            const isConnected = await connector.getProvider();
+            if (isConnected) {
               isReady = true;
             }
           } catch (err) {

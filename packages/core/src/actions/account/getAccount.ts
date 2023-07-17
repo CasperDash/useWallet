@@ -6,6 +6,7 @@ export type Account = {
   publicKey?: string;
   status?: StatusEnum;
   connector?: Connector;
+  ledgerAccountIndex?: string;
 };
 
 /**
@@ -22,6 +23,7 @@ export const getAccount = (): Account | null => {
       publicKey: data?.activeKey,
       status,
       connector,
+      ledgerAccountIndex: data?.ledgerAccountIndex || '0',
     };
   } catch (error) {
     console.error(error);
