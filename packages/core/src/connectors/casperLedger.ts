@@ -130,8 +130,13 @@ CasperLedgerConnectorOptions
       const transport = <TransportWebUSB> await TransportWebUSB.create();
 
       this.transport = transport;
-      console.log('asdasd CasperApp: ', CasperApp);
-      this.casperApp = new CasperApp(transport);
+      // eslint-disable-next-line no-underscore-dangle, @typescript-eslint/no-explicit-any
+      if ((CasperApp as any).__esModule) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.casperApp = new (CasperApp as any).default(transport);
+      } else {
+        this.casperApp = new CasperApp(transport);
+      }
 
       this.transport.on('disconnect', this.onDisconnected);
 
