@@ -8,7 +8,9 @@ export enum RepliedMessageMethodEnums {
 }
 
 export enum PostMessageMethodEnums {
+  CONNECT = 'connect',
   DISCONNECT = 'disconnect',
   SIGN_MESSAGE = 'signMessage',
   SIGN = 'sign',
+  GET_ACTIVE_PUBLIC_KEY = 'getActivePublicKey',
 }

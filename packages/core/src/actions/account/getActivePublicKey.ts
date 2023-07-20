@@ -1,3 +1,4 @@
+import { ConnectorNotFoundError } from '@casperdash/usewallet-core/errors';
 import { getClient } from '@casperdash/usewallet-core/utils/client';
 
 /**
@@ -6,7 +7,15 @@ import { getClient } from '@casperdash/usewallet-core/utils/client';
  */
 export const getActivePublicKey = async (): Promise<string | undefined> => {
   try {
-    const connector = getClient()?.connector;
+    const { connector, data } = getClient();
+    if (!connector) {
+      throw new ConnectorNotFoundError();
+    }
+
+    if (connector.id === 'casperDashWeb') {
+      return data?.activeKey;
+    }
+
     const activeKey = await connector?.getActivePublicKey();
 
     return activeKey;

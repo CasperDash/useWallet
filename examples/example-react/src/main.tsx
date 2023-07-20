@@ -9,7 +9,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
-import './index.css';
+import '../app/globals.css';
 
 const client = createClient({
   connectors: [new CasperSignerConnector(), new CasperDashConnector(), new CasperWalletConnector()],
