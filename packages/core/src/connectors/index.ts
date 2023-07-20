@@ -5,3 +5,4 @@ export * from './casperWallet';
 export * from './casperDashWeb';
 export * from './base';
 export * from './casperLedger';
+export * from './casperDashMobile';

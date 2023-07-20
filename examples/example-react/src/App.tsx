@@ -7,14 +7,15 @@ import {
   useSetLedgerAccountIndex,
 } from '@casperdash/usewallet';
 
-import CasperDashButton from './component/CasperDashButton';
-import CasperSignerButton from './component/CasperSignerButton';
-import CasperWalletButton from './component/CasperWalletButton';
-import FormSigner from './component/FormSigner';
-import CasperDashWebButton from './component/CasperDashWebButton';
-import FormSignerMessage from './component/FormSignerMessage';
-import CasperLedgerButton from './component/CasperLedgerButton';
-import { SelectLedgerAccount } from './component/SelectLedgerAccount';
+import CasperDashButton from './components/ConnectButton/CasperDashButton';
+import { SelectLedgerAccount } from './components/Select/SelectLedgerAccount';
+import FormSignerMessage from './components/Form/FormSignerMessage';
+import CasperSignerButton from './components/ConnectButton/CasperSignerButton';
+import CasperLedgerButton from './components/ConnectButton/CasperLedgerButton';
+import CasperDashWebButton from './components/ConnectButton/CasperDashWebButton';
+import CasperWalletButton from './components/ConnectButton/CasperWalletButton';
+import CasperDashMobileButton from './components/ConnectButton/CasperDashMobileButton';
+import FormSigner from './components/Form/FormSigner';
 
 import './App.css';
 
@@ -64,7 +65,7 @@ function App() {
     <div className="App">
         {publicKey ? (
           <div>
-            <button style={{ marginTop: '-40px' }} onClick={() => disconnect()}>Disconnect {publicKey}</button>
+            <button style={{ marginTop: '-40px' }} onClick={() => disconnect()}>Disconnect</button>
             <div className="signer-form-wrapper">
               <FormSigner />
               <br/>
@@ -79,11 +80,11 @@ function App() {
                   src="/casperdash.png"
                   className="logo"
                   alt="CasperDash logo"
+                  style={{ width: '100%', height: '40px' }}
                 />
               </a>
             </div>
             <div className="card">
-              <h1>useWallet Connector</h1>
               <CasperSignerButton />
               <br />
               <CasperDashButton />
@@ -93,6 +94,8 @@ function App() {
               <CasperDashWebButton/>
               <br/>
               <CasperLedgerButton />
+              <br/>
+              <CasperDashMobileButton />
             </div>
           </>
         )}

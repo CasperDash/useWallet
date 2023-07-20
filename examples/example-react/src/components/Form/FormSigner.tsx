@@ -1,7 +1,7 @@
 import { useAccount, useSign } from '@casperdash/usewallet';
 import { useForm } from 'react-hook-form';
 
-import { getTransferDeploy } from '../utils/valueBuilder';
+import { getTransferDeploy } from '../../utils/valueBuilder';
 
 type FormValues = {
   walletAddress: string;
@@ -17,7 +17,7 @@ const FormSigner = () => {
   });
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      walletAddress: '',
+      walletAddress: '0106ae2a9cd180f2160bd87ed4bf564f34dffc40d71870bd425800f00f1e450ce3',
       amount: 0,
     },
   });

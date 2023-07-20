@@ -40,4 +40,5 @@ export {
   CasperWalletConnector,
   CasperDashWebConnector,
   CasperLedgerConnector,
+  CasperDashMobileConnector,
 } from '@casperdash/usewallet-core';

@@ -1,7 +1,7 @@
-export const maybeParseDetailEvent = (detail: Record<string, unknown> | string) => {
+export const maybeParseDetailEvent = <T extends Record<any, any>>(detail: Record<string, unknown> | string): T => {
   if (typeof detail === 'string') {
     return JSON.parse(detail);
   }
 
-  return detail;
+  return detail as T;
 };

@@ -8,5 +8,8 @@ declare global {
     };
     casperlabsHelper?: CasperLabsHelper;
     CasperWalletProvider: () => CasperWalletProvider;
+    ReactNativeWebView: {
+      postMessage: (message: string) => void;
+    };
   }
 }
