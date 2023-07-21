@@ -13,10 +13,11 @@ export type OnConnectParams = { publicKey: string; connector?: Connector };
 
 export type UserAccounProps = {
   onConnect?: ({ publicKey, connector }: OnConnectParams) => void;
+  onChange?: (account: Account) => void;
   onDisconnect?: () => void;
 };
 
-export const useAccount = ({ onConnect, onDisconnect }: UserAccounProps = {}) => {
+export const useAccount = ({ onConnect, onDisconnect, onChange }: UserAccounProps = {}) => {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [status, setStatus] = useState<StatusEnum>(StatusEnum.DISCONNECTED);
   const ref = useRef<Account>(null!);
@@ -36,6 +37,10 @@ export const useAccount = ({ onConnect, onDisconnect }: UserAccounProps = {}) =>
     watchAccount((account: Account | null) => {
       if (!account) {
         return;
+      }
+
+      if (ref.current?.publicKey && account.publicKey && account.publicKey !== ref.current?.publicKey) {
+        onChange?.(account);
       }
 
       setPublicKey(account.publicKey || null);

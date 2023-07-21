@@ -1,4 +1,4 @@
-import { OnConnectParams, useAccount, useDisconnect } from '@casperdash/usewallet';
+import { Account, OnConnectParams, useAccount, useDisconnect } from '@casperdash/usewallet';
 
 import './App.css';
 import CasperDashButton from './component/CasperDashButton';
@@ -15,6 +15,10 @@ function App() {
     },
     onDisconnect() {
       console.log('onDisconnect Wallet');
+    },
+    onChange: async ({ publicKey: publicKeyOnChange, isConnected }: Account ) => {
+      console.log('isConnected: ', isConnected);
+      return alert(`Account changed: ${publicKeyOnChange}`);
     },
   });
   const { disconnect } = useDisconnect();

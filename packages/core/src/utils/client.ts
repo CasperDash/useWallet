@@ -208,10 +208,11 @@ export class Client {
      * It sets the state of the component.
      * @param {ConnectorData} data - ConnectorData - The data that is passed to the connector.
      */
-    const onChange = (data: ConnectorData) => {
+    const onChange = async (data: ConnectorData) => {
+      const isConnected = await this.connector?.isConnected();
       this.setState((x: StateParams) => ({
         ...x,
-        data: { ...x.data, ...data },
+        data: { ...x.data, ...data, isConnected },
       }));
     };
 
@@ -249,7 +250,7 @@ export class Client {
     };
 
     window?.addEventListener('casper:change',
-      (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onChange(maybeParseDetailEvent(event.detail!)));
+      async (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onChange(maybeParseDetailEvent(event.detail!)));
     window?.addEventListener('casper:disconnect', () => onDisconnect());
     window?.addEventListener('casper:connect',
       (event: CustomEventInit<{ activeKey: string; isConnected: boolean }>) => onConnect(maybeParseDetailEvent(event.detail!)));
