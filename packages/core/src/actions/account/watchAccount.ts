@@ -13,6 +13,7 @@ export type WatchAccountSelectorParams = {
   publicKey?: string;
   connector?: Connector;
   status?: StatusEnum;
+  isConnected?: boolean;
 };
 
 export type WatchAccountOptions = {
@@ -44,6 +45,7 @@ export const watchAccount = (
   const unsubscribe = client.subscribe(
     ({ data, connector, status }: StateParams) => {
       return selector?.({
+        isConnected: data?.isConnected,
         publicKey: data?.activeKey,
         status,
         connector,
