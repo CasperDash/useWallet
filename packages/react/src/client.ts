@@ -33,4 +33,11 @@ export const createClient = ({
 };
 
 export type Client = CasperClient & { queryClient: QueryClient };
-export { CasperDashConnector, CasperSignerConnector, CasperWalletConnector, CasperDashWebConnector } from '@casperdash/usewallet-core';
+
+export {
+  CasperDashConnector,
+  CasperSignerConnector,
+  CasperWalletConnector,
+  CasperDashWebConnector,
+  CasperLedgerConnector,
+} from '@casperdash/usewallet-core';

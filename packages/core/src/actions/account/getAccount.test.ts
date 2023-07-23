@@ -6,7 +6,6 @@ import { StatusEnum } from '@casperdash/usewallet-core/enums';
 import { getAccount } from './getAccount';
 
 describe('getAccount', () => {
-
   it('should return null if the client is not set', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -35,6 +34,7 @@ describe('getAccount', () => {
       publicKey,
       status,
       connector,
+      ledgerAccountIndex: '0',
     });
   });
 
@@ -56,6 +56,7 @@ describe('getAccount', () => {
       publicKey: undefined,
       status,
       connector,
+      ledgerAccountIndex: '0',
     });
   });
 });

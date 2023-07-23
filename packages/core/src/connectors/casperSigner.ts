@@ -54,7 +54,7 @@ CasperSignerConnectorOptions
    * It returns a promise that resolves to the provider object
    * @returns The provider is being returned.
    */
-  public getProvider(): CasperLabWindowGlobal {
+  public async getProvider(): Promise<CasperLabWindowGlobal> {
     const provider = this.options.getProvider?.();
     if (!provider) {
       throw new ConnectorNotFoundError();
@@ -143,7 +143,7 @@ CasperSignerConnectorOptions
    * @returns The public key of the active account.
    */
   public async getActivePublicKey(): Promise<string> {
-    const provider = this.getProvider();
+    const provider = await this.getProvider();
 
     return provider.getActivePublicKey();
   }
@@ -161,7 +161,7 @@ CasperSignerConnectorOptions
     message: string,
     signingPublicKeyHex: string,
   ): Promise<string> {
-    const provider = this.getProvider();
+    const provider = await this.getProvider();
 
     return provider.signMessage(message, signingPublicKeyHex);
   }
@@ -179,7 +179,7 @@ CasperSignerConnectorOptions
     signingPublicKeyHex: string,
     targetPublicKeyHex: string,
   ): Promise<Deploy> {
-    const provider = this.getProvider();
+    const provider = await this.getProvider();
 
     return provider.sign(deploy, signingPublicKeyHex, targetPublicKeyHex);
   }

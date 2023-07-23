@@ -7,6 +7,7 @@ export type ConnectorData<Provider = unknown> = {
   activeKey?: string;
   isConnected?: boolean;
   provider?: Provider;
+  ledgerAccountIndex?: string;
 };
 
 export type SignedParams = {
@@ -50,7 +51,7 @@ export abstract class Connector<Provider = unknown, EventProvider = unknown, Opt
     return super.emit(event, ...args);
   }
 
-  public abstract getProvider(): Provider;
+  public abstract getProvider(): Promise<Provider>;
   public abstract getEventProvider(): Promise<EventProvider>;
 
   public abstract isConnected(): Promise<boolean>;

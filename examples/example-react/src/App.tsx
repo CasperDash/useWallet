@@ -1,30 +1,69 @@
-import { Account, OnConnectParams, useAccount, useDisconnect } from '@casperdash/usewallet';
+import { useState } from 'react';
+import {
+  Account,
+  OnConnectParams,
+  useAccount,
+  useDisconnect,
+  useSetLedgerAccountIndex,
+} from '@casperdash/usewallet';
 
-import './App.css';
 import CasperDashButton from './component/CasperDashButton';
 import CasperSignerButton from './component/CasperSignerButton';
 import CasperWalletButton from './component/CasperWalletButton';
 import FormSigner from './component/FormSigner';
 import CasperDashWebButton from './component/CasperDashWebButton';
 import FormSignerMessage from './component/FormSignerMessage';
+import CasperLedgerButton from './component/CasperLedgerButton';
+import { SelectLedgerAccount } from './component/SelectLedgerAccount';
+
+import './App.css';
 
 function App() {
-  const { publicKey } = useAccount<Error>({
+  const [selectedIndex, setSelectedIndex] = useState<string>(null!);
+  const { setLedgerAccountIndex } = useSetLedgerAccountIndex({
+    onSuccess: ({ index }: { index: string }) => {
+      return setSelectedIndex(index);
+    },
+  });
+  const { publicKey, connector } = useAccount({
     onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
-      console.log('onConnect: ', publicKeyOnConnect);
+      console.log('publicKey: ', publicKeyOnConnect);
     },
     onDisconnect() {
       console.log('onDisconnect Wallet');
     },
+<<<<<<< HEAD
     onChange: async ({ publicKey: publicKeyOnChange, isConnected }: Account ) => {
       console.log('isConnected: ', isConnected);
       return alert(`Account changed: ${publicKeyOnChange}`);
     },
     onError: (err: Error) => {
       console.log(err.message);
+=======
+    onError: (err: unknown) => {
+      console.log((err as Error).message);
+>>>>>>> 5b7c4a1 (feat: #36 integrate with ledger (#42))
     },
   });
   const { disconnect } = useDisconnect();
+
+  if (!selectedIndex && !!publicKey && connector && connector.id === 'ledger') {
+    return (
+      <div className="App">
+          <div>
+            <div>
+              <div>
+                Select Ledger Account
+              </div>
+              <div style={{ marginTop: '10px' }}>
+                <SelectLedgerAccount onChange={(index: string) => setLedgerAccountIndex({ index })}/>
+              </div>
+            </div>
+            <button style={{ marginTop: '40px' }} onClick={() => disconnect()}>Disconnect {publicKey}</button>
+          </div>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
@@ -57,6 +96,8 @@ function App() {
               <CasperWalletButton />
               <br/>
               <CasperDashWebButton/>
+              <br/>
+              <CasperLedgerButton />
             </div>
           </>
         )}
