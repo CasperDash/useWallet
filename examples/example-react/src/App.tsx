@@ -9,7 +9,7 @@ import CasperDashWebButton from './component/CasperDashWebButton';
 import FormSignerMessage from './component/FormSignerMessage';
 
 function App() {
-  const { publicKey } = useAccount({
+  const { publicKey } = useAccount<Error>({
     onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
       console.log('onConnect: ', publicKeyOnConnect);
     },
@@ -19,6 +19,9 @@ function App() {
     onChange: async ({ publicKey: publicKeyOnChange, isConnected }: Account ) => {
       console.log('isConnected: ', isConnected);
       return alert(`Account changed: ${publicKeyOnChange}`);
+    },
+    onError: (err: Error) => {
+      console.log(err.message);
     },
   });
   const { disconnect } = useDisconnect();
