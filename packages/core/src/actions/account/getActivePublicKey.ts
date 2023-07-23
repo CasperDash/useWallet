@@ -13,5 +13,7 @@ export const getActivePublicKey = async (): Promise<string | undefined> => {
     return activeKey;
   } catch (error) {
     console.error(error);
+
+    throw error;
   }
 };
