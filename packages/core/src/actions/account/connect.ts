@@ -55,6 +55,10 @@ export const connect = async ({ connector }: ConnectParams): Promise<ConnectResu
         };
       }
     } catch (err) {
+      if (connector.id === 'ledger') {
+        throw err;
+      }
+
       await connector.connect();
       try {
         const { activeKey } = await getActiveKey(connector);

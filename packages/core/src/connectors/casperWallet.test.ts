@@ -60,7 +60,7 @@ describe('CasperWalletConnector', () => {
         } as unknown as CasperWalletProvider;
       };
       const casperConnector = new CasperWalletConnector();
-      const provider = casperConnector.getProvider();
+      const provider = await casperConnector.getProvider();
 
       expect(provider.isConnected).toBeDefined();
       expect(provider.getActivePublicKey).toBeDefined();

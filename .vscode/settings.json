@@ -2,5 +2,13 @@
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
+  },
+  "typescript.tsserver.watchOptions": {
+    "excludeDirectories": [
+      "**/node_modules",
+      "_build",
+      "temp/*",
+      "pnpm-lock.yaml"
+    ]
   }
 }

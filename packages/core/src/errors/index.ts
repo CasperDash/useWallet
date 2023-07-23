@@ -4,3 +4,4 @@ export * from './ClientNotFoundError';
 export * from './ProviderUrlDoesNotExistError';
 export * from './RejectedSignDeployError';
 export * from './RejectedSignMessageError';
+export * from './ConnectorNotLedgerError';

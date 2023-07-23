@@ -6,7 +6,6 @@ import {
   getAccount,
   deepEqual,
   Connector,
-  getActivePublicKey,
 } from '@casperdash/usewallet-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -19,8 +18,17 @@ export type UseAccounProps<TError> = {
   onError?: (error: TError) => void;
 };
 
-export const useAccount = <TError = unknown>({ onConnect, onDisconnect, onError, onChange }: UseAccounProps<TError> = {}) => {
+type Result = {
+  status: StatusEnum;
+  publicKey: string | null;
+  ledgerAccountIndex: string | null;
+  connector?: Connector;
+};
+
+export const useAccount = <TError = unknown>({ onConnect, onDisconnect, onError, onChange }: UseAccounProps<TError> = {}): Result => {
   const [publicKey, setPublicKey] = useState<string | null>(null);
+  const [ledgerAccountIndex, setLedgerAccountIndex] = useState<string | null>(null);
+  const [connector, setConnector] = useState<Connector>();
   const [status, setStatus] = useState<StatusEnum>(StatusEnum.DISCONNECTED);
   const ref = useRef<Account>(null!);
 
@@ -28,11 +36,12 @@ export const useAccount = <TError = unknown>({ onConnect, onDisconnect, onError,
     const initAccount = async (): Promise<void> => {
       try {
         const account = getAccount();
-        const activePublicKey = await getActivePublicKey();
 
-        if (activePublicKey && account && account.status === StatusEnum.CONNECTED) {
-          setPublicKey(activePublicKey);
+        if (account && account.status === StatusEnum.CONNECTED) {
+          setPublicKey(account.publicKey || null);
           setStatus(account.status);
+          setLedgerAccountIndex(account.ledgerAccountIndex || null);
+          setConnector(account.connector);
         }
       } catch (error: unknown) {
         onError?.(error as TError);
@@ -52,6 +61,8 @@ export const useAccount = <TError = unknown>({ onConnect, onDisconnect, onError,
 
       setPublicKey(account.publicKey || null);
       setStatus(account.status || StatusEnum.DISCONNECTED);
+      setLedgerAccountIndex(account.ledgerAccountIndex || null);
+      setConnector(account.connector);
 
       if (!deepEqual(account, ref.current)) {
         if (account?.publicKey && account.status === StatusEnum.CONNECTED) {
@@ -77,5 +88,7 @@ export const useAccount = <TError = unknown>({ onConnect, onDisconnect, onError,
   return {
     status,
     publicKey,
+    ledgerAccountIndex,
+    connector,
   };
 };

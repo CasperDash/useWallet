@@ -7,6 +7,7 @@ export type Account = {
   status?: StatusEnum;
   connector?: Connector;
   isConnected?: boolean;
+  ledgerAccountIndex?: string;
 };
 
 /**
@@ -24,6 +25,7 @@ export const getAccount = (): Account | null => {
       status,
       connector,
       isConnected: data?.isConnected,
+      ledgerAccountIndex: data?.ledgerAccountIndex || '0',
     };
   } catch (error) {
     console.error(error);
