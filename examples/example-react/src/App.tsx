@@ -32,17 +32,12 @@ function App() {
     onDisconnect() {
       console.log('onDisconnect Wallet');
     },
-<<<<<<< HEAD
     onChange: async ({ publicKey: publicKeyOnChange, isConnected }: Account ) => {
       console.log('isConnected: ', isConnected);
       return alert(`Account changed: ${publicKeyOnChange}`);
     },
     onError: (err: Error) => {
       console.log(err.message);
-=======
-    onError: (err: unknown) => {
-      console.log((err as Error).message);
->>>>>>> 5b7c4a1 (feat: #36 integrate with ledger (#42))
     },
   });
   const { disconnect } = useDisconnect();
