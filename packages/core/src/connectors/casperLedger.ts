@@ -3,7 +3,7 @@ import { Buffer } from 'buffer';
 
 import { DeployUtil, CLPublicKey } from 'casper-js-sdk';
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
-import CasperApp from '@zondax/ledger-casper';
+import * as LedgerCasper from '@zondax/ledger-casper';
 import { JsonTypes } from 'typedjson';
 
 import { AlgoEnum } from '../enums';
@@ -18,7 +18,9 @@ type CasperLedgerConnectorOptions = {
   getEventProvider?: () => EventProvider;
 };
 
-type Provider = CasperApp;
+const { default: CasperApp } = LedgerCasper;
+
+type Provider = LedgerCasper.default;
 type EventProvider = Window;
 
 type LedgerOption = { index?: string };
@@ -128,11 +130,18 @@ CasperLedgerConnectorOptions
       const transport = <TransportWebUSB> await TransportWebUSB.create();
 
       this.transport = transport;
-      this.casperApp = new CasperApp(transport);
+      // eslint-disable-next-line no-underscore-dangle, @typescript-eslint/no-explicit-any
+      if ((CasperApp as any).__esModule) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.casperApp = new (CasperApp as any).default(transport);
+      } else {
+        this.casperApp = new CasperApp(transport);
+      }
 
       this.transport.on('disconnect', this.onDisconnected);
 
     } catch (error) {
+      console.log('error', error);
       throw Error(getLedgerError(error as Error));
     }
   }
