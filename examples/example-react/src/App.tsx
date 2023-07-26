@@ -24,8 +24,7 @@ function App() {
     onSuccess: ({ index }: { index: string }) => {
       return setSelectedIndex(index);
     },
-  });
-  const { publicKey, connector } = useAccount({
+  });  const { publicKey, connector } = useAccount<Error>({
     onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
       console.log('publicKey: ', publicKeyOnConnect);
     },
