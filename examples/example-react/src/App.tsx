@@ -25,7 +25,6 @@ function App() {
       return setSelectedIndex(index);
     },
   });
-
   const { publicKey, connector } = useAccount({
     onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
       console.log('publicKey: ', publicKeyOnConnect);
