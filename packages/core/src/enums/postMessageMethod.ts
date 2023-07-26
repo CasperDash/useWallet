@@ -12,4 +12,5 @@ export enum PostMessageMethodEnums {
   DISCONNECT = 'disconnect',
   SIGN_MESSAGE = 'signMessage',
   SIGN = 'sign',
+  GET_ACTIVE_PUBLIC_KEY = 'getActivePublicKey',
 }

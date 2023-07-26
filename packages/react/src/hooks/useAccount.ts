@@ -39,6 +39,8 @@ export const useAccount = <TError = unknown>({ onConnect, onDisconnect, onError,
         const account = getAccount();
         const activePublicKey = await getActivePublicKey();
 
+        console.log('activePublicKey: ', activePublicKey);
+
         if (activePublicKey && account && account.status === StatusEnum.CONNECTED) {
           setLedgerAccountIndex(account.ledgerAccountIndex || null);
           setConnector(account.connector);
@@ -60,6 +62,8 @@ export const useAccount = <TError = unknown>({ onConnect, onDisconnect, onError,
       if (ref.current?.publicKey && account.publicKey && account.publicKey !== ref.current?.publicKey) {
         onChange?.(account);
       }
+
+      console.log('account: ', account);
 
       setPublicKey(account.publicKey || null);
       setStatus(account.status || StatusEnum.DISCONNECTED);

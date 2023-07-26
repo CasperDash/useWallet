@@ -9,15 +9,13 @@ import {
 
 import CasperDashButton from './components/ConnectButton/CasperDashButton';
 import { SelectLedgerAccount } from './components/Select/SelectLedgerAccount';
-import FormSignerMessage from './components/Form/FormSignerMessage';
 import CasperSignerButton from './components/ConnectButton/CasperSignerButton';
 import CasperLedgerButton from './components/ConnectButton/CasperLedgerButton';
 import CasperDashWebButton from './components/ConnectButton/CasperDashWebButton';
 import CasperWalletButton from './components/ConnectButton/CasperWalletButton';
 import CasperDashMobileButton from './components/ConnectButton/CasperDashMobileButton';
-import FormSigner from './components/Form/FormSigner';
-
-import './App.css';
+import { Button } from './components/ui/Button';
+import { FormTabs } from './components/Form/FormTabs';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState<string>(null!);
@@ -62,14 +60,15 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="flex justify-center mt-10">
+      <div className="max-w-[300px] bg-red">
         {publicKey ? (
           <div>
-            <button style={{ marginTop: '-40px' }} onClick={() => disconnect()}>Disconnect</button>
-            <div className="signer-form-wrapper">
-              <FormSigner />
-              <br/>
-              <FormSignerMessage/>
+            <div>
+              <FormTabs />
+            </div>
+            <div className="mt-20 flex justify-center">
+              <Button style={{ marginTop: '-40px' }} onClick={() => disconnect()}>Disconnect</Button>
             </div>
           </div>
         ) : (
@@ -84,7 +83,7 @@ function App() {
                 />
               </a>
             </div>
-            <div className="card">
+            <div className="mt-10">
               <CasperSignerButton />
               <br />
               <CasperDashButton />
@@ -99,6 +98,7 @@ function App() {
             </div>
           </>
         )}
+      </div>
     </div>
   );
 }

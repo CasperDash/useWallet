@@ -2,6 +2,10 @@ import { useAccount, useSign } from '@casperdash/usewallet';
 import { useForm } from 'react-hook-form';
 
 import { getTransferDeploy } from '../../utils/valueBuilder';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Input } from '../ui/input';
+import { Button } from '../ui/Button';
+import { Textarea } from '../ui/textarea';
 
 type FormValues = {
   walletAddress: string;
@@ -15,9 +19,9 @@ const FormSigner = () => {
       console.log(err);
     },
   });
-  const { register, handleSubmit } = useForm({
+  const form = useForm({
     defaultValues: {
-      walletAddress: '0106ae2a9cd180f2160bd87ed4bf564f34dffc40d71870bd425800f00f1e450ce3',
+      walletAddress: '',
       amount: 0,
     },
   });
@@ -40,17 +44,64 @@ const FormSigner = () => {
     });
   };
 
+  const { handleSubmit } = form;
+
   return (
-    <form className="signer-form" onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" placeholder="Wallet Address" {...register('walletAddress', { required: true, maxLength: 80 })} />
-      <input type="text" placeholder="Amount" {...register('amount', { required: true, maxLength: 100 })} />
+    <Form {...form}>
+        <form className="signer-form" onSubmit={handleSubmit(onSubmit)}>
+          <FormField
+              control={form.control}
+              name="walletAddress"
+              // eslint-disable-next-line @typescript-eslint/typedef
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Wallet Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your wallet address" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    The wallet address you want to send to.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="amount"
+              // eslint-disable-next-line @typescript-eslint/typedef
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Amount</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Amount" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    The amount you want to send.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-      <button type="submit">
-        Send
-      </button>
+            <div className="mt-10">
+              <Button type="submit" className="w-full">
+                Send
+              </Button>
+            </div>
 
-      {data?.deploy.hash}
-    </form>
+            <div className="mt-10">
+              <FormItem>
+                <FormLabel>Result</FormLabel>
+                <FormDescription>
+                  Signed Deploy
+                </FormDescription>
+                <Textarea placeholder="Amount" value={data?.deploy.hash}/>
+                <FormMessage />
+              </FormItem>
+            </div>
+        </form>
+    </Form>
   );
 };
 

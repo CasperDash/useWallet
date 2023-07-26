@@ -1,6 +1,11 @@
 import { useAccount, useSignMessage } from '@casperdash/usewallet';
 import { useForm } from 'react-hook-form';
 
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Input } from '../ui/input';
+import { Button } from '../ui/Button';
+import { Textarea } from '../ui/textarea';
+
 
 type FormValues = {
   message: string;
@@ -13,15 +18,18 @@ const FormSignerMessage = () => {
       console.log(err);
     },
   });
-  const { register, handleSubmit } = useForm({
+  const form = useForm({
     defaultValues: {
       message: '',
     },
   });
+
   const onSubmit = ({ message }: FormValues) => {
+    console.log('publicKey: ', publicKey);
     if (!publicKey) {
       return;
     }
+
 
     signMessage({
       message,
@@ -29,16 +37,47 @@ const FormSignerMessage = () => {
     });
   };
 
+  const { handleSubmit } = form;
+
   return (
-    <form className="signer-form" onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" placeholder="message" {...register('message', { required: true, maxLength: 100 })} />
+    <Form {...form}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+          <FormField
+            control={form.control}
+            name="message"
+            // eslint-disable-next-line @typescript-eslint/typedef
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Message</FormLabel>
+                <FormControl>
+                  <Input placeholder="Your message" {...field} />
+                </FormControl>
+                <FormDescription>
+                  The message you want to sign.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      <button type="submit">
-        Sign
-      </button>
+          <div className="mt-10">
+            <Button type="submit" className="w-full">
+              Sign Message
+            </Button>
+          </div>
 
-      {data}
-    </form>
+          <div className="mt-10">
+            <FormItem>
+              <FormLabel>Result</FormLabel>
+              <FormDescription>
+                Signed Message
+              </FormDescription>
+              <Textarea placeholder="Amount" value={data}/>
+              <FormMessage />
+            </FormItem>
+          </div>
+      </form>
+    </Form>
   );
 };
 

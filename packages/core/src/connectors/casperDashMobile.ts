@@ -215,12 +215,14 @@ CasperDashMobileConnectorOptions
   }
 
   private handleMessage(event: ReplyEvent<Data>) {
+    console.log('message: ', event);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data = maybeParseDetailEvent<{ params: { publicKey: string; signedMessage: string }; method: string }>(event.detail as any);
     console.log('replied Data: ', data);
     switch (data.method) {
       case RepliedMessageMethodEnums.CONNECTED: {
         this.publicKey = data.params.publicKey;
+        console.log('publicKey: ', this.publicKey);
         this.onConnected(new CustomEvent('casperDashWeb:connect', { detail: { activeKey: this.publicKey, isConnected: true } }));
         break;
       }
@@ -254,6 +256,8 @@ CasperDashMobileConnectorOptions
     if (!window.ReactNativeWebView) {
       throw new ConnectorNotFoundError();
     }
+    console.log('method: ', method);
+
     window.ReactNativeWebView.postMessage(JSON.stringify({
       id: Date.now(),
       method,

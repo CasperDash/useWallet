@@ -3,6 +3,8 @@ import {
   useConnect,
 } from '@casperdash/usewallet';
 
+import { Button } from '../ui/Button';
+
 
 export const CasperDashButton = () => {
   const { connect } = useConnect({
@@ -11,9 +13,9 @@ export const CasperDashButton = () => {
 
   return (
     <div>
-        <button onClick={() => connect()}>
+        <Button onClick={() => connect()} className='w-full'>
           Connect with CasperDash
-        </button>
+        </Button>
     </div>
   );
 };
