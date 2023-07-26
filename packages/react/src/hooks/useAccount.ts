@@ -6,7 +6,6 @@ import {
   getAccount,
   deepEqual,
   Connector,
-  getActivePublicKey,
 } from '@casperdash/usewallet-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -37,10 +36,9 @@ export const useAccount = <TError = unknown>({ onConnect, onDisconnect, onError,
     const initAccount = async (): Promise<void> => {
       try {
         const account = getAccount();
-        const activePublicKey = await getActivePublicKey();
 
-        if (activePublicKey && account && account.status === StatusEnum.CONNECTED) {
-          setPublicKey(activePublicKey);
+        if (account && account.status === StatusEnum.CONNECTED) {
+          setPublicKey(account.publicKey || null);
           setStatus(account.status);
           setLedgerAccountIndex(account.ledgerAccountIndex || null);
           setConnector(account.connector);
