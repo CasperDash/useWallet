@@ -24,7 +24,9 @@ function App() {
     onSuccess: ({ index }: { index: string }) => {
       return setSelectedIndex(index);
     },
-  });  const { publicKey, connector } = useAccount<Error>({
+  });
+
+  const { publicKey, connector } = useAccount({
     onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
       console.log('publicKey: ', publicKeyOnConnect);
     },
@@ -35,8 +37,8 @@ function App() {
       console.log('isConnected: ', isConnected);
       return alert(`Account changed: ${publicKeyOnChange}`);
     },
-    onError: (err: Error) => {
-      console.log(err.message);
+    onError: (err: unknown) => {
+      console.log((err as Error).message);
     },
   });
   const { disconnect } = useDisconnect();
