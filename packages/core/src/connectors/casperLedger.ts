@@ -10,6 +10,8 @@ import { AlgoEnum } from '../enums';
 import { CONNECT_ERROR_MESSAGE, getLedgerError, getLedgerPath } from '../utils';
 import { Deploy } from '../types/deploy';
 import { ConnectorNotFoundError } from '../errors';
+import { DeployTypes } from '../enums/deployTypes';
+import { getDeployType } from '../utils/deploy';
 
 import { Connector } from './base';
 
@@ -176,7 +178,6 @@ CasperLedgerConnectorOptions
     return Buffer.from(signatureResponse.signatureRSV).toString('hex');
   }
 
-  // eslint-disable-next-line @typescript-eslint/typedef, @typescript-eslint/no-unused-vars
   public async sign(
     deploy: { deploy: JsonTypes },
     signingPublicKeyHex: string,
@@ -188,10 +189,25 @@ CasperLedgerConnectorOptions
     }
     const deployCasper = DeployUtil.deployFromJson(deploy);
     const deployJson = deployCasper.unwrap();
-    const responseDeploy = await casperApp.sign(
-      getLedgerPath(this.accountIndex || index),
-      <Buffer> DeployUtil.deployToBytes(deployJson),
-    );
+    let responseDeploy;
+
+    if (deployCasper.err) {
+      throw new Error('Something went wrong with deployResult');
+    }
+
+    const isWasm = getDeployType(deployCasper.unwrap()) === DeployTypes.WASM;
+
+    if (isWasm) {
+      responseDeploy = await casperApp.signWasmDeploy(
+        getLedgerPath(this.accountIndex || index),
+        <Buffer> DeployUtil.deployToBytes(deployJson),
+      );
+    } else {
+      responseDeploy = await casperApp.sign(
+        getLedgerPath(this.accountIndex || index),
+        <Buffer> DeployUtil.deployToBytes(deployJson),
+      );
+    }
 
     if (!responseDeploy.signatureRS) {
       console.error(responseDeploy.errorMessage);
