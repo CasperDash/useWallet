@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Buffer } from 'buffer';
 
-import { DeployUtil, CLPublicKey } from 'casper-js-sdk';
+import { DeployUtil, CLPublicKey, formatMessageWithHeaders, encodeBase16 } from 'casper-js-sdk';
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import * as LedgerCasper from '@zondax/ledger-casper';
 import { JsonTypes } from 'typedjson';
@@ -159,23 +159,21 @@ CasperLedgerConnectorOptions
       throw new Error('Please connect to Casper Ledger');
     }
 
-    const ledgerPrefix = 'Casper Message:\n';
-
     const signatureResponse = await casperApp.signMessage(
       getLedgerPath(this.accountIndex || index),
-      Buffer.from(`${ledgerPrefix}${message}`, 'utf8'),
+      formatMessageWithHeaders(message) as Buffer,
     );
 
     if (!signatureResponse) {
       await this.transport.close();
 
       throw new Error('Error on sign message with ledger.');
-
     }
+    const signature = Uint8Array.from(signatureResponse.signatureRSV);
 
     await this.transport.close();
 
-    return Buffer.from(signatureResponse.signatureRSV).toString('hex');
+    return encodeBase16(signature.slice(0, 64));
   }
 
   public async sign(
