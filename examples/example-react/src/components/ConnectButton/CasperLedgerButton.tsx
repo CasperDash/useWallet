@@ -3,6 +3,8 @@ import {
   useConnect,
 } from '@casperdash/usewallet';
 
+import { Button } from '../ui/Button';
+
 export const CasperLedgerButton = () => {
   const { connect } = useConnect({
     connector: new CasperLedgerConnector(),
@@ -13,9 +15,9 @@ export const CasperLedgerButton = () => {
 
   return (
     <div>
-        <button onClick={() => connect()}>
+        <Button onClick={() => connect()} className='w-full'>
           Connect with Ledger
-        </button>
+        </Button>
     </div>
   );
 };
