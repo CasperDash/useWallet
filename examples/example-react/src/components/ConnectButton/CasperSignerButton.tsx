@@ -3,6 +3,8 @@ import {
   useConnect,
 } from '@casperdash/usewallet';
 
+import { Button } from '../ui/Button';
+
 export const CasperSignerButton = () => {
   const { connect } = useConnect({
     connector: new CasperSignerConnector(),
@@ -10,9 +12,9 @@ export const CasperSignerButton = () => {
 
   return (
     <div>
-        <button onClick={() => connect()}>
+        <Button onClick={() => connect()} className='w-full'>
           Connect with CasperSigner
-        </button>
+        </Button>
     </div>
   );
 };

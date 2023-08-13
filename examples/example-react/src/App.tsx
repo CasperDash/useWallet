@@ -7,25 +7,23 @@ import {
   useSetLedgerAccountIndex,
 } from '@casperdash/usewallet';
 
-import CasperDashButton from './component/CasperDashButton';
-import CasperSignerButton from './component/CasperSignerButton';
-import CasperWalletButton from './component/CasperWalletButton';
-import FormSigner from './component/FormSigner';
-import CasperDashWebButton from './component/CasperDashWebButton';
-import FormSignerMessage from './component/FormSignerMessage';
-import CasperLedgerButton from './component/CasperLedgerButton';
-import { SelectLedgerAccount } from './component/SelectLedgerAccount';
-
-import './App.css';
+import CasperDashButton from './components/ConnectButton/CasperDashButton';
+import { SelectLedgerAccount } from './components/Select/SelectLedgerAccount';
+import CasperSignerButton from './components/ConnectButton/CasperSignerButton';
+import CasperLedgerButton from './components/ConnectButton/CasperLedgerButton';
+import CasperDashWebButton from './components/ConnectButton/CasperDashWebButton';
+import CasperWalletButton from './components/ConnectButton/CasperWalletButton';
+import { Button } from './components/ui/Button';
+import { FormTabs } from './components/Form/FormTabs';
 
 function App() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const [selectedIndex, setSelectedIndex] = useState<string>(null!);
   const { setLedgerAccountIndex } = useSetLedgerAccountIndex({
     onSuccess: ({ index }: { index: string }) => {
       return setSelectedIndex(index);
     },
   });
-
   const { publicKey, connector } = useAccount({
     onConnect: async ({ publicKey: publicKeyOnConnect }: OnConnectParams) => {
       console.log('publicKey: ', publicKeyOnConnect);
@@ -35,7 +33,7 @@ function App() {
     },
     onChange: async ({ publicKey: publicKeyOnChange, isConnected }: Account ) => {
       console.log('isConnected: ', isConnected);
-      return alert(`Account changed: ${publicKeyOnChange}`);
+      return console.log(`Account changed: ${publicKeyOnChange}`);
     },
     onError: (err: unknown) => {
       console.log((err as Error).message);
@@ -62,14 +60,15 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="flex justify-center mt-10">
+      <div className="max-w-[300px] bg-red">
         {publicKey ? (
           <div>
-            <button style={{ marginTop: '-40px' }} onClick={() => disconnect()}>Disconnect {publicKey}</button>
-            <div className="signer-form-wrapper">
-              <FormSigner />
-              <br/>
-              <FormSignerMessage/>
+            <div>
+              <FormTabs />
+            </div>
+            <div className="mt-20 flex justify-center">
+              <Button style={{ marginTop: '-40px' }} onClick={() => disconnect()}>Disconnect</Button>
             </div>
           </div>
         ) : (
@@ -80,11 +79,11 @@ function App() {
                   src="/casperdash.png"
                   className="logo"
                   alt="CasperDash logo"
+                  style={{ width: '100%', height: '40px' }}
                 />
               </a>
             </div>
-            <div className="card">
-              <h1>useWallet Connector</h1>
+            <div className="mt-10">
               <CasperSignerButton />
               <br />
               <CasperDashButton />
@@ -97,6 +96,7 @@ function App() {
             </div>
           </>
         )}
+      </div>
     </div>
   );
 }
