@@ -17,6 +17,7 @@ import { Button } from './components/ui/Button';
 import { FormTabs } from './components/Form/FormTabs';
 
 function App() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const [selectedIndex, setSelectedIndex] = useState<string>(null!);
   const { setLedgerAccountIndex } = useSetLedgerAccountIndex({
     onSuccess: ({ index }: { index: string }) => {
