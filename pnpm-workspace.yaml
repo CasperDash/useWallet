@@ -1,5 +1,6 @@
 packages:
   - 'docs'
+  - 'packages/core'
   - 'packages/*'
   - '!**/test/**'
   - 'examples/*'

@@ -1,3 +1,3 @@
 export * from './client';
 export * from './deepEqual';
-export * from './ledger';
+export * from './deploy';

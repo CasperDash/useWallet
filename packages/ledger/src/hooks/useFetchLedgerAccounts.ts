@@ -1,6 +1,9 @@
-/* eslint-disable @typescript-eslint/indent */
-import { getLedgerPath, getLedgerPublicKey } from '@casperdash/usewallet-core';
-import { QueryFunctionContext, useInfiniteQuery, UseInfiniteQueryOptions } from '@tanstack/react-query';
+import {
+  InfiniteData, QueryFunctionContext, useInfiniteQuery, UseInfiniteQueryOptions, UseInfiniteQueryResult,
+} from '@tanstack/react-query';
+
+import { getLedgerPath } from '../util';
+import { getLedgerPublicKey } from '../actions/getLedgerPublicKey';
 
 type Params = {
   startIndex?: number;
@@ -16,16 +19,20 @@ export type LedgerAccount = {
 type Options =
 UseInfiniteQueryOptions<LedgerAccount[], unknown, LedgerAccount[]>;
 
+type Result = Omit<UseInfiniteQueryResult<LedgerAccount[]>, 'data'> & {
+  data?: LedgerAccount[];
+  paggedData?: InfiniteData<LedgerAccount[]>;
+};
+
 export const useFetchLedgerAccounts = (
   { startIndex = 0, total = 10 }: Params,
   options?: Options,
-  ) => {
+): Result => {
   const { data, ...query } = useInfiniteQuery<LedgerAccount[]>(
     ['casper-ledger-accounts'],
     async (context: QueryFunctionContext) => {
       const accounts = [];
       const { pageParam = startIndex } = context;
-      console.log('passgeParam: ', context);
       for (let i = pageParam; i < pageParam + total; i++) {
         const publicKey = await getLedgerPublicKey({ index: i.toString() });
 
