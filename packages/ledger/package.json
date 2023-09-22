@@ -1,11 +1,11 @@
 {
-  "name": "@casperdash/usewallet-core",
-  "version": "0.1.4",
-  "description": "Vanilla JS library for Casper",
+  "name": "@casperdash/usewallet-ledger",
+  "version": "0.0.1",
+  "description": "A React hook for interacting with the Casper Network via Ledger",
   "repository": {
     "type": "git",
     "url": "https://github.com/CasperDash/useWallet.git",
-    "directory": "packages/core"
+    "directory": "packages/ledger"
   },
   "homepage": "https://usewallet.casperdash.io/",
   "contributors": [
@@ -23,14 +23,19 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@ledgerhq/hw-transport-webusb": "^6.27.16",
+    "@zondax/ledger-casper": "^2.6.1",
     "casper-js-sdk": "^2.13.3",
-    "eventemitter3": "^5.0.0",
+    "@casperdash/usewallet-core": "workspace:*",
+    "@tanstack/query-core": "4.35.3",
+    "@tanstack/react-query": "4.35.3",
     "typedjson": "^1.8.0",
-    "zustand": "^4.3.2"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "eslint-plugin-prettier": "^4.2.1",
-    "tsup": "^6.5.0",
+    "@testing-library/react": "^13.4.0",
+    "@types/react": "18.0.26",
     "typescript": ">=4.9.4"
   }
 }

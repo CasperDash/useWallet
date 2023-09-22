@@ -1,7 +1,7 @@
 import {
-  CasperLedgerConnector,
   useConnect,
 } from '@casperdash/usewallet';
+import { CasperLedgerConnector } from '@casperdash/usewallet-ledger';
 
 import { Button } from '../ui/Button';
 

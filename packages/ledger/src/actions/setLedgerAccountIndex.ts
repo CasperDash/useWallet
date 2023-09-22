@@ -1,6 +1,6 @@
-import { CasperLedgerConnector } from '@casperdash/usewallet';
-import { ConnectorNotLedgerError } from '@casperdash/usewallet-core/errors';
-import { StateParams, getClient } from '@casperdash/usewallet-core/utils';
+import { ConnectorNotLedgerError, StateParams, getClient } from '@casperdash/usewallet-core';
+
+import { CasperLedgerConnector } from '../casperLedger';
 
 type Params = { index?: string };
 

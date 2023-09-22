@@ -1,4 +1,4 @@
-import { LedgerEnum } from '../enums';
+import { LedgerEnum } from './enum';
 
 export const CONNECT_ERROR_MESSAGE = 'You must open the Casper app on your Ledger device to connect.';
 

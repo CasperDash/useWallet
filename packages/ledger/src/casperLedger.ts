@@ -1,19 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Buffer } from 'buffer';
-
 import { DeployUtil, CLPublicKey, formatMessageWithHeaders, encodeBase16 } from 'casper-js-sdk';
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import * as LedgerCasper from '@zondax/ledger-casper';
 import { JsonTypes } from 'typedjson';
+import { AlgoEnum, Connector, ConnectorNotFoundError, Deploy, DeployTypes, getDeployType } from '@casperdash/usewallet-core';
 
-import { AlgoEnum } from '../enums';
-import { CONNECT_ERROR_MESSAGE, getLedgerError, getLedgerPath } from '../utils';
-import { Deploy } from '../types/deploy';
-import { ConnectorNotFoundError } from '../errors';
-import { DeployTypes } from '../enums/deployTypes';
-import { getDeployType } from '../utils/deploy';
+import { CONNECT_ERROR_MESSAGE, getLedgerError, getLedgerPath } from './util';
 
-import { Connector } from './base';
 
 type CasperLedgerConnectorOptions = {
   enableDebugLogs?: boolean;
@@ -161,7 +154,7 @@ CasperLedgerConnectorOptions
 
     const signatureResponse = await casperApp.signMessage(
       getLedgerPath(this.accountIndex || index),
-      formatMessageWithHeaders(message) as Buffer,
+      formatMessageWithHeaders(message) as any,
     );
 
     if (!signatureResponse) {
@@ -198,12 +191,12 @@ CasperLedgerConnectorOptions
     if (isWasm) {
       responseDeploy = await casperApp.signWasmDeploy(
         getLedgerPath(this.accountIndex || index),
-        <Buffer> DeployUtil.deployToBytes(deployJson),
+        DeployUtil.deployToBytes(deployJson) as any,
       );
     } else {
       responseDeploy = await casperApp.sign(
         getLedgerPath(this.accountIndex || index),
-        <Buffer> DeployUtil.deployToBytes(deployJson),
+        DeployUtil.deployToBytes(deployJson) as any,
       );
     }
 
