@@ -1,3 +1,4 @@
+import React from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { CasperDashConnector } from '@casperdash/usewallet-core';
 import { CasperProvider, Client, createClient } from '@casperdash/usewallet';

@@ -7,13 +7,13 @@ import {
 } from '@casperdash/usewallet';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { CasperLedgerConnector } from '@casperdash/usewallet-ledger';
 
 import App from './App';
-import '../app/globals.css';
+
+import './index.css';
 
 const client = createClient({
-  connectors: [new CasperSignerConnector(), new CasperDashConnector(), new CasperWalletConnector(), new CasperLedgerConnector()],
+  connectors: [new CasperSignerConnector(), new CasperDashConnector(), new CasperWalletConnector()],
   autoConnect: true,
 });
 
