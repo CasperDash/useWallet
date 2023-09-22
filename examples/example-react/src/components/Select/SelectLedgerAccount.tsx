@@ -1,4 +1,4 @@
-import { LedgerAccount, useFetchLedgerAccounts } from '@casperdash/usewallet';
+import { LedgerAccount, useFetchLedgerAccounts } from '@casperdash/usewallet-ledger';
 import { ChangeEvent } from 'react';
 
 type Props = {

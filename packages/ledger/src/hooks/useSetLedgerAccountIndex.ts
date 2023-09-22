@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { MutationKeysEnum } from '@casperdash/usewallet';
+
 import {
   setLedgerAccountIndex as setLedgerAccountIndexDapp,
-} from '@casperdash/usewallet-core';
-import { MutationKeysEnum } from '@casperdash/usewallet';
+} from '../actions/setLedgerAccountIndex';
 
 export type UseSetLedgerAccountIndexParams = {
   index?: string;
