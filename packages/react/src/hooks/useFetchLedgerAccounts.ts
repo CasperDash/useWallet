@@ -1,9 +1,7 @@
 import {
   InfiniteData, QueryFunctionContext, useInfiniteQuery, UseInfiniteQueryOptions, UseInfiniteQueryResult,
 } from '@tanstack/react-query';
-
-import { getLedgerPath } from '../util';
-import { getLedgerPublicKey } from '../actions/getLedgerPublicKey';
+import { getLedgerPublicKey, getLedgerPath } from '@casperdash/usewallet-core';
 
 type Params = {
   startIndex?: number;

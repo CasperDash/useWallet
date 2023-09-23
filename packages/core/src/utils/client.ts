@@ -3,8 +3,8 @@ import { createStore, Mutate, StoreApi } from 'zustand/vanilla';
 import { subscribeWithSelector } from 'zustand/middleware';
 
 import { Connector, ConnectorData } from '../connectors/base';
-import { ClientNotFoundError } from '../errors';
 import { StatusEnum } from '../enums';
+import { ClientNotFoundError } from '../errors';
 
 import { ClientStorage, createStorage, noopStorage } from './storage';
 import { maybeParseDetailEvent } from './parser';
