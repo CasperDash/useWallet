@@ -3,9 +3,16 @@ import { DeployUtil, CLPublicKey, formatMessageWithHeaders, encodeBase16 } from 
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import * as LedgerCasper from '@zondax/ledger-casper';
 import { JsonTypes } from 'typedjson';
-import { AlgoEnum, Connector, ConnectorNotFoundError, Deploy, DeployTypes, getDeployType } from '@casperdash/usewallet-core';
-
-import { CONNECT_ERROR_MESSAGE, getLedgerError, getLedgerPath } from './util';
+import {
+  AlgoEnum,
+  Connector,
+  ConnectorNotFoundError,
+  Deploy, DeployTypes,
+  getDeployType,
+  CONNECT_ERROR_MESSAGE,
+  getLedgerError,
+  getLedgerPath,
+} from '@casperdash/usewallet-core';
 
 
 type CasperLedgerConnectorOptions = {

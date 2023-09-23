@@ -16,14 +16,15 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup src/index.ts",
+    "build": "tsc && vite build --mode development",
+    "dev": "tsup src/index.ts --watch",
     "start": "pnpm build -- --watch"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@ledgerhq/hw-transport-webusb": "^6.27.16",
+    "@ledgerhq/hw-transport-webusb": "^6.27.19",
     "@zondax/ledger-casper": "^2.6.1",
     "casper-js-sdk": "^2.13.3",
     "@casperdash/usewallet-core": "workspace:*",
@@ -36,6 +37,11 @@
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
     "@types/react": "18.0.26",
-    "typescript": ">=4.9.4"
+    "typescript": ">=4.9.4",
+    "@rollup/plugin-inject": "5.0.3",
+    "vite": "^4.4.9",
+    "@vitejs/plugin-react-swc": "3.3.2",
+    "vite-plugin-dts": "^3.5.4",
+    "vite-plugin-node-polyfills": "^0.14.1"
   }
 }

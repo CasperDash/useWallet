@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { MutationKeysEnum } from '@casperdash/usewallet';
-
 import {
   setLedgerAccountIndex as setLedgerAccountIndexDapp,
-} from '../actions/setLedgerAccountIndex';
+} from '@casperdash/usewallet-core';
 
 export type UseSetLedgerAccountIndexParams = {
   index?: string;
@@ -47,7 +45,7 @@ export const useSetLedgerAccountIndex = ({
     variables,
     mutate,
     mutateAsync,
-  } = useMutation([MutationKeysEnum.SET_LEDGER_ACCOUNT_INDEX], mutationFn, {
+  } = useMutation(['set_ledger_account_index'], mutationFn, {
     onError,
     onMutate,
     onSettled,

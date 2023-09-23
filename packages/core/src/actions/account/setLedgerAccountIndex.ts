@@ -1,19 +1,16 @@
-import { ConnectorNotLedgerError, StateParams, getClient } from '@casperdash/usewallet-core';
-
-import { CasperLedgerConnector } from '../casperLedger';
+import { ConnectorNotLedgerError } from '@casperdash/usewallet-core/errors/ConnectorNotLedgerError';
+import { StateParams, client } from '@casperdash/usewallet-core/utils/client';
 
 type Params = { index?: string };
 
 export const setLedgerAccountIndex = async ({ index = '0' }: Params = { index: '0' }): Promise<void> => {
-  const client = getClient();
-
   try {
     const connector = client?.connector;
-    if (connector && connector.id !== 'ledger') {
+    if (!connector || connector && connector.id !== 'ledger') {
       throw new ConnectorNotLedgerError();
     }
 
-    const publicKey = await (connector as CasperLedgerConnector).getPublicKey(index);
+    const publicKey = await (connector as any).getPublicKey(index);
 
     client.setState((oldState: StateParams) => ({
       ...oldState,
@@ -24,7 +21,7 @@ export const setLedgerAccountIndex = async ({ index = '0' }: Params = { index: '
       },
     }));
 
-    (connector as CasperLedgerConnector).setAccountIndex(index);
+    (connector as any).setAccountIndex(index);
   } catch (error) {
     console.error(error);
 

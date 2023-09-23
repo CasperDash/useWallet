@@ -4,8 +4,8 @@ import {
   OnConnectParams,
   useAccount,
   useDisconnect,
+  useSetLedgerAccountIndex,
 } from '@casperdash/usewallet';
-import { useSetLedgerAccountIndex } from '@casperdash/usewallet-ledger';
 
 import CasperDashButton from './components/ConnectButton/CasperDashButton';
 import { SelectLedgerAccount } from './components/Select/SelectLedgerAccount';
