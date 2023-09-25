@@ -1,4 +1,4 @@
-import { ConnectorNotLedgerError, client } from '@casperdash/usewallet-core';
+import { ConnectorNotLedgerError, getClient } from '@casperdash/usewallet-core';
 import { CasperLedgerConnector } from '@casperdash/usewallet-core/types/casperLedgerConnector';
 
 /**
@@ -6,7 +6,7 @@ import { CasperLedgerConnector } from '@casperdash/usewallet-core/types/casperLe
  * @returns The active public key of the user.
  */
 export const getLedgerAccountIndex = async (): Promise<string> => {
-  const connector = client?.connector;
+  const connector = getClient()?.connector;
 
   try {
     if (connector && connector.id !== 'ledger') {
