@@ -1,6 +1,6 @@
 {
   "name": "@casperdash/usewallet-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vanilla JS library for Casper",
   "repository": {
     "type": "git",
