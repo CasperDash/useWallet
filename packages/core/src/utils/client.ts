@@ -129,7 +129,13 @@ export class Client {
 
     for (const connector of sortedConnectors || []) {
       /* It's checking if the connector is connected. */
-      const isConnectedWithConnector = await connector?.isConnected();
+      let isConnectedWithConnector;
+      try {
+        isConnectedWithConnector = await connector.isConnected();
+      } catch (_err) {
+        isConnectedWithConnector = false;
+      }
+
       if (isConnectedWithConnector) {
         let publicKey = await this.getPublicKeyFromConnector(connector);
         if (!publicKey) {

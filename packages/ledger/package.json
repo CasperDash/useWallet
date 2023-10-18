@@ -1,6 +1,6 @@
 {
   "name": "@casperdash/usewallet-ledger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A React hook for interacting with the Casper Network via Ledger",
   "repository": {
     "type": "git",
