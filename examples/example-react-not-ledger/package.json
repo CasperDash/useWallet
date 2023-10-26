@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@casperdash/usewallet": "workspace:*",
-    "casper-js-sdk": "^2.11.1",
+    "casper-js-sdk": "^2.15.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.42.1"

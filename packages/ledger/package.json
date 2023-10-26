@@ -1,6 +1,6 @@
 {
   "name": "@casperdash/usewallet-ledger",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React hook for interacting with the Casper Network via Ledger",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
   "dependencies": {
     "@ledgerhq/hw-transport-webusb": "^6.27.19",
     "@zondax/ledger-casper": "^2.6.1",
-    "casper-js-sdk": "^2.13.3",
+    "casper-js-sdk": "^2.15.3",
     "@casperdash/usewallet-core": "workspace:*",
     "@tanstack/query-core": "^4.35.3",
     "@tanstack/react-query": "^4.35.3",
