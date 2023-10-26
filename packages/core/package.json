@@ -1,6 +1,6 @@
 {
   "name": "@casperdash/usewallet-core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Vanilla JS library for Casper",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "casper-js-sdk": "^2.13.3",
+    "casper-js-sdk": "^2.15.3",
     "eventemitter3": "^5.0.0",
     "typedjson": "^1.8.0",
     "zustand": "^4.3.2"

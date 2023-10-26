@@ -14,7 +14,7 @@ import '../app/globals.css';
 
 const client = createClient({
   connectors: [new CasperSignerConnector(), new CasperDashConnector(), new CasperWalletConnector(), new CasperLedgerConnector()],
-  autoConnect: true,
+  // autoConnect: true,
 });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
