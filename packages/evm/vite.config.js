@@ -1,16 +1,12 @@
 import { resolve } from 'path';
 
 import { defineConfig } from 'vite';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     dts(),
-    nodePolyfills({
-      Buffer: true,
-    }),
   ],
   build: {
     lib: {
@@ -19,15 +15,10 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['react', '@tanstack/react-query', '@ledgerhq/hw-transport-node-hid'],
+      external: ['react'],
       output: {
         format: 'esm',
       },
     },
   },
-  resolve: {
-    alias: {
-      'Buffer': 'buffer',
-    },
-  }
 });

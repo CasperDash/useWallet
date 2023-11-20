@@ -1,0 +1,48 @@
+{
+  "name": "@casperdash/usewallet-evm",
+  "version": "1.0.3",
+  "description": "A React hook for interacting with the Casper Network via Ledger",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CasperDash/useWallet.git",
+    "directory": "packages/ledger"
+  },
+  "homepage": "https://usewallet.casperdash.io/",
+  "contributors": [
+    "dev <dev@casperdash.io>"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && vite build --mode development",
+    "dev": "tsup src/index.ts --watch",
+    "start": "pnpm build -- --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ledgerhq/hw-transport-webusb": "^6.27.19",
+    "@zondax/ledger-casper": "^2.6.1",
+    "casper-js-sdk": "^2.15.3",
+    "@casperdash/usewallet-core": "workspace:*",
+    "@tanstack/query-core": "^4.35.3",
+    "@tanstack/react-query": "^4.35.3",
+    "typedjson": "^1.8.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "^1.19.4"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^13.4.0",
+    "@types/react": "18.0.26",
+    "typescript": ">=5.2.2",
+    "@rollup/plugin-inject": "5.0.3",
+    "vite": "^4.4.9",
+    "@vitejs/plugin-react-swc": "3.3.2",
+    "vite-plugin-dts": "^3.5.4",
+    "vite-plugin-node-polyfills": "^0.14.1"
+  }
+}
