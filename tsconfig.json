@@ -21,6 +21,8 @@
       "@casperdash/usewallet/*": ["packages/react/src/*"],
       "@casperdash/usewallet-ledger": ["packages/ledger/src"],
       "@casperdash/usewallet-ledger/*": ["packages/ledger/src/*"],
+      "@casperdash/usewallet-evm": ["packages/evm/src"],
+      "@casperdash/usewallet-evm/*": ["packages/evm/src/*"],
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,

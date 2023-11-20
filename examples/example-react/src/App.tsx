@@ -15,6 +15,7 @@ import CasperDashWebButton from './components/ConnectButton/CasperDashWebButton'
 import CasperWalletButton from './components/ConnectButton/CasperWalletButton';
 import { Button } from './components/ui/Button';
 import { FormTabs } from './components/Form/FormTabs';
+import MetaMaskButton from './components/ConnectButton/MetaMaskButton';
 
 function App() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -93,6 +94,8 @@ function App() {
               <CasperDashWebButton/>
               <br/>
               <CasperLedgerButton />
+              <br/>
+              <MetaMaskButton />
             </div>
           </>
         )}
